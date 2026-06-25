@@ -1,24 +1,21 @@
-# brainstorm-site
+# Brainstorm — Website
 
-The marketing surface for [Brainstorm](../app) — the local-first OS-shell knowledge product.
+The marketing site for [Brainstorm](https://github.com/brainst0rm-os/shell), the local-first knowledge OS — live at **[getbrainstorm.online](https://getbrainstorm.online)**.
 
-- Plan: [`docs/implementation-plan.md`](docs/implementation-plan.md)
-- Bootstrap for Claude Code: [`CLAUDE.md`](CLAUDE.md)
-- Source of truth for product claims: [`../docs/`](../docs/)
-  ([`46-marketing-and-promotion.md`](../docs/platform/46-marketing-and-promotion.md) is the canonical spec for this site)
+Built with [Astro](https://astro.build): static-first, with zero client-side JavaScript above the fold and an optional 3D hero scene that gracefully degrades on reduced-motion and low-power devices.
 
-## Run
+## Develop
 
 ```sh
 bun install
-bun run dev          # astro dev (port 4321)
+bun run dev          # astro dev server (port 4321)
 bun run build        # static build to dist/
-bun run preview      # serve dist/ locally
+bun run preview      # serve the production build locally
 bun run typecheck    # astro check + tsc --noEmit
-bun run lint         # biome check .
-bun run format       # biome format --write .
+bun run lint         # biome check
+bun run format       # biome format --write
 ```
 
-## Status
+## License
 
-**Phase 0 — stealth / placeholder.** No marketing copy. The site exists to claim the domain and route curious developers to the GitHub repo and the docs. See [`docs/implementation-plan.md`](docs/implementation-plan.md) for the four-phase launch sequence anchored to the [brainstorm](../app) implementation stages.
+[MIT](LICENSE) © Brainstorm

@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # generated artifacts
 public/og/
+
+# agent guide — real file lives in the private harness repo
+CLAUDE.md
