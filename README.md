@@ -1,6 +1,6 @@
 # Brainstorm — Website
 
-The marketing site for [Brainstorm](https://github.com/brainst0rm-os/shell), the local-first knowledge OS — live at **[getbrainstorm.online](https://getbrainstorm.online)**.
+The marketing site for [Brainstorm](https://github.com/brainstorm-os/shell), the local-first knowledge OS — live at **[getbrainstorm.online](https://getbrainstorm.online)**.
 
 Built with [Astro](https://astro.build): static-first, with zero client-side JavaScript above the fold and an optional 3D hero scene that gracefully degrades on reduced-motion and low-power devices.
 
