@@ -9,8 +9,8 @@ export const SITE_NAME = "Brainstorm";
 export const SITE_URL = "https://getbrainstorm.online";
 
 export const links = {
-	github: "https://github.com/brainst0rm-os",
-	repo: "https://github.com/brainst0rm-os/shell",
+	github: "https://github.com/brainstorm-os",
+	repo: "https://github.com/brainstorm-os/shell",
 	docs: "https://docs.getbrainstorm.online",
 	// The downloads page lists every release with per-platform builds.
 	downloads: "/downloads",
