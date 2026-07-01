@@ -1,13 +1,13 @@
 ---
 /**
  * Shared email-capture form. Posts to a Turso-backed endpoint (see
- * `api/waitlist.ts` / `api/newsletter.ts`). Both the waitlist and the
- * newsletter render through this — the client script binds every
- * `.email-signup` on the page and reads its target + copy from `data-*`,
- * so a page may show more than one with different destinations.
+ * `api/waitlist.ts`). Both the waitlist and the newsletter render through
+ * this — the client script binds every `.email-signup` on the page and reads
+ * its target + copy from `data-*`, so a page may show more than one with
+ * different destinations.
  */
 interface Props {
-	/** The API route this form posts to, e.g. "/api/newsletter". */
+	/** The API route this form posts to, e.g. "/api/waitlist". */
 	endpoint: string;
 	/** Amplitude event fired on a successful submit. */
 	trackEvent: string;
