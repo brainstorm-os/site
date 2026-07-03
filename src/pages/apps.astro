@@ -207,9 +207,16 @@ const description = `The ${apps.length} first-party apps that ship with ${SITE_N
 	}
 	@media (max-width: 960px) {
 		.app-body {
-			grid-template-columns: 1fr;
+			/* minmax(0, …), not bare 1fr: a bare fr track's min is the item's
+			   min-content, and Swiper stamps measured px widths on slides —
+			   min-content feedback inflates the track to the browser's max
+			   layout size (~33.5M px) on mobile. */
+			grid-template-columns: minmax(0, 1fr);
 			gap: var(--space-5);
 		}
+	}
+	.app-shots {
+		min-width: 0;
 	}
 	.app-summary {
 		font-size: var(--text-base);
