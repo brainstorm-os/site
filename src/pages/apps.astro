@@ -11,12 +11,8 @@ import Base from "~/layouts/Base.astro";
 
 const apps = (await getCollection("apps")).sort((a, b) => a.data.order - b.data.order);
 
-// `source` follows the citation convention ("brainstorm/docs/..." — the
-// sibling-repo alias); the file itself lives at docs/... in the shell repo.
-const sourceHref = (source: string) => {
-	const path = (source.split(" ")[0] ?? source).replace(/^brainstorm\//, "");
-	return `${links.repo}/blob/main/${path}`;
-};
+// Each app has a matching page on the docs site (same slug).
+const docsHref = (slug: string) => `${links.docs}/apps/${slug}`;
 
 const title = "Apps";
 const description = `The ${apps.length} first-party apps that ship with ${SITE_NAME} — every one sandboxed, every one reading and writing the same vault.`;
@@ -77,8 +73,8 @@ const description = `The ${apps.length} first-party apps that ship with ${SITE_N
 										<li class="app-cap">{cap}</li>
 									))}
 								</ul>
-								<a class="app-source mono" href={sourceHref(app.data.source)}>
-									Design doc ↗
+								<a class="app-source mono" href={docsHref(app.slug)}>
+									Docs ↗
 								</a>
 							</div>
 						</div>
