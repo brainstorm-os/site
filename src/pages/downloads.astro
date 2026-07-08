@@ -9,9 +9,28 @@ import Base from "~/layouts/Base.astro";
 
 type Release = CollectionEntry<"releases">;
 
+/** Newest-first by SEMANTIC VERSION — the authoritative release order.
+ *  Sorting by `date` was fragile for same-day releases: a date-only entry is
+ *  midnight, so it sorted BEHIND a timed entry published the same day (0.2.1
+ *  losing to 0.2.0). Version is monotonic and unambiguous; `date` is a
+ *  secondary tiebreak only (and display). */
+function compareVersionDesc(a: string, b: string): number {
+	const pa = a.split(".").map(Number);
+	const pb = b.split(".").map(Number);
+	for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+		const diff = (pb[i] ?? 0) - (pa[i] ?? 0);
+		if (diff !== 0) return diff;
+	}
+	return 0;
+}
+
 const published = (await getCollection("releases"))
 	.filter((r) => r.data.status === "published")
-	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+	.sort(
+		(a, b) =>
+			compareVersionDesc(a.data.version, b.data.version) ||
+			b.data.date.getTime() - a.data.date.getTime(),
+	);
 
 const latest = published[0];
 const archive = published.slice(1);
