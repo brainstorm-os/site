@@ -1,0 +1,77 @@
+{
+  "$schema": "https://fundingjson.org/schema/v1.1.0.json",
+  "version": "v1.1.0",
+  "entity": {
+    "type": "organisation",
+    "role": "steward",
+    "name": "Brainstorm",
+    "email": "hello@getbrainstorm.online",
+    "description": "Brainstorm builds a local-first, AI-native operating system for knowledge work — a desktop shell that hosts sandboxed apps, keeps your data on your machine, and only reaches the network when you allow it.",
+    "webpageUrl": {
+      "url": "https://getbrainstorm.online"
+    }
+  },
+  "projects": [
+    {
+      "guid": "brainstorm-shell",
+      "name": "Brainstorm",
+      "description": "An Electron desktop OS for notes, tasks, files, mail, calendars, automations, and AI agents — with Block Protocol interop, Yjs CRDT sync, and a permissioned app runtime. AGPL-licensed; public beta for macOS, Windows, and Linux.",
+      "webpageUrl": {
+        "url": "https://getbrainstorm.online"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/brainstorm-os/shell",
+        "wellKnown": "https://github.com/brainstorm-os/shell/blob/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": ["spdx:AGPL-3.0-or-later"],
+      "tags": [
+        "knowledge-management",
+        "desktop-app",
+        "local-first",
+        "open-source",
+        "developer-tools",
+        "ai",
+        "electron",
+        "crdt"
+      ]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "email",
+        "type": "other",
+        "address": "hello@getbrainstorm.online",
+        "description": "Email the team to discuss pre-seed investment, grants, or strategic partnerships."
+      },
+      {
+        "guid": "github",
+        "type": "other",
+        "address": "https://github.com/brainstorm-os",
+        "description": "Follow development, open issues, and contribute on GitHub."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "pre-seed",
+        "status": "active",
+        "name": "Pre-seed round",
+        "description": "Raising a pre-seed round to fund 12–18 months of product development toward a 1.0 release — desktop shell, sync stack, and the first-party app fleet.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": ["email"]
+      },
+      {
+        "guid": "goodwill",
+        "status": "active",
+        "name": "Goodwill support",
+        "description": "Any amount to signal support for local-first, open knowledge tooling. Reach out by email — we will share the best channel for your situation.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": ["email", "github"]
+      }
+    ]
+  }
+}
