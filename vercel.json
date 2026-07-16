@@ -5,5 +5,11 @@
   "outputDirectory": "dist",
   "installCommand": "bun install",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/deck.pdf",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ]
 }
