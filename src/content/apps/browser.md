@@ -1,6 +1,6 @@
 ---
 order: 14
-name: "Web Browser"
+name: "Browser"
 appId: "io.brainstorm.browser"
 tagline: "Browsing that saves into your vault"
 summary: "Tabbed browsing over isolated, Node-less web renderers the app itself never touches — it sees metadata, never page bytes. One click clips the page into a bookmark, with the readable article body captured when the page allows it."
