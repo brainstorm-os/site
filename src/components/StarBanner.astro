@@ -1,0 +1,53 @@
+---
+import { links } from "~/content/site";
+---
+
+<a class="star-banner" href={links.repo} target="_blank" rel="noopener">
+	<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+		<path
+			d="M12 3.6l2.47 5 5.53.8-4 3.9.94 5.5L12 16.2l-4.94 2.6.94-5.5-4-3.9 5.53-.8z"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.7"
+			stroke-linejoin="round"></path>
+	</svg>
+	<span>
+		Brainstorm is free and open source — if it's useful to you,
+		<span class="star-banner-link">star it on GitHub</span>
+	</span>
+</a>
+
+<style>
+	.star-banner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 7px var(--space-4);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-tight);
+		color: var(--fog-2);
+		background: var(--bg-edge);
+		border-bottom: 1px solid var(--hairline);
+		text-align: center;
+		transition: color var(--dur-base) var(--ease-out);
+	}
+	.star-banner svg {
+		flex-shrink: 0;
+		color: var(--cyan-mid);
+	}
+	.star-banner-link {
+		color: var(--cyan-mid);
+		font-weight: 500;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-color: transparent;
+		transition: text-decoration-color var(--dur-base) var(--ease-out);
+	}
+	.star-banner:hover {
+		color: var(--fog-3);
+	}
+	.star-banner:hover .star-banner-link {
+		text-decoration-color: currentColor;
+	}
+</style>
