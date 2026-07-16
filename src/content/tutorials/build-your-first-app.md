@@ -1,7 +1,7 @@
 ---
 order: 2
 title: Build your first Brainstorm app
-summary: Twenty minutes from "I don't have an app" to "I just installed my own app." Uses the Code Editor app — you write the app inside Brainstorm.
+summary: Twenty minutes from "I don't have an app" to "I just installed my own app." Uses the Code app — you write the app inside Brainstorm.
 duration: 20 min
 audience: developer
 status: draft
@@ -11,17 +11,17 @@ status: draft
 
 ## What you'll do
 
-In twenty minutes you'll write a small Brainstorm app that displays a list of cities and lets you pin one to the dashboard. It's a real app: sandboxed, capability-gated, installable. You'll write it inside Brainstorm using the Code Editor app, build it, and install it into your own vault.
+In twenty minutes you'll write a small Brainstorm app that displays a list of cities and lets you pin one to the dashboard. It's a real app: sandboxed, capability-gated, installable. You'll write it inside Brainstorm using the Code app, build it, and install it into your own vault.
 
 ## What you'll need
 
 - Brainstorm installed (see the [5-minute install tutorial](/tutorials/install-and-first-note)).
 - Familiarity with TypeScript. We won't explain `import`.
-- Nothing else. The Code Editor app is bundled.
+- Nothing else. The Code app is bundled.
 
-## 1. Open the Code Editor app
+## 1. Open the Code app
 
-From the dashboard, open **Code Editor**. The first time it asks where to keep your app projects — pick a folder.
+From the dashboard, open **Code**. The first time it asks where to keep your app projects — pick a folder.
 
 Click **New app**. A small wizard collects:
 
@@ -86,7 +86,7 @@ Cross-app intents are how apps cooperate. Add a row action that calls `intents.d
 
 ## 6. Build and install
 
-In the Code Editor app, click **Build**. The output is an installable bundle (a directory plus a manifest). Drag it onto the dashboard — the install dialog lists the capabilities your app is asking for. Approve.
+In the Code app, click **Build**. The output is an installable bundle (a directory plus a manifest). Drag it onto the dashboard — the install dialog lists the capabilities your app is asking for. Approve.
 
 Your app is now in the launcher. Open it. Add a few cities. Pin one to the dashboard.
 

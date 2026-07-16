@@ -1,6 +1,6 @@
 ---
 order: 18
-name: "Form Designer"
+name: "Forms"
 appId: "io.brainstorm.form-designer"
 tagline: "Forms that create real objects"
 summary: "Build a property form over any entity type, save it as a reusable Layout object, and every fill creates a real object of that type — there is no submissions inbox to shovel data out of. It also renders invoices to PDF."

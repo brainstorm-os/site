@@ -1,6 +1,6 @@
 ---
 order: 20
-name: "Theme Editor"
+name: "Themes"
 appId: "io.brainstorm.theme-editor"
 tagline: "Design the OS you work in"
 summary: "Compose a theme from four parts — a token set, an icon pack, typography, and an optional CSS style pack — and preview it live across the shell and every open app. Themes are vault objects like everything else."
@@ -10,7 +10,7 @@ capabilities:
   - "A raw-CSS style pack editor whose sanitizer rejects dangerous constructs and blocks save on errors."
   - "One button previews the composition across the dashboard and every app window, then auto-reverts."
   - "WCAG contrast lint flags unreadable token pairs."
-  - "Hand the style pack's CSS to the Code Editor for a full editing surface."
+  - "Hand the style pack's CSS to the Code app for a full editing surface."
 screenshots:
   - src: "/screenshots/apps/theme-editor/01-tokens.webp"
     title: "The token set"

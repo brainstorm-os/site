@@ -3,7 +3,7 @@ order: 2
 audience: Developers and power users
 headline: An Electron shell, an IPC broker, a capability ledger, and a real SDK.
 summary: If you read CHANGELOG before INSTALL.md and have opinions about CRDTs vs OT, here are the design docs. Here is the SDK. Build an app this weekend.
-proof: The Code Editor app lets you write Brainstorm apps from inside Brainstorm. Sandboxed, capability-gated, with a stable contract.
+proof: The Code app lets you write Brainstorm apps from inside Brainstorm. Sandboxed, capability-gated, with a stable contract.
 channels:
   - GitHub
   - HackerNews
@@ -18,7 +18,7 @@ The short version: the shell is an **Electron + IPC + capability-ledger host**. 
 
 - **The IPC envelope is a real contract.** Every host-service call goes through `{v, msg, app, service, method, args, caps}`. The broker validates structure, verifies the preload-stamped app id, checks capabilities against the per-vault ledger, and forwards to a service handler. Fail-closed; capability misses return `Unavailable`, not approval.
 
-- **The SDK is real.** Manifest, capabilities, host services, versioning — all in `docs/apps/08-app-sdk.md`. The Code Editor app lets you write a Brainstorm app from inside Brainstorm. Build, install, debug — all in-product. The capability surface is documented.
+- **The SDK is real.** Manifest, capabilities, host services, versioning — all in `docs/apps/08-app-sdk.md`. The Code app lets you write a Brainstorm app from inside Brainstorm. Build, install, debug — all in-product. The capability surface is documented.
 
 - **Storage is local-first, repo-pattern, and runtime-agnostic.** `bun:sqlite` under tests, `better-sqlite3` in production. No inline SQL outside repos. Yjs persistence is snapshot+tail with per-update CRC32; compaction at 256 KiB tail.
 
