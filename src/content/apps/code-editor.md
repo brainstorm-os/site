@@ -1,6 +1,6 @@
 ---
 order: 17
-name: "Code Editor"
+name: "Code"
 appId: "io.brainstorm.code-editor"
 tagline: "A real editor for code-shaped notes"
 summary: "Edits snippets, configs, and other code-shaped objects in the vault with a genuinely capable editor: Shiki highlighting, multi-cursor, folding, diagnostics, and diffs. It opens any source-code MIME the vault hands it."
