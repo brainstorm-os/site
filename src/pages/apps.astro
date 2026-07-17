@@ -40,7 +40,7 @@ const description = `The ${apps.length} first-party apps that ship with ${SITE_N
 			<nav class="app-index" aria-label="Jump to an app">
 				{
 					apps.map((app, i) => (
-						<a class="index-chip" href={`#${app.slug}`}>
+						<a class="index-chip" href={`#${app.id}`}>
 							<span class="chip-num mono">{String(i + 1).padStart(2, "0")}</span>
 							{app.data.name}
 						</a>
@@ -51,7 +51,7 @@ const description = `The ${apps.length} first-party apps that ship with ${SITE_N
 
 		{
 			apps.map((app, i) => (
-				<section class="app-block" id={app.slug}>
+				<section class="app-block" id={app.id}>
 					<div class="container">
 						<header class="app-head">
 							<span class="app-num mono">{String(i + 1).padStart(2, "0")}</span>
@@ -73,7 +73,7 @@ const description = `The ${apps.length} first-party apps that ship with ${SITE_N
 										<li class="app-cap">{cap}</li>
 									))}
 								</ul>
-								<a class="app-source mono" href={docsHref(app.slug)}>
+								<a class="app-source mono" href={docsHref(app.id)}>
 									Docs ↗
 								</a>
 							</div>

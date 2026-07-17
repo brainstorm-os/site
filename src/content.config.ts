@@ -1,8 +1,9 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 import { Platform, ReleaseChannel } from "~/content/releases";
 
 const apps = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/apps" }),
 	schema: z.object({
 		order: z.number().int().positive(),
 		name: z.string(),
@@ -24,7 +25,7 @@ const apps = defineCollection({
 });
 
 const capabilities = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/capabilities" }),
 	schema: z.object({
 		order: z.number().int().positive(),
 		title: z.string(),
@@ -36,7 +37,7 @@ const capabilities = defineCollection({
 });
 
 const changelog = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/changelog" }),
 	schema: z.object({
 		date: z.coerce.date(),
 		version: z.string(),
@@ -47,7 +48,7 @@ const changelog = defineCollection({
 });
 
 const blog = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
 	schema: z.object({
 		date: z.coerce.date(),
 		title: z.string(),
@@ -60,7 +61,7 @@ const blog = defineCollection({
 });
 
 const tutorials = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/tutorials" }),
 	schema: z.object({
 		order: z.number().int().positive(),
 		title: z.string(),
@@ -72,7 +73,7 @@ const tutorials = defineCollection({
 });
 
 const segments = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/segments" }),
 	schema: z.object({
 		order: z.number().int().positive(),
 		audience: z.string(),
@@ -85,7 +86,7 @@ const segments = defineCollection({
 });
 
 const compare = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/compare" }),
 	schema: z.object({
 		competitor: z.string(),
 		competitorTagline: z.string(),
@@ -104,7 +105,7 @@ const compare = defineCollection({
 });
 
 const releases = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/releases" }),
 	schema: z.object({
 		date: z.coerce.date(),
 		version: z.string(),
