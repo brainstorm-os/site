@@ -8,7 +8,7 @@ interface Props {
 
 const { entry, index } = Astro.props;
 const number = String(index + 1).padStart(2, "0");
-const href = `/capabilities/${entry.slug}`;
+const href = `/capabilities/${entry.id}`;
 ---
 
 <a class="tile" href={href}>

@@ -27,7 +27,7 @@ export const GET: APIRoute = async () => {
 		"",
 		"## Apps",
 		"",
-		...apps.map((a) => `- [${a.data.name}](${SITE_URL}/apps#${a.slug}): ${a.data.summary}`),
+		...apps.map((a) => `- [${a.data.name}](${SITE_URL}/apps#${a.id}): ${a.data.summary}`),
 		"",
 		"## How it works",
 		"",

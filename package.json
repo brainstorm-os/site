@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.44.1",
-    "@astrojs/react": "^3.6.3",
+    "@astrojs/react": "^5.0.7",
     "@libsql/client": "^0.17.4",
     "@react-three/fiber": "^8.17.10",
     "@react-three/postprocessing": "^2.16.5",
-    "astro": "^4.16.18",
+    "astro": "^6.4.8",
     "postprocessing": "^6.36.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -30,7 +30,7 @@
     "three": "^0.170.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.9",
     "@biomejs/biome": "^1.9.0",
     "@size-limit/file": "^12.1.0",
     "@types/react": "^18.3.12",
