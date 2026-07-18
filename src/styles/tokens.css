@@ -109,42 +109,39 @@
 	--font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
 }
 
-/* Dark theme = Midnight (the product's cool navy/cyan dark theme). Token NAMES
-   are kept; only VALUES swap — the `--cyan-*` family becomes cyan, surfaces go
-   navy, ink goes light. Mirrors packages/tokens/src/themes.ts (midnight). */
+/* Dark theme = Default Dark (the product's neutral near-black dark theme).
+   Token NAMES are kept; only VALUES swap — the `--cyan-*` family stays the
+   violet-indigo accent (lighter steps for dark contrast), surfaces go neutral
+   gray-900, ink goes near-white. Mirrors packages/tokens/src/themes.ts
+   (defaultDark). The brand mark keeps its indigo fallbacks in both themes. */
 :root[data-theme="dark"] {
-	--bg-deep: #0a1020;
-	--bg-mid: #121a30;
-	--bg-edge: #1a2440;
+	--bg-deep: #161616;
+	--bg-mid: #232323;
+	--bg-edge: #303030;
 
-	--paper: #e7eef9;
+	--paper: #f7f7f7;
 
-	--cyan-core: #bae6fd;
-	--cyan-bright: #7dd3fc;
-	--cyan-mid: #38bdf8;
-	--cyan-deep: #0ea5e9;
-	--cyan-glow: #38bdf8;
-	--accent-rgb: 56, 189, 248;
+	--cyan-core: #a8b2ff;
+	--cyan-bright: #8b95ff;
+	--cyan-mid: #8b95ff;
+	--cyan-deep: #6b73f0;
+	--cyan-glow: #8b95ff;
+	--accent-rgb: 139, 149, 255;
 
-	--fog-1: rgba(231, 238, 249, 0.42);
-	--fog-2: rgba(231, 238, 249, 0.62);
-	--fog-3: rgba(231, 238, 249, 0.82);
+	--fog-1: rgba(247, 247, 247, 0.42);
+	--fog-2: rgba(247, 247, 247, 0.62);
+	--fog-3: rgba(247, 247, 247, 0.82);
 
-	--hairline: rgba(180, 200, 255, 0.1);
-	--hairline-strong: rgba(180, 200, 255, 0.18);
+	--hairline: rgba(231, 238, 249, 0.1);
+	--hairline-strong: rgba(231, 238, 249, 0.18);
 
-	--header-bg: rgba(10, 16, 32, 0.6);
-	--header-bg-scrolled: rgba(10, 16, 32, 0.8);
+	--header-bg: rgba(22, 22, 22, 0.6);
+	--header-bg-scrolled: rgba(22, 22, 22, 0.8);
 
-	--surface-card: rgba(180, 200, 255, 0.05);
-	--accent-soft: rgba(56, 189, 248, 0.14);
-	--accent-border: rgba(56, 189, 248, 0.4);
+	--surface-card: rgba(255, 255, 255, 0.05);
+	--accent-soft: rgba(139, 149, 255, 0.14);
+	--accent-border: rgba(139, 149, 255, 0.4);
 	--card-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-
-	/* Brand mark goes navy in Midnight (indigo by default in light) */
-	--mark-bg-top: #2c4a78;
-	--mark-bg-bottom: #122644;
-	--mark-bolt-bottom: #cfe0f5;
 }
 
 @media (prefers-reduced-motion: reduce) {

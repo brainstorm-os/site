@@ -33,25 +33,25 @@ export const LIGHT: ScenePalette = {
 	particle: "#5b62e0",
 };
 
-/** Midnight — the dark theme. The original blue-site look: an icy near-white
-   crystal lit by cyan, on navy. Cyan family from the icon (icon.svg boltGrad). */
-export const MIDNIGHT: ScenePalette = {
-	hemiSky: "#cfe8f7",
-	hemiGround: "#16243f",
-	fillBack: "#2b9bd1",
-	pointCore: "#1ea8d6",
-	fog: "#0a1020",
-	formA: "#bcd6ee",
-	formB: "#5cc8ee",
-	formC: "#e8fbff",
-	shard: "#bcd6ee",
-	shardEmissive: "#1ea8d6",
-	arc: "#5cc8ee",
-	particle: "#9ecbe8",
+/** Default Dark — the dark theme: an icy near-white crystal lit by indigo,
+   on neutral near-black. Accent family from packages/tokens defaultDark. */
+export const DARK: ScenePalette = {
+	hemiSky: "#dfe3ff",
+	hemiGround: "#1c1f33",
+	fillBack: "#5b62e0",
+	pointCore: "#6b73f0",
+	fog: "#161616",
+	formA: "#c6ccf5",
+	formB: "#8b95ff",
+	formC: "#eef0ff",
+	shard: "#c6ccf5",
+	shardEmissive: "#6b73f0",
+	arc: "#8b95ff",
+	particle: "#aab3f0",
 };
 
 export function getScenePalette(theme: string | undefined): ScenePalette {
-	return theme === "dark" ? MIDNIGHT : LIGHT;
+	return theme === "dark" ? DARK : LIGHT;
 }
 
 export const PaletteContext = createContext<ScenePalette>(LIGHT);
