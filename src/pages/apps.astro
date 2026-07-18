@@ -15,7 +15,7 @@ const apps = (await getCollection("apps")).sort((a, b) => a.data.order - b.data.
 const docsHref = (slug: string) => `${links.docs}/apps/${slug}`;
 
 const title = "Apps";
-const description = `The ${apps.length} first-party apps that ship with ${SITE_NAME} — every one sandboxed, every one reading and writing the same vault.`;
+const description = `The ${apps.length} first-party knowledge-management apps that ship with ${SITE_NAME} — every one sandboxed, every one reading and writing the same end-to-end encrypted vault.`;
 ---
 
 <Base title={`${title} — ${SITE_NAME}`} description={description}>
