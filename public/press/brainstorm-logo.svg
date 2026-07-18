@@ -1,27 +1,83 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-	<defs>
-		<linearGradient id="bg" x1="0.5" y1="0" x2="0.5" y2="1">
-			<stop offset="0%" stop-color="#1b2a44"/>
-			<stop offset="100%" stop-color="#0d1626"/>
-		</linearGradient>
-		<radialGradient id="halo" cx="0.5" cy="0.52" r="0.55">
-			<stop offset="0%" stop-color="#1ea8d6" stop-opacity="0.55"/>
-			<stop offset="55%" stop-color="#1ea8d6" stop-opacity="0.10"/>
-			<stop offset="100%" stop-color="#1ea8d6" stop-opacity="0"/>
-		</radialGradient>
-		<linearGradient id="bolt" x1="0.2" y1="0.05" x2="0.85" y2="0.95">
-			<stop offset="0%" stop-color="#e8fbff"/>
-			<stop offset="35%" stop-color="#a9ecff"/>
-			<stop offset="70%" stop-color="#5cc8ee"/>
-			<stop offset="100%" stop-color="#2b9bd1"/>
-		</linearGradient>
-		<clipPath id="sq">
-			<rect x="0" y="0" width="1024" height="1024" rx="229" ry="229"/>
-		</clipPath>
-	</defs>
-	<g clip-path="url(#sq)">
-		<rect width="1024" height="1024" fill="url(#bg)"/>
-		<rect width="1024" height="1024" fill="url(#halo)"/>
-		<path d="M 600 215 L 348 555 L 488 555 L 424 808 L 676 468 L 536 468 Z" fill="url(#bolt)" stroke="#cdf3ff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
-	</g>
+  <defs>
+    <!-- Squircle background: light periwinkle top → deep indigo bottom (the
+         Default Light theme's accent family — see packages/tokens/src/themes.ts
+         `palette.blue`). Indigo successor to the rose icon10. -->
+    <linearGradient id="bgGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%"  stop-color="#8f97ff"/>
+      <stop offset="48%" stop-color="#6b73f0"/>
+      <stop offset="100%" stop-color="#4a51c9"/>
+    </linearGradient>
+
+    <!-- Soft cool highlight near the top, mirroring the gloss shine. -->
+    <radialGradient id="bgGlow" cx="0.5" cy="0.34" r="0.62">
+      <stop offset="0%"  stop-color="#e0e3ff" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#e0e3ff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#e0e3ff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Bolt body: near-white with a faint indigo tint at the foot so it reads
+         crisp on the indigo tile. -->
+    <linearGradient id="boltGrad" x1="0.2" y1="0.05" x2="0.85" y2="0.95">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#f0f2ff"/>
+      <stop offset="100%" stop-color="#d6dbff"/>
+    </linearGradient>
+
+    <!-- Inner specular highlight on the bolt's upper edge -->
+    <linearGradient id="boltShine" x1="0.3" y1="0" x2="0.5" y2="0.4">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Inner shadow on the rounded square (subtle vignette around edges) -->
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.72">
+      <stop offset="60%" stop-color="#23277a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#23277a" stop-opacity="0.40"/>
+    </radialGradient>
+
+    <!-- Rounded-square clip (matches the shipped icon's corner radius) -->
+    <clipPath id="tile">
+      <rect x="0" y="0" width="1024" height="1024" rx="229" ry="229"/>
+    </clipPath>
+  </defs>
+
+  <!-- ===== ICON BODY (clipped to rounded tile) ===== -->
+  <g clip-path="url(#tile)">
+    <!-- Indigo base -->
+    <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+    <!-- Cool radial highlight -->
+    <rect width="1024" height="1024" fill="url(#bgGlow)"/>
+    <!-- Edge vignette -->
+    <rect width="1024" height="1024" fill="url(#vignette)"/>
+
+    <!-- ===== LIGHTNING BOLT ===== -->
+    <path d="
+      M 600 215
+      L 348 555
+      L 488 555
+      L 424 808
+      L 676 468
+      L 536 468
+      Z"
+      fill="url(#boltGrad)"
+      stroke="#ffffff"
+      stroke-opacity="0.85"
+      stroke-width="6"
+      stroke-linejoin="round"
+      stroke-linecap="round"/>
+
+    <!-- Inner specular shine along the upper face -->
+    <path d="
+      M 600 215
+      L 348 555
+      L 488 555
+      L 600 215 Z"
+      fill="url(#boltShine)"
+      opacity="0.6"/>
+  </g>
+
+  <!-- Subtle outer rim highlight (follows the tile corners) -->
+  <rect x="1" y="1" width="1022" height="1022" rx="228" ry="228"
+        fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="2"/>
 </svg>
