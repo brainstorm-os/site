@@ -1,6 +1,6 @@
 /**
  * The product carousel. Real captures of the current build — a small design
- * studio's vault, in the Rose theme — not mockups. Curated from the dogfood
+ * studio's vault, in the Default Light theme — not mockups. Curated from the dogfood
  * Playwright harness; see ../../../tests/dogfood/sessions.
  */
 
