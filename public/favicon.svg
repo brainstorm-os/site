@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
 	<defs>
 		<linearGradient id="bg" x1="0.5" y1="0" x2="0.5" y2="1">
-			<stop offset="0%" stop-color="#fb7185"/>
-			<stop offset="100%" stop-color="#be123c"/>
+			<stop offset="0%" stop-color="#8b95ff"/>
+			<stop offset="100%" stop-color="#4a51c9"/>
 		</linearGradient>
 		<radialGradient id="halo" cx="0.5" cy="0.42" r="0.55">
 			<stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
@@ -10,7 +10,7 @@
 		</radialGradient>
 		<linearGradient id="bolt" x1="0.2" y1="0" x2="0.8" y2="1">
 			<stop offset="0%" stop-color="#ffffff"/>
-			<stop offset="100%" stop-color="#ffe4ec"/>
+			<stop offset="100%" stop-color="#dfe3ff"/>
 		</linearGradient>
 	</defs>
 	<rect width="64" height="64" rx="14" fill="url(#bg)"/>

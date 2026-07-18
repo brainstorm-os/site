@@ -16,20 +16,21 @@ export interface ScenePalette {
 	particle: string;
 }
 
-/** Rose — the default (light) theme: warm crimson crystal. */
-export const ROSE: ScenePalette = {
-	hemiSky: "#be123c",
-	hemiGround: "#f7dde4",
-	fillBack: "#9f1239",
-	pointCore: "#e11d48",
-	fog: "#fdf4f6",
-	formA: "#be123c",
-	formB: "#9f1239",
-	formC: "#e11d48",
-	shard: "#be123c",
-	shardEmissive: "#e11d48",
-	arc: "#fb7185",
-	particle: "#be123c",
+/** Default Light — the light theme: a violet-indigo crystal on near-white.
+   Accent family from packages/tokens defaultLight (palette.blue). */
+export const LIGHT: ScenePalette = {
+	hemiSky: "#5b62e0",
+	hemiGround: "#e4e6fb",
+	fillBack: "#3f45b5",
+	pointCore: "#6b73f0",
+	fog: "#f7f7f7",
+	formA: "#5b62e0",
+	formB: "#3f45b5",
+	formC: "#6b73f0",
+	shard: "#5b62e0",
+	shardEmissive: "#6b73f0",
+	arc: "#8b95ff",
+	particle: "#5b62e0",
 };
 
 /** Midnight — the dark theme. The original blue-site look: an icy near-white
@@ -50,8 +51,8 @@ export const MIDNIGHT: ScenePalette = {
 };
 
 export function getScenePalette(theme: string | undefined): ScenePalette {
-	return theme === "dark" ? MIDNIGHT : ROSE;
+	return theme === "dark" ? MIDNIGHT : LIGHT;
 }
 
-export const PaletteContext = createContext<ScenePalette>(ROSE);
+export const PaletteContext = createContext<ScenePalette>(LIGHT);
 export const usePalette = (): ScenePalette => useContext(PaletteContext);

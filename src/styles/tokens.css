@@ -1,38 +1,38 @@
 :root {
-	/* base — warm blush light (Rose theme: bg primary / elevated / subtle) */
-	--bg-deep: #fdf4f6;
+	/* base — neutral near-white (Default Light: bg primary / elevated / subtle) */
+	--bg-deep: #f7f7f7;
 	--bg-mid: #ffffff;
-	--bg-edge: #fcedf1;
+	--bg-edge: #ededed;
 
-	/* type — dark plum ink (Rose text.primary) */
-	--paper: #3a1f29;
+	/* type — near-black ink (Default Light text.primary) */
+	--paper: #161616;
 
-	/* accent — rose (Rose accent + link). Token names kept; values are rose.
-	   core = darkest (high-contrast text), glow = the live accent. */
-	--cyan-core: #9f1239;
-	--cyan-bright: #be123c;
-	--cyan-mid: #e11d48;
-	--cyan-deep: #be123c;
-	--cyan-glow: #e11d48;
+	/* accent — violet-indigo (Default Light accent + link). Token names kept;
+	   values are indigo. core = darkest (high-contrast text), glow = the live accent. */
+	--cyan-core: #3f45b5;
+	--cyan-bright: #5b62e0;
+	--cyan-mid: #6b73f0;
+	--cyan-deep: #5b62e0;
+	--cyan-glow: #6b73f0;
 
 	/* fog — ink at decreasing opacity for hierarchy */
-	--fog-1: rgba(58, 31, 41, 0.42);
-	--fog-2: rgba(58, 31, 41, 0.62);
-	--fog-3: rgba(58, 31, 41, 0.82);
+	--fog-1: rgba(22, 22, 22, 0.42);
+	--fog-2: rgba(22, 22, 22, 0.62);
+	--fog-3: rgba(22, 22, 22, 0.82);
 
 	/* lines */
-	--hairline: rgba(58, 31, 41, 0.1);
-	--hairline-strong: rgba(58, 31, 41, 0.18);
+	--hairline: rgba(17, 26, 46, 0.1);
+	--hairline-strong: rgba(17, 26, 46, 0.18);
 
 	/* header surface — translucent glass (strong blur frosts content behind it) */
-	--header-bg: rgba(253, 244, 246, 0.62);
-	--header-bg-scrolled: rgba(253, 244, 246, 0.8);
+	--header-bg: rgba(247, 247, 247, 0.62);
+	--header-bg-scrolled: rgba(247, 247, 247, 0.8);
 
 	/* elevated card surfaces + soft-accent fills (theme-aware) */
 	--surface-card: rgba(255, 255, 255, 0.5);
-	--accent-soft: rgba(225, 29, 72, 0.07);
-	--accent-border: rgba(225, 29, 72, 0.33);
-	--card-shadow: 0 16px 40px rgba(58, 31, 41, 0.08);
+	--accent-soft: rgba(107, 115, 240, 0.07);
+	--accent-border: rgba(107, 115, 240, 0.33);
+	--card-shadow: 0 16px 40px rgba(17, 26, 46, 0.08);
 
 	/* spacing — 8pt scale */
 	--space-1: 4px;
@@ -138,7 +138,7 @@
 	--accent-border: rgba(56, 189, 248, 0.4);
 	--card-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 
-	/* Brand mark goes navy in Midnight (rose by default in light) */
+	/* Brand mark goes navy in Midnight (indigo by default in light) */
 	--mark-bg-top: #2c4a78;
 	--mark-bg-bottom: #122644;
 	--mark-bolt-bottom: #cfe0f5;
