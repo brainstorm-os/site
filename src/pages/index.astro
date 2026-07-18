@@ -9,7 +9,7 @@ import GeoAccent from "~/components/GeoAccent.astro";
 import Header from "~/components/Header.astro";
 import HeroScene from "~/components/HeroScene.tsx";
 import Section from "~/components/Section.astro";
-import { POSITIONING, SITE_NAME } from "~/content/site";
+import { SEO_DESCRIPTION, SITE_NAME, SITE_URL } from "~/content/site";
 import Base from "~/layouts/Base.astro";
 
 const capabilities = (await getCollection("capabilities")).sort(
@@ -81,12 +81,29 @@ const roadmap = [
 			"Build on the open SDK today, then discover, install, and publish third-party apps — each running in the same sandbox, under the same capability grants you control.",
 	},
 ];
+
+// Structured data for search engines: the product as a free, cross-platform
+// desktop application. Kept next to the copy it describes so the two can't drift.
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: SITE_NAME,
+	description: SEO_DESCRIPTION,
+	url: SITE_URL,
+	downloadUrl: `${SITE_URL}/downloads`,
+	applicationCategory: "ProductivityApplication",
+	applicationSubCategory: "Knowledge management",
+	operatingSystem: "macOS, Windows, Linux",
+	offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+	license: "https://www.gnu.org/licenses/agpl-3.0.html",
+};
 ---
 
 <Base
-	title={`${SITE_NAME} — a local-first, AI-native OS for your knowledge work, with end-to-end encrypted sync`}
-	description={POSITIONING}
+	title={`${SITE_NAME} — a local-first, AI-native operating system for knowledge management, with end-to-end encrypted sync`}
+	description={SEO_DESCRIPTION}
 >
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	<CornerMarks />
 	<Header />
 
@@ -136,8 +153,8 @@ const roadmap = [
 		<Section
 			id="overview"
 			eyebrow="What it is"
-			titleHtml="It's not a notes app.<br />It's a desktop for everything you know"
-			lede="The screen is a real desktop — a wallpaper, app icons, windows. Each icon is its own app, sandboxed, all working from one set of data that lives with you."
+			titleHtml="It's not a notes app.<br />It's an operating system for everything you know"
+			lede="The screen is a real desktop — a wallpaper, app icons, windows. Each icon is its own app, sandboxed, all working from one set of data that lives with you: knowledge management without someone else's cloud in the middle."
 		>
 			<ul class="pillars">
 				{
