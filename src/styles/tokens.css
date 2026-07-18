@@ -14,6 +14,8 @@
 	--cyan-mid: #6b73f0;
 	--cyan-deep: #5b62e0;
 	--cyan-glow: #6b73f0;
+	/* the accent as bare R, G, B — for rgba() glows/shadows at varying alphas */
+	--accent-rgb: 107, 115, 240;
 
 	/* fog — ink at decreasing opacity for hierarchy */
 	--fog-1: rgba(22, 22, 22, 0.42);
@@ -122,6 +124,7 @@
 	--cyan-mid: #38bdf8;
 	--cyan-deep: #0ea5e9;
 	--cyan-glow: #38bdf8;
+	--accent-rgb: 56, 189, 248;
 
 	--fog-1: rgba(231, 238, 249, 0.42);
 	--fog-2: rgba(231, 238, 249, 0.62);

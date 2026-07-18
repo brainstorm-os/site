@@ -189,14 +189,14 @@ import { SITE_NAME, links, nav } from "~/content/site";
 		color: #fff;
 		border: 1px solid transparent;
 		background: var(--cyan-mid);
-		box-shadow: 0 4px 14px rgba(225, 29, 72, 0.24);
+		box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.24);
 		transition:
 			background var(--dur-base) var(--ease-out),
 			box-shadow var(--dur-base) var(--ease-out);
 	}
 	.nav-cta:hover {
 		background: var(--cyan-bright);
-		box-shadow: 0 6px 18px rgba(225, 29, 72, 0.32);
+		box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.32);
 	}
 	@media (max-width: 760px) {
 		.primary {
