@@ -9,6 +9,7 @@ import GeoAccent from "~/components/GeoAccent.astro";
 import Header from "~/components/Header.astro";
 import HeroScene from "~/components/HeroScene.tsx";
 import Section from "~/components/Section.astro";
+import VideoDialog from "~/components/VideoDialog.astro";
 import { SEO_DESCRIPTION, SITE_NAME, SITE_URL } from "~/content/site";
 import Base from "~/layouts/Base.astro";
 
@@ -139,7 +140,10 @@ const jsonLd = {
 				</p>
 
 				<div class="hero-cta">
-						<CTAs align="start" />
+						<div class="hero-actions">
+							<CTAs align="start" />
+							<VideoDialog label="Watch the 84‑second tour" />
+						</div>
 						<p class="hero-trust mono">
 							<span class="dot" aria-hidden="true"></span>
 							Local-first · No account required · <a href="#inside">See it in action ↓</a>
@@ -510,6 +514,12 @@ const jsonLd = {
 		gap: var(--space-3);
 		margin-top: var(--space-4);
 		width: 100%;
+	}
+	.hero-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		flex-wrap: wrap;
 	}
 	.hero-trust {
 		font-size: var(--text-mono);
