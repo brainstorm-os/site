@@ -123,19 +123,25 @@ const darkSrc = (src: string) => src.replace(/\/([^/]+)$/, "/midnight/$1");
 		box-shadow:
 			0 14px 36px rgba(58, 31, 41, 0.12),
 			0 2px 5px rgba(58, 31, 41, 0.05);
+		/* Query container so the overlaid window chrome scales with the
+		   frame, not the browser viewport (cqw below). */
+		container-type: inline-size;
 	}
+	/* macOS traffic lights, sized in cqw against the 1440px-wide capture
+	   so they stay in the app header's reserved inset at every displayed
+	   width. Fixed px drifted over the app title below 1440. */
 	.traffic {
 		position: absolute;
-		top: 10px;
-		left: 12px;
+		top: 0.69cqw;
+		left: 0.83cqw;
 		z-index: 3;
 		display: inline-flex;
-		gap: 6px;
+		gap: 0.42cqw;
 		pointer-events: none;
 	}
 	.traffic i {
-		width: 9px;
-		height: 9px;
+		width: 0.625cqw;
+		height: 0.625cqw;
 		border-radius: 50%;
 		box-shadow:
 			inset 0 0 0 0.5px rgba(0, 0, 0, 0.14),
