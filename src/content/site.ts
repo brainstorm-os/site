@@ -14,12 +14,19 @@ export const TAGLINE_SUB =
 export const SITE_NAME = "Brainstorm";
 export const SITE_URL = "https://getbrainstorm.online";
 
+// The 84s product tour on YouTube (channel "Brainstorm OS", @th3-br41n). The
+// on-site player embeds by id via youtube-nocookie; `watch` is the canonical
+// share/fallback link.
+export const YOUTUBE_VIDEO_ID = "kkjVrnwmZT4";
+
 export const links = {
 	github: "https://github.com/brainstorm-os",
 	repo: "https://github.com/brainstorm-os/shell",
 	docs: "https://docs.getbrainstorm.online",
 	// The downloads page lists every release with per-platform builds.
 	downloads: "/downloads",
+	youtube: "https://www.youtube.com/@th3-br41n",
+	watch: `https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`,
 } as const;
 
 // Hrefs are root-absolute (`/#…`) so the nav works from any page, not just the

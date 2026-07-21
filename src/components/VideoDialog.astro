@@ -1,0 +1,250 @@
+---
+import { YOUTUBE_VIDEO_ID, links } from "~/content/site";
+
+interface Props {
+	/** YouTube video id. Defaults to the site's product-tour video. */
+	videoId?: string;
+	label?: string;
+	/** Accessible name / heading for the dialog. */
+	title?: string;
+	/** Visual weight of the trigger — matches the CTA button styles. */
+	variant?: "ghost" | "primary";
+}
+
+const {
+	videoId = YOUTUBE_VIDEO_ID,
+	label = "Watch the tour",
+	title = "Brainstorm — product tour",
+	variant = "ghost",
+} = Astro.props;
+
+// Privacy-friendly host (no cookies until playback); the iframe is only mounted
+// when the dialog opens, so YouTube isn't contacted on page load.
+const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+---
+
+<button
+	type="button"
+	class:list={["video-trigger", `video-trigger--${variant}`]}
+	data-video-open
+	aria-haspopup="dialog"
+>
+	<span class="video-trigger__play" aria-hidden="true">
+		<svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 1.5v9l8-4.5-8-4.5Z" fill="currentColor"></path></svg>
+	</span>
+	<span>{label}</span>
+</button>
+
+<dialog class="video-dialog" data-video-dialog aria-label={title} data-embed-src={embedSrc}>
+	<div class="video-dialog__stage">
+		<button type="button" class="video-dialog__close" data-video-close aria-label="Close video">
+			<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+				<path d="M4 4l10 10M14 4L4 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+			</svg>
+		</button>
+		<div class="video-dialog__frame" data-video-mount></div>
+		<a class="video-dialog__fallback mono" href={links.watch} target="_blank" rel="noreferrer noopener">
+			Trouble playing? Open on YouTube ↗
+		</a>
+	</div>
+</dialog>
+
+<style>
+	.video-trigger {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 14px 24px;
+		border-radius: var(--radius-2);
+		font-size: var(--text-base);
+		font-weight: 500;
+		letter-spacing: var(--tracking-tight);
+		border: 1px solid transparent;
+		cursor: pointer;
+		transition:
+			background var(--dur-base) var(--ease-out),
+			border-color var(--dur-base) var(--ease-out),
+			transform var(--dur-fast) var(--ease-out),
+			color var(--dur-base) var(--ease-out),
+			box-shadow var(--dur-base) var(--ease-out);
+	}
+	.video-trigger:active {
+		transform: translateY(1px);
+	}
+	.video-trigger__play {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		background: currentColor;
+	}
+	.video-trigger__play svg {
+		color: var(--bg-deep);
+		margin-left: 1px;
+	}
+
+	.video-trigger--ghost {
+		background: rgba(255, 255, 255, 0.4);
+		color: var(--paper);
+		border-color: var(--hairline-strong);
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+	}
+	.video-trigger--ghost:hover {
+		border-color: var(--cyan-glow);
+		color: var(--cyan-core);
+		background: rgba(var(--accent-rgb), 0.08);
+	}
+	.video-trigger--primary {
+		background: var(--cyan-glow);
+		color: #fff;
+		box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.28);
+	}
+	.video-trigger--primary .video-trigger__play {
+		background: #fff;
+	}
+	.video-trigger--primary .video-trigger__play svg {
+		color: var(--cyan-glow);
+	}
+	.video-trigger--primary:hover {
+		background: var(--cyan-bright);
+		box-shadow: 0 10px 28px rgba(var(--accent-rgb), 0.42);
+	}
+
+	/* ── Dialog / lightbox ──────────────────────────────── */
+	.video-dialog {
+		/* The `* { margin: 0 }` reset removes the UA `margin: auto` that centers a
+		   modal <dialog>; restore it so the lightbox sits centered. */
+		margin: auto;
+		width: min(1040px, 92vw);
+		max-width: 92vw;
+		padding: 0;
+		border: 1px solid var(--hairline-strong);
+		border-radius: 16px;
+		background: #000;
+		box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+		overflow: hidden;
+		color: var(--paper);
+	}
+	.video-dialog::backdrop {
+		background: rgba(6, 8, 14, 0.72);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+	}
+	.video-dialog[open] {
+		animation: video-in var(--dur-base) var(--ease-out);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.video-dialog[open] {
+			animation: none;
+		}
+	}
+	@keyframes video-in {
+		from {
+			opacity: 0;
+			transform: translateY(8px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	.video-dialog__stage {
+		position: relative;
+	}
+	.video-dialog__frame {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		width: 100%;
+	}
+	.video-dialog__frame :global(iframe) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+	.video-dialog__close {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		z-index: 2;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		border-radius: 50%;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: rgba(10, 12, 18, 0.6);
+		color: #fff;
+		cursor: pointer;
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		transition:
+			background var(--dur-fast) var(--ease-out),
+			border-color var(--dur-fast) var(--ease-out);
+	}
+	.video-dialog__close:hover {
+		background: rgba(10, 12, 18, 0.85);
+		border-color: var(--cyan-glow);
+	}
+	.video-dialog__fallback {
+		display: block;
+		padding: 10px 14px;
+		font-size: var(--text-mono);
+		letter-spacing: var(--tracking-wide);
+		color: var(--fog-2);
+		background: var(--bg-deep);
+		text-align: center;
+	}
+	.video-dialog__fallback:hover {
+		color: var(--cyan-bright);
+	}
+</style>
+
+<script>
+	const openIframe = (dialog: HTMLDialogElement) => {
+		const mount = dialog.querySelector<HTMLElement>("[data-video-mount]");
+		const src = dialog.dataset.embedSrc;
+		if (!mount || !src || mount.querySelector("iframe")) return;
+		const iframe = document.createElement("iframe");
+		iframe.src = src;
+		iframe.title = dialog.getAttribute("aria-label") ?? "Video";
+		iframe.allow =
+			"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+		iframe.setAttribute("allowfullscreen", "");
+		mount.replaceChildren(iframe);
+	};
+
+	// Clearing the src stops playback and releases the player when closed.
+	const clearIframe = (dialog: HTMLDialogElement) => {
+		dialog.querySelector<HTMLElement>("[data-video-mount]")?.replaceChildren();
+	};
+
+	for (const trigger of document.querySelectorAll<HTMLButtonElement>("[data-video-open]")) {
+		// The dialog renders immediately after its trigger (adjacent siblings).
+		const dialog = trigger.nextElementSibling;
+		if (!(dialog instanceof HTMLDialogElement)) continue;
+
+		trigger.addEventListener("click", () => {
+			openIframe(dialog);
+			dialog.showModal();
+		});
+
+		dialog.querySelector("[data-video-close]")?.addEventListener("click", () => dialog.close());
+
+		// Backdrop click (the dialog element fills the viewport; the stage is the
+		// visible card) closes the lightbox.
+		dialog.addEventListener("click", (event) => {
+			if (event.target === dialog) dialog.close();
+		});
+
+		dialog.addEventListener("close", () => {
+			clearIframe(dialog);
+			trigger.focus();
+		});
+	}
+</script>
