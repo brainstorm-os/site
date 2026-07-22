@@ -1,5 +1,5 @@
 ---
-import { links } from "~/content/site";
+import { docsUrl, links } from "~/content/site";
 import { type Lang, defaultLang, localizePath } from "~/i18n/ui";
 
 interface Props {
@@ -15,10 +15,12 @@ interface Props {
 const {
 	primaryLabel = "Download",
 	secondaryLabel = "Read the docs",
-	secondaryHref = links.docs,
 	align = "center",
 	lang = defaultLang,
 } = Astro.props;
+// The "read the docs" link defaults to the locale-matched docs portal so a
+// German page doesn't send you to the English docs.
+const secondaryHref = Astro.props.secondaryHref ?? docsUrl(lang);
 const downloadHref = localizePath(links.downloads, lang);
 ---
 
