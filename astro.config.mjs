@@ -7,6 +7,16 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
 	site: "https://getbrainstorm.online",
 	integrations: [react()],
+	// English is the default and stays at the root; German lives under `/de/`.
+	// No auto-redirect — the copy module + <link hreflang> handle discovery.
+	i18n: {
+		locales: ["en", "de"],
+		defaultLocale: "en",
+		routing: {
+			prefixDefaultLocale: false,
+			redirectToDefaultLocale: false,
+		},
+	},
 	build: {
 		inlineStylesheets: "auto",
 	},

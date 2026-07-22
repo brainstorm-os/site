@@ -1,10 +1,27 @@
 ---
 import BrandMark from "~/components/BrandMark.astro";
+import LangSwitcher from "~/components/LangSwitcher.astro";
 import StarBanner from "~/components/StarBanner.astro";
 import { SITE_NAME, links, nav } from "~/content/site";
+import { type Lang, defaultLang, localizePath, useTranslations } from "~/i18n/ui";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+
+// The nav section id maps to a translated label; hrefs are localised so the
+// German header points at German pages.
+const navKey: Record<string, Parameters<typeof t>[0]> = {
+	overview: "nav.overview",
+	apps: "nav.apps",
+	capabilities: "nav.how",
+	roadmap: "nav.roadmap",
+};
 ---
 
-<StarBanner />
+<StarBanner lang={lang} />
 <header class="site-header" data-header>
 	<div class="container row">
 		<div class="brand">
@@ -15,8 +32,12 @@ import { SITE_NAME, links, nav } from "~/content/site";
 		<nav class="primary" aria-label="Primary">
 			{
 				nav.map((item) => (
-					<a href={item.href} class="nav-link" data-nav={item.section}>
-						{item.label}
+					<a
+						href={localizePath(item.href, lang)}
+						class="nav-link"
+						data-nav={item.section}
+					>
+						{navKey[item.section] ? t(navKey[item.section]!) : item.label}
 					</a>
 				))
 			}
@@ -24,11 +45,12 @@ import { SITE_NAME, links, nav } from "~/content/site";
 		</nav>
 
 		<div class="actions">
+			<LangSwitcher lang={lang} />
 			<button
 				class="theme-toggle"
 				type="button"
-				aria-label="Toggle color theme"
-				title="Toggle theme"
+				aria-label={t("header.toggleTheme")}
+				title={t("header.toggleTheme")}
 				data-theme-toggle
 			>
 				<svg class="ico ico-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
@@ -50,8 +72,8 @@ import { SITE_NAME, links, nav } from "~/content/site";
 						stroke-linecap="round"></path>
 				</svg>
 			</button>
-			<a href={links.docs} class="nav-docs">Docs</a>
-			<a href={links.downloads} class="nav-cta">Download</a>
+			<a href={links.docs} class="nav-docs">{t("header.docs")}</a>
+			<a href={localizePath(links.downloads, lang)} class="nav-cta">{t("header.download")}</a>
 		</div>
 	</div>
 </header>

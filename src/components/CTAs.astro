@@ -1,5 +1,6 @@
 ---
 import { links } from "~/content/site";
+import { type Lang, defaultLang, localizePath } from "~/i18n/ui";
 
 interface Props {
 	primaryLabel?: string;
@@ -8,6 +9,7 @@ interface Props {
 	/** "center" (default) for centered sections; "start" to left-align with
 	 *  left-aligned copy (e.g. the hero). */
 	align?: "start" | "center";
+	lang?: Lang;
 }
 
 const {
@@ -15,12 +17,14 @@ const {
 	secondaryLabel = "Read the docs",
 	secondaryHref = links.docs,
 	align = "center",
+	lang = defaultLang,
 } = Astro.props;
+const downloadHref = localizePath(links.downloads, lang);
 ---
 
 <div class="cta-block" data-align={align}>
 	<div class="ctas">
-		<a class="cta primary" href={links.downloads}>
+		<a class="cta primary" href={downloadHref}>
 			<span>{primaryLabel}</span>
 			<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
 				<path

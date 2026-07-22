@@ -6,13 +6,13 @@ import { appsCopy } from "~/i18n/pages";
 import Base from "~/layouts/Base.astro";
 
 const count = (await getCollection("apps")).length;
-const copy = appsCopy("en");
+const copy = appsCopy("de");
 ---
 
 <Base
-	lang="en"
+	lang="de"
 	title={`${copy.seoTitle} — ${SITE_NAME}`}
 	description={copy.description(count)}
 >
-	<AppsContent lang="en" />
+	<AppsContent lang="de" />
 </Base>

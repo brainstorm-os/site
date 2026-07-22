@@ -19,6 +19,7 @@ interface Props {
 	extraClass?: string;
 	cta?: string;
 	placeholder?: string;
+	emailLabel?: string;
 }
 const {
 	endpoint,
@@ -28,6 +29,7 @@ const {
 	extraClass = "",
 	cta = "Subscribe",
 	placeholder = "you@example.com",
+	emailLabel = "Email address",
 } = Astro.props;
 const inputId = `email-${idSuffix}`;
 ---
@@ -40,7 +42,7 @@ const inputId = `email-${idSuffix}`;
 	data-track={trackEvent}
 	data-success={successLabel}
 >
-	<label class="sr-only" for={inputId}>Email address</label>
+	<label class="sr-only" for={inputId}>{emailLabel}</label>
 	<input
 		id={inputId}
 		class="field"
