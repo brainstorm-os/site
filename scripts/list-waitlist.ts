@@ -14,9 +14,7 @@ if (!url || !authToken) {
 
 const turso = createClient({ url, authToken });
 
-const result = await turso.execute(
-	"select email, created_at from waitlist order by created_at",
-);
+const result = await turso.execute("select email, created_at from waitlist order by created_at");
 
 for (const row of result.rows) {
 	console.log(`${row.created_at}\t${row.email}`);
