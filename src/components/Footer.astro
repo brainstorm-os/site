@@ -2,17 +2,25 @@
 import BrandMark from "~/components/BrandMark.astro";
 import NewsletterForm from "~/components/NewsletterForm.astro";
 import { SITE_NAME, links } from "~/content/site";
+import { type Lang, defaultLang, localizePath, useTranslations } from "~/i18n/ui";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 
 const year = new Date().getFullYear();
 
-// Root-absolute so they work from any page, not just the homepage.
+// Root-absolute so they work from any page, not just the homepage; hrefs are
+// localised so the German footer points at German pages.
 const footerLinks = [
-	{ label: "Overview", href: "/#overview" },
-	{ label: "Apps", href: "/apps" },
-	{ label: "Screenshots", href: "/#inside" },
-	{ label: "How it works", href: "/#capabilities" },
-	{ label: "Roadmap", href: "/#roadmap" },
-];
+	{ label: t("nav.overview"), href: "/#overview" },
+	{ label: t("nav.apps"), href: "/apps" },
+	{ label: t("nav.screenshots"), href: "/#inside" },
+	{ label: t("nav.how"), href: "/#capabilities" },
+	{ label: t("nav.roadmap"), href: "/#roadmap" },
+].map((l) => ({ ...l, href: localizePath(l.href, lang) }));
 ---
 
 <footer class="footer">
@@ -24,28 +32,32 @@ const footerLinks = [
 					<span class="wordmark">{SITE_NAME}</span>
 				</p>
 				<p class="positioning">
-					A local-first, AI-native operating system for your knowledge work. Your data lives on
-					your machine — no account required.
+					{t("footer.positioning")}
 				</p>
 
 				<div class="newsletter-col">
-					<p class="newsletter-label">Get product updates</p>
-					<NewsletterForm />
+					<p class="newsletter-label">{t("footer.updatesLabel")}</p>
+					<NewsletterForm
+						cta={t("newsletter.cta")}
+						success={t("newsletter.success")}
+						placeholder={t("email.placeholder")}
+						emailLabel={t("email.label")}
+					/>
 				</div>
 			</div>
 
 			<nav class="links" aria-label="Footer">
 				{footerLinks.map((l) => <a href={l.href}>{l.label}</a>)}
-				<a href={links.downloads}>Download</a>
-				<a href={links.docs}>Docs</a>
-				<a href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+				<a href={localizePath(links.downloads, lang)}>{t("footer.download")}</a>
+				<a href={links.docs}>{t("footer.docs")}</a>
+				<a href={links.github} target="_blank" rel="noopener noreferrer">{t("footer.github")}</a>
 			</nav>
 		</div>
 
 		<div class="footer-meta">
 			<p class="copyright mono">© {year} {SITE_NAME}</p>
 			<a class="source mono" href={links.repo} target="_blank" rel="noopener noreferrer">
-				Open source · AGPL-3.0
+				{t("footer.opensource")}
 			</a>
 		</div>
 

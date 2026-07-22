@@ -1,5 +1,12 @@
 ---
 import { links } from "~/content/site";
+import { type Lang, defaultLang, useTranslations } from "~/i18n/ui";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <a class="star-banner" href={links.repo} target="_blank" rel="noopener">
@@ -12,8 +19,8 @@ import { links } from "~/content/site";
 			stroke-linejoin="round"></path>
 	</svg>
 	<span>
-		Brainstorm is free and open source — if it's useful to you,
-		<span class="star-banner-link">star it on GitHub</span>
+		{t("star.text")}
+		<span class="star-banner-link">{t("star.link")}</span>
 	</span>
 </a>
 

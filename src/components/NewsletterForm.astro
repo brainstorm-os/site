@@ -9,15 +9,26 @@ import EmailSignupForm from "~/components/EmailSignupForm.astro";
 interface Props {
 	idSuffix?: string;
 	cta?: string;
+	success?: string;
+	placeholder?: string;
+	emailLabel?: string;
 }
-const { idSuffix = "footer", cta = "Subscribe" } = Astro.props;
+const {
+	idSuffix = "footer",
+	cta = "Subscribe",
+	success = "You're subscribed. We'll send the occasional update.",
+	placeholder = "you@example.com",
+	emailLabel = "Email address",
+} = Astro.props;
 ---
 
 <EmailSignupForm
 	endpoint="/api/waitlist"
 	trackEvent="Newsletter Signup"
-	successLabel="You're subscribed. We'll send the occasional update."
+	successLabel={success}
 	extraClass="newsletter"
 	idSuffix={idSuffix}
 	cta={cta}
+	placeholder={placeholder}
+	emailLabel={emailLabel}
 />

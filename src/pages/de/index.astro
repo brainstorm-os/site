@@ -4,26 +4,25 @@ import { SITE_NAME, SITE_URL } from "~/content/site";
 import { homeCopy } from "~/i18n/home";
 import Base from "~/layouts/Base.astro";
 
-const copy = homeCopy("en");
+const copy = homeCopy("de");
 
-// Structured data for search engines: the product as a free, cross-platform
-// desktop application. Kept next to the copy it describes so the two can't drift.
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "SoftwareApplication",
 	name: SITE_NAME,
 	description: copy.seoDescription,
-	url: SITE_URL,
-	downloadUrl: `${SITE_URL}/downloads`,
+	url: `${SITE_URL}/de`,
+	downloadUrl: `${SITE_URL}/de/downloads`,
 	applicationCategory: "ProductivityApplication",
 	applicationSubCategory: "Knowledge management",
 	operatingSystem: "macOS, Windows, Linux",
 	offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 	license: "https://www.gnu.org/licenses/agpl-3.0.html",
+	inLanguage: "de",
 };
 ---
 
-<Base lang="en" title={copy.seoTitle} description={copy.seoDescription}>
+<Base lang="de" title={copy.seoTitle} description={copy.seoDescription}>
 	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-	<HomeContent lang="en" />
+	<HomeContent lang="de" />
 </Base>

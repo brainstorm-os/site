@@ -1,0 +1,297 @@
+---
+import { getCollection } from "astro:content";
+import AppSlider from "~/components/AppSlider.astro";
+import CTAs from "~/components/CTAs.astro";
+import CornerMarks from "~/components/CornerMarks.astro";
+import Footer from "~/components/Footer.astro";
+import GeoAccent from "~/components/GeoAccent.astro";
+import Header from "~/components/Header.astro";
+import { links } from "~/content/site";
+import { appsCopy } from "~/i18n/pages";
+import { type Lang, defaultLang, useTranslations } from "~/i18n/ui";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const copy = appsCopy(lang);
+const t = useTranslations(lang);
+
+const apps = (await getCollection("apps")).sort((a, b) => a.data.order - b.data.order);
+
+// Each app has a matching page on the docs site (same slug).
+const docsHref = (slug: string) => `${links.docs}/apps/${slug}`;
+---
+
+<CornerMarks />
+<Header lang={lang} />
+
+<main class="apps-main">
+	<div class="container">
+		<header class="page-header">
+			<p class="eyebrow">
+				<span class="diamond" aria-hidden="true">◇</span>
+				{copy.eyebrow}
+			</p>
+			<h1 class="page-title">{copy.title(apps.length)}</h1>
+			<p class="page-lede">
+				{copy.lede}
+			</p>
+		</header>
+
+		<nav class="app-index" aria-label={copy.indexAria}>
+			{
+				apps.map((app, i) => (
+					<a class="index-chip" href={`#${app.id}`}>
+						<span class="chip-num mono">{String(i + 1).padStart(2, "0")}</span>
+						{app.data.name}
+					</a>
+				))
+			}
+		</nav>
+	</div>
+
+	{
+		apps.map((app, i) => (
+			<section class="app-block" id={app.id}>
+				<div class="container">
+					<header class="app-head">
+						<span class="app-num mono">{String(i + 1).padStart(2, "0")}</span>
+						<div class="app-head-text">
+							<h2 class="app-name">{app.data.name}</h2>
+							<p class="app-tagline">{app.data.tagline}</p>
+						</div>
+					</header>
+
+					<div class="app-body">
+						<div class="app-shots">
+							<AppSlider name={app.data.name} shots={app.data.screenshots} />
+						</div>
+
+						<div class="app-detail">
+							<p class="app-summary">{app.data.summary}</p>
+							<ul class="app-caps">
+								{app.data.capabilities.map((cap) => (
+									<li class="app-cap">{cap}</li>
+								))}
+							</ul>
+							<a class="app-source mono" href={docsHref(app.id)}>
+								{copy.docsLabel}
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		))
+	}
+
+	<section class="closer">
+		<div class="container closer-inner glow-ring">
+			<GeoAccent shape="ico" size={46} class="closer-geo" />
+			<h2 class="closer-title">{copy.closerTitle}</h2>
+			<p class="closer-lede">
+				{copy.closerLede}
+			</p>
+			<CTAs lang={lang} primaryLabel={t("cta.download")} secondaryLabel={t("cta.readDocs")} />
+		</div>
+	</section>
+</main>
+
+<Footer lang={lang} />
+
+<style>
+	.apps-main {
+		padding-top: var(--space-8);
+	}
+	.page-header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		max-width: 64ch;
+		margin-bottom: var(--space-6);
+	}
+	.eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+	}
+	.diamond {
+		color: var(--cyan-glow);
+	}
+	.page-title {
+		font-size: clamp(2rem, 3.4vw + 1rem, 3.2rem);
+		font-weight: 500;
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-hero);
+	}
+	.page-lede {
+		font-size: var(--text-lg);
+		line-height: var(--leading-snug);
+		color: var(--fog-3);
+	}
+
+	/* ── Jump index ─────────────────────────────────────── */
+	.app-index {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		padding-bottom: var(--space-6);
+		border-bottom: 1px solid var(--hairline);
+	}
+	.index-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 7px 13px;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--hairline);
+		background: var(--surface-card);
+		color: var(--fog-3);
+		font-size: var(--text-sm);
+		white-space: nowrap;
+		transition:
+			color var(--dur-base) var(--ease-out),
+			border-color var(--dur-base) var(--ease-out),
+			transform var(--dur-base) var(--ease-out);
+	}
+	.index-chip:hover {
+		color: var(--paper);
+		border-color: var(--accent-border);
+		transform: translateY(-1px);
+	}
+	.chip-num {
+		font-size: var(--text-mono);
+		color: var(--cyan-glow);
+	}
+
+	/* ── Per-app blocks ─────────────────────────────────── */
+	.app-block {
+		padding: var(--space-8) 0;
+		border-bottom: 1px solid var(--hairline);
+		/* Land anchor jumps below the sticky header. */
+		scroll-margin-top: 72px;
+	}
+	.app-block:last-of-type {
+		border-bottom: none;
+	}
+	.app-head {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-4);
+		margin-bottom: var(--space-5);
+	}
+	.app-num {
+		font-size: var(--text-mono);
+		color: var(--cyan-glow);
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.app-head-text {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.app-name {
+		font-size: clamp(1.5rem, 1.6vw + 1rem, 2rem);
+		font-weight: 500;
+		letter-spacing: var(--tracking-tight);
+	}
+	.app-tagline {
+		font-size: var(--text-lg);
+		color: var(--fog-3);
+	}
+	.app-body {
+		display: grid;
+		grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+		gap: var(--space-7);
+		align-items: start;
+	}
+	@media (max-width: 960px) {
+		.app-body {
+			/* minmax(0, …), not bare 1fr: a bare fr track's min is the item's
+			   min-content, and Swiper stamps measured px widths on slides —
+			   min-content feedback inflates the track to the browser's max
+			   layout size (~33.5M px) on mobile. */
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--space-5);
+		}
+	}
+	.app-shots {
+		min-width: 0;
+	}
+	.app-summary {
+		font-size: var(--text-base);
+		line-height: var(--leading-relaxed);
+		color: var(--fog-3);
+	}
+	.app-detail {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+	}
+	.app-caps {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+	.app-cap {
+		position: relative;
+		padding-left: 22px;
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
+	}
+	.app-cap::before {
+		content: "";
+		position: absolute;
+		left: 2px;
+		top: 0.52em;
+		width: 7px;
+		height: 7px;
+		transform: rotate(45deg);
+		background: var(--cyan-glow);
+		opacity: 0.75;
+	}
+	.app-source {
+		font-size: var(--text-mono);
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--cyan-bright);
+		width: fit-content;
+	}
+	.app-source:hover {
+		color: var(--cyan-core);
+	}
+
+	/* ── Closer ─────────────────────────────────────────── */
+	.closer {
+		padding: var(--space-10) 0 var(--space-9);
+		overflow-x: clip;
+	}
+	.closer-inner {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: var(--space-4);
+		max-width: 620px;
+		margin-inline: auto;
+	}
+	.closer-geo {
+		margin-bottom: var(--space-2);
+	}
+	.closer-title {
+		font-size: clamp(1.8rem, 2.6vw + 1rem, 2.6rem);
+		font-weight: 500;
+		letter-spacing: var(--tracking-hero);
+	}
+	.closer-lede {
+		font-size: var(--text-lg);
+		line-height: var(--leading-snug);
+		color: var(--fog-3);
+		max-width: 46ch;
+	}
+</style>

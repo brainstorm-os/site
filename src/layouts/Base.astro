@@ -1,20 +1,25 @@
 ---
 import "~/styles/global.css";
 import { SITE_NAME } from "~/content/site";
+import { type Lang, alternatesFor, defaultLang, htmlLang, ogLocale } from "~/i18n/ui";
 
 interface Props {
 	title: string;
 	description: string;
 	canonical?: string;
 	noindex?: boolean;
+	lang?: Lang;
 }
 
-const { title, description, canonical, noindex } = Astro.props;
+const { title, description, canonical, noindex, lang = defaultLang } = Astro.props;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+// hreflang alternates so Google indexes each locale and serves the right one.
+// Suppressed on noindex pages (e.g. /joined) — they shouldn't advertise pairs.
+const alternates = Astro.site && !noindex ? alternatesFor(Astro.url.pathname, Astro.site) : [];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang[lang]}>
 	<head>
 		<meta charset="utf-8" />
 		<script is:inline>
@@ -42,13 +47,18 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toStri
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalUrl} />
+		{
+			alternates.map((alt) => (
+				<link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+			))
+		}
 
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="mask-icon" href="/favicon.svg" color="#5b62e0" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={SITE_NAME} />
-		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale" content={ogLocale[lang]} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalUrl} />

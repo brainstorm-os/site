@@ -1,0 +1,68 @@
+---
+import { type Lang, languages, localizePath, useTranslations } from "~/i18n/ui";
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Link each locale to the equivalent page for the current path, so switching
+// keeps you where you are rather than dumping you on the homepage.
+const here = Astro.url.pathname;
+const entries = (Object.keys(languages) as Lang[]).map((code) => ({
+	code,
+	label: code.toUpperCase(),
+	name: languages[code],
+	href: localizePath(here, code),
+	current: code === lang,
+}));
+---
+
+<nav class="lang-switch" aria-label={t("lang.label")}>
+	{
+		entries.map((e) => (
+			<a
+				class="lang-opt"
+				href={e.href}
+				hreflang={e.code}
+				lang={e.code}
+				aria-current={e.current ? "true" : undefined}
+				aria-label={e.name}
+			>
+				{e.label}
+			</a>
+		))
+	}
+</nav>
+
+<style>
+	.lang-switch {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		font-size: var(--text-xs);
+		font-family: var(--font-mono);
+		letter-spacing: var(--tracking-tight);
+	}
+	.lang-opt {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 26px;
+		padding: 5px 6px;
+		border-radius: var(--radius-1);
+		color: var(--fog-1);
+		transition:
+			color var(--dur-base) var(--ease-out),
+			background var(--dur-base) var(--ease-out);
+	}
+	.lang-opt:hover {
+		color: var(--paper);
+		background: var(--bg-edge);
+	}
+	.lang-opt[aria-current="true"] {
+		color: var(--paper);
+		font-weight: 500;
+	}
+</style>

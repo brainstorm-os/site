@@ -1,0 +1,792 @@
+---
+import { getCollection } from "astro:content";
+import CTAs from "~/components/CTAs.astro";
+import CornerMarks from "~/components/CornerMarks.astro";
+import Divider from "~/components/Divider.astro";
+import Footer from "~/components/Footer.astro";
+import Gallery from "~/components/Gallery.astro";
+import GeoAccent from "~/components/GeoAccent.astro";
+import Header from "~/components/Header.astro";
+import HeroScene from "~/components/HeroScene.tsx";
+import Section from "~/components/Section.astro";
+import VideoDialog from "~/components/VideoDialog.astro";
+import { homeCopy } from "~/i18n/home";
+import { type Lang, defaultLang, localizePath, useTranslations } from "~/i18n/ui";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const copy = homeCopy(lang);
+const t = useTranslations(lang);
+
+// Card structure comes from the English `capabilities` collection (source of
+// truth for order + count). German overlays title/summary by position.
+const capsCollection = (await getCollection("capabilities")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+const capabilities = capsCollection.map((entry, i) => {
+	const localized = lang === defaultLang ? undefined : copy.capabilities.items[i];
+	return {
+		title: localized?.title ?? entry.data.title,
+		summary: localized?.summary ?? entry.data.summary,
+	};
+});
+
+const pillarShapes = ["tetra", "diamond", "ring"] as const;
+const capShapes = ["triangle", "diamond", "ico", "tetra", "ring", "triangle"] as const;
+
+const insideHref = localizePath("/apps", lang);
+---
+
+<CornerMarks />
+<Header lang={lang} />
+
+<main id="top">
+	<!-- Hero -->
+	<section class="hero">
+		<div class="scene-bleed" aria-hidden="true">
+			<div class="scene-mount"><HeroScene client:visible /></div>
+		</div>
+		<div class="hero-scrim" aria-hidden="true"></div>
+
+		<div class="hero-shapes" aria-hidden="true">
+			<svg class="hs-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+				<polyline points="84,17 93,31 91,73 79,57 84,17"></polyline>
+				<line x1="8" y1="22" x2="84" y2="17"></line>
+			</svg>
+			<span class="hs hs-1"><GeoAccent shape="tetra" size={42} /></span>
+			<span class="hs hs-2"><GeoAccent shape="triangle" size={26} /></span>
+			<span class="hs hs-3"><GeoAccent shape="diamond" size={34} /></span>
+			<span class="hs hs-4"><GeoAccent shape="ring" size={30} /></span>
+			<span class="hs hs-5"><GeoAccent shape="triangle" size={20} /></span>
+		</div>
+
+		<div class="container">
+			<div class="hero-inner">
+			<p class="hero-eyebrow eyebrow">
+				<span class="diamond" aria-hidden="true">◇</span> {copy.hero.eyebrow}
+			</p>
+			<h1 class="hero-title" set:html={copy.hero.title}></h1>
+			<p class="hero-lede lead">
+				{copy.hero.lede}
+			</p>
+
+			<div class="hero-cta">
+					<div class="hero-actions">
+						<CTAs
+							align="start"
+							lang={lang}
+							primaryLabel={t("cta.download")}
+							secondaryLabel={t("cta.readDocs")}
+						/>
+						<VideoDialog
+							label={t("video.watch")}
+							title={t("video.title")}
+							fallbackLabel={t("video.fallback")}
+							closeLabel={t("video.close")}
+						/>
+					</div>
+					<p class="hero-trust mono">
+						<span class="dot" aria-hidden="true"></span>
+						{copy.hero.trustPre} <a href="#inside">{copy.hero.trustLink}</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Overview -->
+	<Section
+		id="overview"
+		eyebrow={copy.overview.eyebrow}
+		titleHtml={copy.overview.titleHtml}
+		lede={copy.overview.lede}
+	>
+		<ul class="pillars">
+			{
+				copy.overview.pillars.map((p, i) => (
+					<li class="pillar">
+						<span class="pillar-glyph" aria-hidden="true">
+							<GeoAccent shape={pillarShapes[i] ?? "tetra"} size={30} />
+						</span>
+						<h3 class="pillar-title">{p.title}</h3>
+						<p class="pillar-body">{p.body}</p>
+					</li>
+				))
+			}
+		</ul>
+	</Section>
+
+	<!-- Screenshot carousel -->
+	<Section
+		id="inside"
+		eyebrow={copy.inside.eyebrow}
+		titleHtml={copy.inside.titleHtml}
+		lede={copy.inside.lede}
+	>
+		<Gallery />
+		<p class="inside-more">
+			<a href={insideHref}>{copy.inside.more}</a>
+		</p>
+	</Section>
+
+	<Divider />
+
+	<!-- AI-native / governance -->
+	<Section id="ai-native" eyebrow={copy.aiNative.eyebrow} title={copy.aiNative.title}>
+		<div class="split">
+			<p class="split-lede lead">
+				{copy.aiNative.lede}
+			</p>
+			<div class="split-points">
+				<p set:html={copy.aiNative.point1Html}></p>
+				<p set:html={copy.aiNative.point2Html}></p>
+				<p class="split-note muted" set:html={copy.aiNative.noteHtml}></p>
+			</div>
+		</div>
+	</Section>
+
+	<!-- Capabilities -->
+	<Section id="capabilities" eyebrow={copy.capabilities.eyebrow} title={copy.capabilities.title}>
+		<ul class="caps">
+			{
+				capabilities.map((entry, i) => (
+					<li class="cap">
+						<div class="cap-top">
+							<span class="cap-num mono">{String(i + 1).padStart(2, "0")}</span>
+							<GeoAccent shape={capShapes[i] ?? "ico"} size={22} class="cap-geo" />
+						</div>
+						<h3 class="cap-title">{entry.title}</h3>
+						<p class="cap-summary">{entry.summary}</p>
+					</li>
+				))
+			}
+		</ul>
+	</Section>
+
+	<Divider />
+
+	<!-- Roadmap -->
+	<Section
+		id="roadmap"
+		eyebrow={copy.roadmap.eyebrow}
+		title={copy.roadmap.title}
+		lede={copy.roadmap.lede}
+	>
+		<ol class="roadmap">
+			{
+				copy.roadmap.items.map((r) => (
+					<li class:list={["rm-item", `rm-item--${r.state}`]}>
+						<span class="rm-rail" aria-hidden="true">
+							<span class="rm-dot" />
+						</span>
+						<div class="rm-body">
+							<span class:list={["rm-status", `rm-status--${r.state}`]}>{r.status}</span>
+							<h3 class="rm-title">{r.title}</h3>
+							<p class="rm-text">{r.body}</p>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</Section>
+
+	<!-- Closing CTA -->
+	<section id="download" class="closer">
+		<div class="container closer-inner glow-ring">
+			<GeoAccent shape="ico" size={46} class="closer-geo" />
+			<h2 class="closer-title">{copy.closer.title}</h2>
+			<p class="closer-lede">
+				{copy.closer.lede}
+			</p>
+			<CTAs lang={lang} primaryLabel={t("cta.download")} secondaryLabel={t("cta.readDocs")} />
+			<p class="closer-note mono">
+				{copy.closer.note}
+			</p>
+		</div>
+	</section>
+</main>
+
+<Footer lang={lang} />
+
+<style>
+	/* ── Hero ───────────────────────────────────────────── */
+	.hero {
+		position: relative;
+		isolation: isolate;
+		min-height: clamp(600px, 90vh, 880px);
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+	.scene-bleed {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		opacity: calc(0.85 - var(--hero-dim, 0) * 0.57);
+		transform: translateX(15%) scale(calc(1.05 - var(--hero-dim, 0) * 0.05))
+			translateY(calc(var(--hero-dim, 0) * -3%));
+		will-change: opacity, transform;
+		-webkit-mask: radial-gradient(ellipse 62% 70% at 66% 48%, black 42%, transparent 100%);
+		mask: radial-gradient(ellipse 62% 70% at 66% 48%, black 42%, transparent 100%);
+	}
+	.scene-mount {
+		position: absolute;
+		inset: 0;
+	}
+	.scene-mount :global(astro-island) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.hero-scrim {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background:
+			linear-gradient(
+				90deg,
+				var(--bg-deep) 0%,
+				var(--bg-deep) 34%,
+				color-mix(in srgb, var(--bg-deep) 86%, transparent) 50%,
+				color-mix(in srgb, var(--bg-deep) 40%, transparent) 66%,
+				transparent 82%
+			),
+			linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--bg-deep) 45%, transparent) 100%);
+	}
+	.hero-shapes {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		overflow: hidden;
+	}
+	.hs-lines {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.hs-lines polyline,
+	.hs-lines line {
+		fill: none;
+		stroke: var(--cyan-glow);
+		stroke-width: 1;
+		stroke-dasharray: 0.1 5;
+		stroke-linecap: round;
+		vector-effect: non-scaling-stroke;
+		opacity: 0.3;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.hs-lines polyline,
+		.hs-lines line {
+			animation: hs-dash 5s linear infinite;
+		}
+	}
+	@keyframes hs-dash {
+		to {
+			stroke-dashoffset: -50;
+		}
+	}
+	.hs {
+		position: absolute;
+		line-height: 0;
+	}
+	.hs-1 {
+		top: 16%;
+		right: 16%;
+	}
+	.hs-2 {
+		top: 30%;
+		right: 7%;
+	}
+	.hs-3 {
+		top: 56%;
+		right: 21%;
+	}
+	.hs-4 {
+		top: 72%;
+		right: 9%;
+	}
+	.hs-5 {
+		top: 21%;
+		left: 7%;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.hs {
+			animation: hs-float 8s var(--ease-in-out) infinite;
+		}
+		.hs-2 {
+			animation-duration: 6.5s;
+			animation-delay: -2s;
+		}
+		.hs-3 {
+			animation-duration: 9.5s;
+			animation-delay: -4s;
+		}
+		.hs-4 {
+			animation-duration: 7s;
+			animation-delay: -1s;
+		}
+		.hs-5 {
+			animation-duration: 10s;
+			animation-delay: -3s;
+		}
+		.hs :global(.geo) {
+			animation: hs-glitch 5.5s steps(1, end) infinite;
+		}
+		.hs-2 :global(.geo) {
+			animation-delay: 1.3s;
+		}
+		.hs-3 :global(.geo) {
+			animation-delay: 2.6s;
+		}
+		.hs-4 :global(.geo) {
+			animation-delay: 3.9s;
+		}
+		.hs-5 :global(.geo) {
+			animation-delay: 0.7s;
+		}
+	}
+	@keyframes hs-float {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-12px);
+		}
+	}
+	@keyframes hs-glitch {
+		0%,
+		86%,
+		100% {
+			transform: translate(0, 0) skewX(0deg);
+			opacity: 0.42;
+		}
+		87% {
+			transform: translate(2px, -1px) skewX(5deg);
+			opacity: 0.85;
+		}
+		89% {
+			transform: translate(-3px, 1px) skewX(-4deg);
+			opacity: 0.25;
+		}
+		91% {
+			transform: translate(2px, 1px) skewX(3deg);
+			opacity: 0.9;
+		}
+		93% {
+			transform: translate(-1px, 0) skewX(-1deg);
+			opacity: 0.5;
+		}
+	}
+	.hero-inner {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-4);
+		padding-top: var(--space-8);
+		padding-bottom: var(--space-8);
+		max-width: 720px;
+	}
+	.hero-brand {
+		display: inline-flex;
+		margin-bottom: var(--space-2);
+	}
+	/* On mobile the sticky header already shows the mark + wordmark, so the
+	   large hero mark is a second logo on screen at once — drop it. */
+	@media (max-width: 600px) {
+		.hero-brand {
+			display: none;
+		}
+	}
+	.hero-mark {
+		filter: drop-shadow(0 8px 28px rgba(var(--accent-rgb), 0.35));
+	}
+	.hero-eyebrow {
+		color: var(--cyan-bright);
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+	}
+	.diamond {
+		color: var(--cyan-glow);
+	}
+	.hero-title {
+		font-size: var(--text-hero);
+		line-height: var(--leading-hero);
+		letter-spacing: var(--tracking-hero);
+		text-wrap: balance;
+		max-width: 15ch;
+		text-shadow: 0 2px 18px rgba(253, 244, 246, 0.6);
+	}
+	.hero-lede {
+		max-width: 46ch;
+		text-shadow: 0 1px 12px rgba(253, 244, 246, 0.6);
+	}
+	.hero-cta {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		margin-top: var(--space-4);
+		width: 100%;
+	}
+	.hero-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		flex-wrap: wrap;
+	}
+	.hero-trust {
+		font-size: var(--text-mono);
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--fog-2);
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+	.hero-trust a {
+		color: var(--cyan-bright);
+		text-transform: none;
+		letter-spacing: var(--tracking-tight);
+	}
+	.hero-trust a:hover {
+		color: var(--cyan-core);
+	}
+	.dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--cyan-glow);
+		box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.8);
+	}
+
+	/* ── Overview pillars ───────────────────────────────── */
+	.pillars {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-6);
+	}
+	@media (max-width: 820px) {
+		.pillars {
+			grid-template-columns: 1fr;
+			gap: var(--space-5);
+		}
+	}
+	.pillar {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		padding: var(--space-5);
+		background: var(--surface-card);
+		border: 1px solid var(--hairline);
+		border-radius: 16px;
+		transition:
+			border-color var(--dur-base) var(--ease-out),
+			transform var(--dur-base) var(--ease-out),
+			box-shadow var(--dur-base) var(--ease-out);
+	}
+	.pillar:hover {
+		border-color: var(--accent-border);
+		transform: translateY(-3px);
+		box-shadow: var(--card-shadow);
+	}
+	.pillar-glyph {
+		display: inline-flex;
+		width: 46px;
+		height: 46px;
+		align-items: center;
+		justify-content: center;
+		border-radius: 12px;
+		background: var(--accent-soft);
+		margin-bottom: var(--space-2);
+	}
+	.pillar-glyph :global(.geo) {
+		opacity: 0.85;
+	}
+	.pillar-title {
+		font-size: var(--text-xl);
+		font-weight: 500;
+		color: var(--paper);
+	}
+	.pillar-body {
+		font-size: var(--text-base);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
+	}
+
+	/* ── A look inside ──────────────────────────────────── */
+	.inside-more {
+		margin-top: var(--space-5);
+		font-size: var(--text-base);
+	}
+	.inside-more a {
+		color: var(--cyan-bright);
+	}
+	.inside-more a:hover {
+		color: var(--cyan-core);
+	}
+
+	/* ── AI-native split ────────────────────────────────── */
+	.split {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-7);
+		align-items: start;
+	}
+	@media (max-width: 820px) {
+		.split {
+			grid-template-columns: 1fr;
+			gap: var(--space-5);
+		}
+	}
+	.split-lede {
+		max-width: 34ch;
+	}
+	.split-points {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		font-size: var(--text-base);
+		line-height: var(--leading-relaxed);
+		color: var(--fog-3);
+	}
+	.split-points strong {
+		color: var(--paper);
+		font-weight: 500;
+	}
+	.split-points a {
+		color: var(--cyan-bright);
+	}
+	.split-points a:hover {
+		color: var(--cyan-core);
+	}
+	.split-note {
+		font-size: var(--text-sm);
+	}
+
+	/* ── Capabilities ───────────────────────────────────── */
+	.caps {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-6);
+	}
+	@media (max-width: 820px) {
+		.caps {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--space-5);
+		}
+	}
+	@media (max-width: 560px) {
+		.caps {
+			grid-template-columns: 1fr;
+		}
+	}
+	.cap {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding: var(--space-5);
+		background: var(--surface-card);
+		border: 1px solid var(--hairline);
+		border-radius: 14px;
+		transition:
+			border-color var(--dur-base) var(--ease-out),
+			transform var(--dur-base) var(--ease-out),
+			box-shadow var(--dur-base) var(--ease-out);
+	}
+	.cap:hover {
+		border-color: var(--accent-border);
+		transform: translateY(-2px);
+		box-shadow: var(--card-shadow);
+	}
+	.cap-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: var(--space-2);
+	}
+	.cap-geo {
+		opacity: 0.7;
+	}
+	.cap-num {
+		font-size: var(--text-mono);
+		color: var(--cyan-glow);
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.cap-title {
+		font-size: var(--text-lg);
+		font-weight: 500;
+		color: var(--paper);
+		text-wrap: balance;
+		/* Reserve two lines so 1- and 2-line titles align across the grid. */
+		min-height: 2.3em;
+		line-height: 1.15;
+	}
+	.cap-summary {
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
+	}
+
+	/* ── Roadmap ────────────────────────────────────────── */
+	.roadmap {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		max-width: 60ch;
+	}
+	.rm-item {
+		display: grid;
+		grid-template-columns: 28px 1fr;
+		gap: var(--space-4);
+	}
+	.rm-rail {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.rm-dot {
+		width: 13px;
+		height: 13px;
+		border-radius: 50%;
+		margin-top: 5px;
+		border: 2px solid var(--cyan-glow);
+		background: var(--bg-deep);
+		flex-shrink: 0;
+	}
+	.rm-item--done .rm-dot {
+		background: var(--cyan-glow);
+	}
+	.rm-item--active .rm-dot {
+		background: var(--cyan-glow);
+		box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.22);
+	}
+	.rm-item--next .rm-dot,
+	.rm-item--horizon .rm-dot {
+		border-color: var(--hairline-strong);
+	}
+	.rm-rail::after {
+		content: "";
+		flex: 1;
+		width: 1px;
+		background: var(--hairline);
+		margin: 6px 0;
+	}
+	.rm-item:last-child .rm-rail::after {
+		display: none;
+	}
+	.rm-body {
+		padding-bottom: var(--space-6);
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.rm-status {
+		font-family: var(--font-mono);
+		font-size: var(--text-mono);
+		letter-spacing: var(--tracking-eyebrow);
+		text-transform: uppercase;
+		color: var(--fog-1);
+		width: fit-content;
+	}
+	.rm-status--done {
+		color: var(--cyan-mid);
+	}
+	.rm-status--active {
+		color: var(--cyan-bright);
+	}
+	.rm-title {
+		font-size: var(--text-xl);
+		font-weight: 500;
+		color: var(--paper);
+	}
+	.rm-text {
+		font-size: var(--text-base);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
+	}
+
+	/* ── Closer ─────────────────────────────────────────── */
+	.closer {
+		padding: var(--space-10) 0 var(--space-9);
+		/* The glow-ring halo bleeds past the gutters; clip its horizontal
+		   overspill so it can't drive page-wide horizontal scroll on mobile. */
+		overflow-x: clip;
+	}
+	.closer-inner {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: var(--space-4);
+		max-width: 620px;
+		margin-inline: auto;
+	}
+	.closer-geo {
+		margin-bottom: var(--space-2);
+	}
+	.closer-title {
+		font-size: clamp(2rem, 3vw + 1rem, 3rem);
+		font-weight: 500;
+		letter-spacing: var(--tracking-hero);
+	}
+	.closer-lede {
+		font-size: var(--text-lg);
+		line-height: var(--leading-snug);
+		color: var(--fog-3);
+		max-width: 46ch;
+	}
+	.closer :global(.waitlist) {
+		justify-content: center;
+		margin-top: var(--space-2);
+	}
+	.closer-note {
+		font-size: var(--text-mono);
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--fog-1);
+		margin-top: var(--space-2);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.scene-bleed {
+			transform: translateX(15%) scale(1.05);
+		}
+	}
+</style>
+
+<script>
+	// Drive the hero's scroll reaction: a 0..1 progress over the first viewport
+	// the crystal (CSS) and camera (3D) read to recede as you scroll.
+	let ticking = false;
+	const setDim = () => {
+		const dim = Math.min(1, window.scrollY / Math.max(1, window.innerHeight * 0.9));
+		document.documentElement.style.setProperty("--hero-dim", String(dim));
+		ticking = false;
+	};
+	window.addEventListener(
+		"scroll",
+		() => {
+			if (!ticking) {
+				ticking = true;
+				requestAnimationFrame(setDim);
+			}
+		},
+		{ passive: true },
+	);
+	setDim();
+</script>

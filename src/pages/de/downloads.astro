@@ -4,9 +4,9 @@ import { SITE_NAME } from "~/content/site";
 import { downloadsCopy } from "~/i18n/pages";
 import Base from "~/layouts/Base.astro";
 
-const copy = downloadsCopy("en");
+const copy = downloadsCopy("de");
 ---
 
-<Base lang="en" title={`${copy.seoTitle} — ${SITE_NAME}`} description={copy.description}>
-	<DownloadsContent lang="en" />
+<Base lang="de" title={`${copy.seoTitle} — ${SITE_NAME}`} description={copy.description}>
+	<DownloadsContent lang="de" />
 </Base>
