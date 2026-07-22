@@ -1,3 +1,5 @@
+import { type Lang, defaultLang } from "~/i18n/ui";
+
 export const POSITIONING =
 	"Brainstorm is a local-first, AI-native operating system for knowledge work. Your apps, your data, and your AI all run on your machine, with optional end-to-end encrypted sync — and every app and every agent only touches what you allow.";
 
@@ -28,6 +30,13 @@ export const links = {
 	youtube: "https://www.youtube.com/@th3-br41n",
 	watch: `https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`,
 } as const;
+
+// The docs portal (a separate Starlight site) mirrors this site's locales:
+// English at the root, German under /de/. Link the matching locale so a German
+// visitor lands on the German docs, not the English root.
+export function docsUrl(lang: Lang): string {
+	return lang === defaultLang ? links.docs : `${links.docs}/${lang}`;
+}
 
 // Hrefs are root-absolute (`/#…`) so the nav works from any page, not just the
 // homepage — a bare `#overview` does nothing on /downloads, /blog, etc. The

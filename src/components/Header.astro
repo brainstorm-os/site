@@ -2,7 +2,7 @@
 import BrandMark from "~/components/BrandMark.astro";
 import LangSwitcher from "~/components/LangSwitcher.astro";
 import StarBanner from "~/components/StarBanner.astro";
-import { SITE_NAME, links, nav } from "~/content/site";
+import { SITE_NAME, docsUrl, links, nav } from "~/content/site";
 import { type Lang, defaultLang, localizePath, useTranslations } from "~/i18n/ui";
 
 interface Props {
@@ -72,7 +72,7 @@ const navKey: Record<string, Parameters<typeof t>[0]> = {
 						stroke-linecap="round"></path>
 				</svg>
 			</button>
-			<a href={links.docs} class="nav-docs">{t("header.docs")}</a>
+			<a href={docsUrl(lang)} class="nav-docs">{t("header.docs")}</a>
 			<a href={localizePath(links.downloads, lang)} class="nav-cta">{t("header.download")}</a>
 		</div>
 	</div>

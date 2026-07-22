@@ -3,10 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const manifestPath = resolve(import.meta.dirname, "../public/funding.json");
-const wellKnownPath = resolve(
-	import.meta.dirname,
-	"../public/.well-known/funding-manifest-urls",
-);
+const wellKnownPath = resolve(import.meta.dirname, "../public/.well-known/funding-manifest-urls");
 
 describe("funding.json", () => {
 	it("is valid JSON with required fundingjson.org fields", () => {

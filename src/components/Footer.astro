@@ -1,7 +1,7 @@
 ---
 import BrandMark from "~/components/BrandMark.astro";
 import NewsletterForm from "~/components/NewsletterForm.astro";
-import { SITE_NAME, links } from "~/content/site";
+import { SITE_NAME, docsUrl, links } from "~/content/site";
 import { type Lang, defaultLang, localizePath, useTranslations } from "~/i18n/ui";
 
 interface Props {
@@ -49,7 +49,7 @@ const footerLinks = [
 			<nav class="links" aria-label="Footer">
 				{footerLinks.map((l) => <a href={l.href}>{l.label}</a>)}
 				<a href={localizePath(links.downloads, lang)}>{t("footer.download")}</a>
-				<a href={links.docs}>{t("footer.docs")}</a>
+				<a href={docsUrl(lang)}>{t("footer.docs")}</a>
 				<a href={links.github} target="_blank" rel="noopener noreferrer">{t("footer.github")}</a>
 			</nav>
 		</div>
