@@ -134,21 +134,23 @@ const insideHref = localizePath("/apps", lang);
 	<Divider />
 
 	<!-- AI-native / governance -->
-	<Section id="ai-native" eyebrow={copy.aiNative.eyebrow} title={copy.aiNative.title}>
-		<div class="split">
-			<p class="split-lede lead">
-				{copy.aiNative.lede}
-			</p>
-			<div class="split-points">
-				<p set:html={copy.aiNative.point1Html}></p>
-				<p set:html={copy.aiNative.point2Html}></p>
-				<p class="split-note muted" set:html={copy.aiNative.noteHtml}></p>
+	<!-- How it works — opens with the AI-native narrative, then the capability
+	     cards (the two were merged to shorten the page, per site feedback). -->
+	<Section id="capabilities" eyebrow={copy.capabilities.eyebrow} title={copy.capabilities.title}>
+		<div class="ai-lead" id="ai-native">
+			<h3 class="ai-lead-title">{copy.aiNative.title}</h3>
+			<div class="split">
+				<p class="split-lede lead">
+					{copy.aiNative.lede}
+				</p>
+				<div class="split-points">
+					<p set:html={copy.aiNative.point1Html}></p>
+					<p set:html={copy.aiNative.point2Html}></p>
+					<p class="split-note muted" set:html={copy.aiNative.noteHtml}></p>
+				</div>
 			</div>
 		</div>
-	</Section>
 
-	<!-- Capabilities -->
-	<Section id="capabilities" eyebrow={copy.capabilities.eyebrow} title={copy.capabilities.title}>
 		<ul class="caps">
 			{
 				capabilities.map((entry, i) => (
@@ -535,6 +537,21 @@ const insideHref = localizePath("/apps", lang);
 	}
 	.inside-more a:hover {
 		color: var(--cyan-core);
+	}
+
+	/* ── AI-native narrative (intro to How it works) ────── */
+	.ai-lead {
+		margin-bottom: var(--space-8);
+		padding-bottom: var(--space-8);
+		border-bottom: 1px solid var(--hairline);
+	}
+	.ai-lead-title {
+		max-width: 30ch;
+		margin-bottom: var(--space-5);
+		font-size: clamp(1.35rem, 1.3vw + 0.9rem, 1.75rem);
+		font-weight: 500;
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
 	}
 
 	/* ── AI-native split ────────────────────────────────── */
