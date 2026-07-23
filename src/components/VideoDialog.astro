@@ -12,6 +12,9 @@ interface Props {
 	/** Localised chrome for the dialog. */
 	fallbackLabel?: string;
 	closeLabel?: string;
+	/** Where the "open on YouTube" fallback points. Defaults to the site's
+	 *  product-tour video; per-app dialogs pass their own watch URL. */
+	watchHref?: string;
 }
 
 const {
@@ -21,6 +24,7 @@ const {
 	variant = "ghost",
 	fallbackLabel = "Trouble playing? Open on YouTube ↗",
 	closeLabel = "Close video",
+	watchHref = links.watch,
 } = Astro.props;
 
 // Privacy-friendly host (no cookies until playback); the iframe is only mounted
@@ -48,7 +52,7 @@ const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
 			</svg>
 		</button>
 		<div class="video-dialog__frame" data-video-mount></div>
-		<a class="video-dialog__fallback mono" href={links.watch} target="_blank" rel="noreferrer noopener">
+		<a class="video-dialog__fallback mono" href={watchHref} target="_blank" rel="noreferrer noopener">
 			{fallbackLabel}
 		</a>
 	</div>
