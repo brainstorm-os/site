@@ -386,7 +386,167 @@ const de: HomeCopy = {
 	},
 };
 
-const HOME: Record<Lang, HomeCopy> = { en, de };
+const fr: HomeCopy = {
+	seoTitle:
+		"Brainstorm — un système d'exploitation local-first et natif de l'IA pour la gestion des connaissances, avec synchronisation chiffrée de bout en bout",
+	seoDescription:
+		"Brainstorm est un système d'exploitation local-first et natif de l'IA pour la gestion des connaissances. Vos applications, vos données et votre IA tournent toutes sur votre machine, avec une synchronisation chiffrée de bout en bout en option — et chaque application et chaque agent ne touche que ce que vous autorisez.",
+	hero: {
+		eyebrow: "Local-first · Natif de l'IA",
+		title: "Un OS de bureau pour vous et votre&nbsp;IA.",
+		lede:
+			"Brainstorm exécute vos applications, vos données et votre IA sur votre propre machine. Installez ce dont vous avez besoin, gardez chaque fichier sur votre disque, et laissez l'IA vous aider — uniquement avec ce que vous lui confiez.",
+		trustPre: "Local-first · Aucun compte requis ·",
+		trustLink: "Voir en action ↓",
+	},
+	overview: {
+		eyebrow: "Ce que c'est",
+		titleHtml:
+			"Ce n'est pas une appli de notes.<br />C'est un système d'exploitation pour tout ce que vous savez",
+		lede:
+			"L'écran est un vrai bureau — un fond d'écran, des icônes d'applications, des fenêtres. Chaque icône est sa propre application, isolée, toutes travaillant à partir d'un même ensemble de données qui reste chez vous : la gestion des connaissances sans le cloud d'un autre au milieu.",
+		pillars: [
+			{
+				title: "Des applications, pas des fonctionnalités",
+				body:
+					"Le shell n'héberge que des applications. Notes, Base de données, Fichiers, Graphe, un calendrier, un éditeur de code — ajoutez celles que vous voulez, laissez le reste, et mettez chacune à jour séparément.",
+			},
+			{
+				title: "Vos données, votre disque",
+				body:
+					"Chaque document est un simple fichier dans un dossier qui vous appartient. La synchronisation est optionnelle et chiffrée de bout en bout — le relais ne voit jamais que des octets brouillés. Il n'y a aucun compte à créer.",
+			},
+			{
+				title: "Une IA que vous gouvernez",
+				body:
+					"Le shell se place entre vos applications et n'importe quelle IA. Utilisez votre propre clé d'API ou un modèle qui tourne localement, et décidez précisément ce que chaque application et chaque agent a le droit de toucher.",
+			},
+		],
+	},
+	inside: {
+		eyebrow: "Un regard à l'intérieur",
+		titleHtml:
+			"Un seul ensemble d'objets.<br />Une application différente pour chaque façon de le voir",
+		lede:
+			"Chaque application lit et écrit le même coffre, si bien qu'une note que vous écrivez ici est une ligne là-bas et un nœud dans le graphe — jamais une copie, jamais un export.",
+		more: "Chaque application, décrite en détail — capacités et captures d'écran →",
+	},
+	aiNative: {
+		eyebrow: "Natif de l'IA",
+		title: "Vous et vos agents, à partir d'un seul endroit",
+		lede:
+			"La plupart des outils greffent l'IA par-dessus : un bouton dans le cloud d'un autre, travaillant sur des données qui ne vous appartiennent pas, sans trace de ce qu'il a fait. Brainstorm part d'ailleurs.",
+		point1Html:
+			"Le même registre qui décide ce qu'une application peut atteindre décide ce qu'un <strong>agent</strong> peut atteindre. Chaque autorisation est précise, journalisée et facile à révoquer — et si le système ne peut pas vérifier une demande, il répond simplement non.",
+		point2Html:
+			"Vos données et vos clés restent sur votre machine, si bien que vous pouvez confier à l'IA un travail que vous n'enverriez jamais au serveur d'un inconnu. C'est ce qu'aucun outil cloud ne peut offrir : <strong>vos données chiffrées, des modèles sur votre matériel, et une trace de qui a fait quoi.</strong>",
+		noteHtml:
+			"Présents aujourd'hui : le courtier d'IA, la provenance et les budgets. Les agents dotés de leur propre identité et de leur propre historique sont sur la <a href=\"#roadmap\">feuille de route</a> ci-dessous — pas présentés comme s'ils étaient déjà livrés.",
+	},
+	capabilities: {
+		eyebrow: "Comment ça marche",
+		title: "Une poignée de décisions, tenues partout",
+		// L'ordre suit la collection de contenu `capabilities` (order 1..6).
+		items: [
+			{
+				title: "Des applications que vous choisissez, pas des fonctionnalités imposées.",
+				summary:
+					"Installez Notes, Base de données, Fichiers, Graphe de notre part. Installez des applications tierces depuis le catalogue ou une URL. Désinstallez ce que vous n'utilisez pas. Le shell reste léger.",
+			},
+			{
+				title: "Vos données, votre disque.",
+				summary:
+					"Chaque document est un fichier sur votre machine. La synchronisation est optionnelle et utilise des CRDT Yjs. Exportez vers des formats standards à tout moment. Aucun compte requis, jamais.",
+			},
+			{
+				title: "L'IA quand vous la voulez, jamais quand vous ne la voulez pas.",
+				summary:
+					"Le shell arbitre chaque appel d'IA. Apportez la clé de votre propre fournisseur, ou faites tourner le modèle local livré avec le shell. Des budgets par application plafonnent les coûts qui s'emballent.",
+			},
+			{
+				title: "Personnalisez sans polluer l'espace de travail partagé.",
+				summary:
+					"Vues de base de données, dispositions du tableau de bord, raccourcis clavier, thème — tout est personnel par défaut. Un « partager avec l'équipe » explicite l'élève au niveau de l'organisation quand vous le souhaitez.",
+			},
+			{
+				title: "Un vrai SDK d'applications.",
+				summary:
+					"Isolé, régi par les capacités, avec un contrat stable. Construisez une application depuis Brainstorm avec l'application Code, et installez-la depuis un paquet local ou une URL.",
+			},
+			{
+				title: "Conçu au grand jour.",
+				summary:
+					"Chaque décision, chaque compromis et chaque question ouverte est écrit et débattu avant d'être livré. Le produit est le résultat de ces notes, pas une couche marketing par-dessus.",
+			},
+		],
+	},
+	roadmap: {
+		eyebrow: "Feuille de route",
+		title: "Où cela se dirige",
+		lede:
+			"Nous construisons au grand jour — le plan et les questions ouvertes sont tous dans le dépôt. Voici ce qui est dans le build actuel, ce sur quoi nous travaillons, et où cela va.",
+		items: [
+			{
+				status: "Dans le build",
+				state: "done",
+				title: "Le shell et vingt applications",
+				body:
+					"Un hôte isolé avec un registre de capacités, le coffre, et vingt applications maison qui partagent toutes un même espace d'objets.",
+			},
+			{
+				status: "Dans le build",
+				state: "done",
+				title: "Données locales, synchronisation chiffrée",
+				body:
+					"Chaque document est un CRDT sur votre disque. La synchronisation multi-appareils est optionnelle et chiffrée de bout en bout — vos clés ne quittent jamais vos appareils.",
+			},
+			{
+				status: "Livré",
+				state: "done",
+				title: "Le courtier d'IA",
+				body:
+					"Un seul chemin pour chaque appel d'IA — votre clé ou un modèle local — avec une trace sur chaque objet et un budget sur chaque application.",
+			},
+			{
+				status: "Disponible",
+				state: "done",
+				title: "Bêta publique",
+				body:
+					"Un cœur multi-appareils gratuit et chiffré dans lequel vous pouvez vraiment vivre — disponible dès maintenant pour macOS, Windows et Linux, avec un moyen en un clic d'y amener vos notes existantes.",
+			},
+			{
+				status: "En cours",
+				state: "active",
+				title: "Les agents comme coéquipiers",
+				body:
+					"Une IA qui a sa propre identité, ses propres permissions et un historique de ce qu'elle a fait — un système d'exploitation pour une équipe qui tourne sur des agents.",
+			},
+			{
+				status: "Sur la feuille de route",
+				state: "next",
+				title: "Un compagnon mobile",
+				body:
+					"Votre coffre dans votre poche — une application de lecture et de capture pour iOS et Android qui se synchronise par le même canal chiffré de bout en bout, si bien que les notes prises en déplacement atterrissent dans le même espace d'objets.",
+			},
+			{
+				status: "Sur la feuille de route",
+				state: "next",
+				title: "Une place de marché d'applications",
+				body:
+					"Construisez dès aujourd'hui sur le SDK ouvert, puis découvrez, installez et publiez des applications tierces — chacune tournant dans la même sandbox, sous les mêmes autorisations de capacités que vous contrôlez.",
+			},
+		],
+	},
+	closer: {
+		title: "Redevenez maître de vos outils",
+		lede:
+			"Gratuit, local-first et à vous. Téléchargez la bêta publique pour macOS, Windows ou Linux.",
+		note:
+			"Aucun compte requis · Votre coffre est un dossier que vous contrôlez · Libre et open source sous AGPL-3.0",
+	},
+};
+
+const HOME: Record<Lang, HomeCopy> = { en, de, fr };
 
 export function homeCopy(lang: Lang): HomeCopy {
 	return HOME[lang];
