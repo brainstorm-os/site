@@ -20,6 +20,9 @@ const apps = defineCollection({
 				}),
 			)
 			.min(1),
+		// Optional YouTube id for a per-app demo video (surfaced as a lightbox on
+		// the app's block). Bare id, e.g. "OR-kKDEFhzQ" — not a full URL.
+		video: z.string().min(6).optional(),
 		source: z.string(),
 	}),
 });

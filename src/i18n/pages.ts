@@ -14,6 +14,8 @@ export interface AppsCopy {
 	lede: string;
 	indexAria: string;
 	docsLabel: string;
+	/** Trigger label for an app's demo-video lightbox (apps with a `video`). */
+	watchDemo: string;
 	closerTitle: string;
 	closerLede: string;
 }
@@ -52,6 +54,7 @@ const apps: Record<Lang, AppsCopy> = {
 			"Every product surface in Brainstorm is its own sandboxed app — installed, updated, and removed on its own. They all read and write the same vault, so a note here is a row there and a node in the graph, never a copy. Here is each one, in full.",
 		indexAria: "Jump to an app",
 		docsLabel: "Docs ↗",
+		watchDemo: "Watch the demo",
 		closerTitle: "All of them, in one download",
 		closerLede:
 			"Every app above ships with the public beta — free, local-first, for macOS, Windows, and Linux.",
@@ -66,6 +69,7 @@ const apps: Record<Lang, AppsCopy> = {
 			"Jede Produktoberfläche in Brainstorm ist ihre eigene Sandbox-App — installiert, aktualisiert und entfernt für sich. Sie alle lesen und schreiben denselben Vault, sodass eine Notiz hier dort eine Zeile und im Graphen ein Knoten ist, nie eine Kopie. Hier ist jede einzelne, vollständig.",
 		indexAria: "Zu einer App springen",
 		docsLabel: "Doku ↗",
+		watchDemo: "Demo ansehen",
 		closerTitle: "Alle zusammen, in einem Download",
 		closerLede:
 			"Jede App oben kommt mit der öffentlichen Beta — kostenlos, lokal-first, für macOS, Windows und Linux.",

@@ -21,5 +21,6 @@ screenshots:
   - src: "/screenshots/apps/notes/03-properties.webp"
     title: "Typed properties on a page"
     caption: "The shared properties panel: typed fields that live on the note object itself."
+video: "OR-kKDEFhzQ"
 source: "brainstorm/docs/apps/notes/00-overview.md"
 ---
