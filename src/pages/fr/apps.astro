@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import AppsContent from "~/components/AppsContent.astro";
+import { SITE_NAME } from "~/content/site";
+import { appsCopy } from "~/i18n/pages";
+import Base from "~/layouts/Base.astro";
+
+const count = (await getCollection("apps")).length;
+const copy = appsCopy("fr");
+---
+
+<Base
+	lang="fr"
+	title={`${copy.seoTitle} — ${SITE_NAME}`}
+	description={copy.description(count)}
+>
+	<AppsContent lang="fr" />
+</Base>

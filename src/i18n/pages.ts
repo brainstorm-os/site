@@ -70,6 +70,20 @@ const apps: Record<Lang, AppsCopy> = {
 		closerLede:
 			"Jede App oben kommt mit der öffentlichen Beta — kostenlos, lokal-first, für macOS, Windows und Linux.",
 	},
+	fr: {
+		seoTitle: "Applications",
+		description: (n) =>
+			`Les ${n} applications maison de gestion des connaissances livrées avec Brainstorm — chacune isolée, chacune lit et écrit le même coffre chiffré de bout en bout.`,
+		eyebrow: "Les applications",
+		title: (n) => `${n} applications. Un seul espace d'objets.`,
+		lede:
+			"Chaque surface produit de Brainstorm est sa propre application isolée — installée, mise à jour et supprimée séparément. Elles lisent et écrivent toutes le même coffre, si bien qu'une note ici est une ligne là-bas et un nœud dans le graphe, jamais une copie. Les voici toutes, en détail.",
+		indexAria: "Aller à une application",
+		docsLabel: "Docs ↗",
+		closerTitle: "Toutes, en un seul téléchargement",
+		closerLede:
+			"Chaque application ci-dessus est livrée avec la bêta publique — gratuite, local-first, pour macOS, Windows et Linux.",
+	},
 };
 
 const downloads: Record<Lang, DownloadsCopy> = {
@@ -120,6 +134,32 @@ const downloads: Record<Lang, DownloadsCopy> = {
 			windows: "Windows 10 oder neuer",
 		},
 		dateLocale: "de",
+	},
+	fr: {
+		seoTitle: "Téléchargements",
+		description:
+			"Téléchargez Brainstorm — le système d'exploitation local-first et chiffré de bout en bout pour la gestion des connaissances — pour macOS, Windows et Linux. Chaque version est publiée ici.",
+		eyebrow: "Téléchargements",
+		title: "Obtenir Brainstorm",
+		lede:
+			"Une application de bureau pour macOS, Windows et Linux. Gratuite, pour toujours — vos données restent sur votre machine, et il n'y a aucun compte à créer.",
+		latestLabel: "Dernière",
+		betaLabel: "Bêta",
+		platformAria: "Télécharger par plateforme",
+		noBuild: "Pas encore de build pour cette plateforme.",
+		notesAria: "Notes de version",
+		allReleases: "Toutes les versions sur GitHub",
+		emptyLine: "Aucun build public pour l'instant.",
+		emptySub:
+			"Les builds de Brainstorm sont publiés sur GitHub — consultez la page des versions pour la dernière.",
+		emptyCta: "Voir les versions",
+		archiveAria: "Versions précédentes",
+		archiveTitle: "Versions précédentes",
+		platformReq: {
+			mac: "macOS 12 Monterey ou plus récent",
+			windows: "Windows 10 ou plus récent",
+		},
+		dateLocale: "fr",
 	},
 };
 
