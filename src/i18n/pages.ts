@@ -14,6 +14,8 @@ export interface AppsCopy {
 	lede: string;
 	indexAria: string;
 	docsLabel: string;
+	/** Trigger label for an app's demo-video lightbox (apps with a `video`). */
+	watchDemo: string;
 	closerTitle: string;
 	closerLede: string;
 }
@@ -52,6 +54,7 @@ const apps: Record<Lang, AppsCopy> = {
 			"Every product surface in Brainstorm is its own sandboxed app — installed, updated, and removed on its own. They all read and write the same vault, so a note here is a row there and a node in the graph, never a copy. Here is each one, in full.",
 		indexAria: "Jump to an app",
 		docsLabel: "Docs ↗",
+		watchDemo: "Watch the demo",
 		closerTitle: "All of them, in one download",
 		closerLede:
 			"Every app above ships with the public beta — free, local-first, for macOS, Windows, and Linux.",
@@ -66,9 +69,24 @@ const apps: Record<Lang, AppsCopy> = {
 			"Jede Produktoberfläche in Brainstorm ist ihre eigene Sandbox-App — installiert, aktualisiert und entfernt für sich. Sie alle lesen und schreiben denselben Vault, sodass eine Notiz hier dort eine Zeile und im Graphen ein Knoten ist, nie eine Kopie. Hier ist jede einzelne, vollständig.",
 		indexAria: "Zu einer App springen",
 		docsLabel: "Doku ↗",
+		watchDemo: "Demo ansehen",
 		closerTitle: "Alle zusammen, in einem Download",
 		closerLede:
 			"Jede App oben kommt mit der öffentlichen Beta — kostenlos, lokal-first, für macOS, Windows und Linux.",
+	},
+	fr: {
+		seoTitle: "Applications",
+		description: (n) =>
+			`Les ${n} applications maison de gestion des connaissances livrées avec Brainstorm — chacune isolée, chacune lit et écrit le même coffre chiffré de bout en bout.`,
+		eyebrow: "Les applications",
+		title: (n) => `${n} applications. Un seul espace d'objets.`,
+		lede:
+			"Chaque surface produit de Brainstorm est sa propre application isolée — installée, mise à jour et supprimée séparément. Elles lisent et écrivent toutes le même coffre, si bien qu'une note ici est une ligne là-bas et un nœud dans le graphe, jamais une copie. Les voici toutes, en détail.",
+		indexAria: "Aller à une application",
+		docsLabel: "Docs ↗",
+		closerTitle: "Toutes, en un seul téléchargement",
+		closerLede:
+			"Chaque application ci-dessus est livrée avec la bêta publique — gratuite, local-first, pour macOS, Windows et Linux.",
 	},
 };
 
@@ -120,6 +138,32 @@ const downloads: Record<Lang, DownloadsCopy> = {
 			windows: "Windows 10 oder neuer",
 		},
 		dateLocale: "de",
+	},
+	fr: {
+		seoTitle: "Téléchargements",
+		description:
+			"Téléchargez Brainstorm — le système d'exploitation local-first et chiffré de bout en bout pour la gestion des connaissances — pour macOS, Windows et Linux. Chaque version est publiée ici.",
+		eyebrow: "Téléchargements",
+		title: "Obtenir Brainstorm",
+		lede:
+			"Une application de bureau pour macOS, Windows et Linux. Gratuite, pour toujours — vos données restent sur votre machine, et il n'y a aucun compte à créer.",
+		latestLabel: "Dernière",
+		betaLabel: "Bêta",
+		platformAria: "Télécharger par plateforme",
+		noBuild: "Pas encore de build pour cette plateforme.",
+		notesAria: "Notes de version",
+		allReleases: "Toutes les versions sur GitHub",
+		emptyLine: "Aucun build public pour l'instant.",
+		emptySub:
+			"Les builds de Brainstorm sont publiés sur GitHub — consultez la page des versions pour la dernière.",
+		emptyCta: "Voir les versions",
+		archiveAria: "Versions précédentes",
+		archiveTitle: "Versions précédentes",
+		platformReq: {
+			mac: "macOS 12 Monterey ou plus récent",
+			windows: "Windows 10 ou plus récent",
+		},
+		dateLocale: "fr",
 	},
 };
 

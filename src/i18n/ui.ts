@@ -1,10 +1,12 @@
 // Locale plumbing for the marketing site. English is the default and lives at
-// the root; German lives under `/de/`. Nothing auto-redirects — the audience
-// that cares about local-first tools does not want IP-based geo-sniffing.
+// the root; German lives under `/de/`, French under `/fr/`. Nothing
+// auto-redirects — the audience that cares about local-first tools does not
+// want IP-based geo-sniffing.
 
 export const languages = {
 	en: "English",
 	de: "Deutsch",
+	fr: "Français",
 } as const;
 
 export type Lang = keyof typeof languages;
@@ -66,11 +68,13 @@ export function alternatesFor(pathname: string, site: URL | string): Alternate[]
 export const htmlLang: Record<Lang, string> = {
 	en: "en",
 	de: "de",
+	fr: "fr",
 };
 
 export const ogLocale: Record<Lang, string> = {
 	en: "en_US",
 	de: "de_DE",
+	fr: "fr_FR",
 };
 
 type UiKey = keyof (typeof ui)["en"];
@@ -137,6 +141,37 @@ export const ui = {
 		"email.label": "E-Mail-Adresse",
 		"email.placeholder": "du@beispiel.de",
 		"lang.label": "Sprache",
+	},
+	fr: {
+		"star.text": "Brainstorm est gratuit et open source — s'il vous est utile,",
+		"star.link": "mettez-lui une étoile sur GitHub",
+		"nav.overview": "Aperçu",
+		"nav.apps": "Applications",
+		"nav.how": "Comment ça marche",
+		"nav.roadmap": "Feuille de route",
+		"nav.screenshots": "Captures d'écran",
+		"header.docs": "Docs",
+		"header.download": "Télécharger",
+		"header.toggleTheme": "Changer de thème",
+		"footer.positioning":
+			"Un système d'exploitation local-first et natif de l'IA pour votre travail intellectuel. Vos données restent sur votre machine — aucun compte requis.",
+		"footer.updatesLabel": "Recevoir les nouveautés du produit",
+		"footer.download": "Télécharger",
+		"footer.docs": "Docs",
+		"footer.github": "GitHub",
+		"footer.opensource": "Open source · AGPL-3.0",
+		"newsletter.cta": "S'abonner",
+		"newsletter.success":
+			"Vous êtes abonné. Nous vous enverrons quelques nouvelles de temps à autre.",
+		"cta.download": "Télécharger",
+		"cta.readDocs": "Lire la documentation",
+		"video.watch": "Voir la présentation",
+		"video.title": "Brainstorm — présentation du produit",
+		"video.fallback": "Un problème de lecture ? Ouvrir sur YouTube ↗",
+		"video.close": "Fermer la vidéo",
+		"email.label": "Adresse e-mail",
+		"email.placeholder": "vous@exemple.fr",
+		"lang.label": "Langue",
 	},
 } as const;
 
