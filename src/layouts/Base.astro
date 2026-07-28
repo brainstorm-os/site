@@ -9,13 +9,23 @@ interface Props {
 	canonical?: string;
 	noindex?: boolean;
 	lang?: Lang;
+	/** English-only pages (e.g. /privacy, /terms) must not advertise locale pairs that 404. */
+	localized?: boolean;
 }
 
-const { title, description, canonical, noindex, lang = defaultLang } = Astro.props;
+const {
+	title,
+	description,
+	canonical,
+	noindex,
+	lang = defaultLang,
+	localized = true,
+} = Astro.props;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 // hreflang alternates so Google indexes each locale and serves the right one.
 // Suppressed on noindex pages (e.g. /joined) — they shouldn't advertise pairs.
-const alternates = Astro.site && !noindex ? alternatesFor(Astro.url.pathname, Astro.site) : [];
+const alternates =
+	Astro.site && !noindex && localized ? alternatesFor(Astro.url.pathname, Astro.site) : [];
 ---
 
 <!doctype html>
@@ -43,6 +53,7 @@ const alternates = Astro.site && !noindex ? alternatesFor(Astro.url.pathname, As
 			name="google-site-verification"
 			content="NExj5Z6AMLGuszWb9UxsrZXdsO6WA2xXE-6JsnqLXq8"
 		/>
+		<meta name="stackscope-claim" content="atnja14f" />
 
 		<title>{title}</title>
 		<meta name="description" content={description} />
@@ -84,9 +95,21 @@ const alternates = Astro.site && !noindex ? alternatesFor(Astro.url.pathname, As
 
 			if (!window.__amplitudeInitialized) {
 				window.__amplitudeInitialized = true;
+				// Cookieless on purpose: identityStorage "none" + attribution off means
+				// no AMP_* cookies and no persistent identifier, so no consent banner is
+				// needed (see /privacy). Visitors are counted per-session only.
 				init("cca1e2687dc8b1388f4b33372a97fdaa", {
 					serverZone: "EU",
-					autocapture: true,
+					identityStorage: "none",
+					trackingOptions: { ipAddress: false },
+					autocapture: {
+						attribution: false,
+						pageViews: true,
+						sessions: true,
+						formInteractions: true,
+						fileDownloads: true,
+						elementInteractions: true,
+					},
 				});
 			}
 		</script>

@@ -1,0 +1,79 @@
+---
+import { SITE_URL, links } from "~/content/site";
+import Article from "~/layouts/Article.astro";
+---
+
+<Article
+	title="Privacy policy"
+	description="What this site collects, what it doesn't, and why there is no cookie banner."
+	eyebrow="Legal"
+	date={new Date("2026-07-28")}
+	localized={false}
+>
+	<p>
+		Brainstorm is a local-first product, and this site follows the same posture: collect as
+		little as possible, keep what is collected boring, and never trade your attention or your
+		data. This page describes everything the site at <a href={SITE_URL}>{SITE_URL}</a> does
+		with data. The Brainstorm app itself stores your data on your machine and has no account
+		system; nothing on this page is about the app.
+	</p>
+
+	<h2>What we collect</h2>
+
+	<h3>Anonymous usage analytics</h3>
+	<p>
+		We use Amplitude to count visits and see which pages get read. It is configured to be
+		cookieless: it sets no cookies, stores no identifier on your device, and does not record
+		your IP address. Each visit is counted as a new, anonymous session, and data is processed
+		on Amplitude's EU servers. Because nothing persistent is stored on your device, there is
+		no cookie banner — there is nothing to consent to storing.
+	</p>
+
+	<h3>Your email address, if you give it to us</h3>
+	<p>
+		If you join the waitlist or subscribe to product updates, we store the email address you
+		submit in a database (hosted by Turso) and use it for exactly one thing: sending you
+		Brainstorm product updates. We do not share it, sell it, or enrich it. To have it
+		removed, email
+		<a href="mailto:hello@getbrainstorm.online">hello@getbrainstorm.online</a> and we will
+		delete it.
+	</p>
+
+	<h3>A theme preference</h3>
+	<p>
+		If you switch between light and dark theme, the choice is stored in a
+		<code>bs-theme</code> cookie so the site and the docs open in the theme you picked. It
+		contains the word "light" or "dark" and nothing else. It is functional, not tracking.
+	</p>
+
+	<h3>Server logs</h3>
+	<p>
+		The site is hosted on Vercel, which keeps standard, short-lived request logs (IP address,
+		user agent) for operations and abuse prevention, acting as our processor.
+	</p>
+
+	<h2>What loads from third parties</h2>
+	<p>
+		The product-tour video embeds from <code>youtube-nocookie.com</code> and only loads after
+		you press play; until then no request goes to YouTube. The footer shows badges from
+		launch directories we are listed on (VerifiedDR, Endors, KittyLaunch, ListBulb, Product
+		Watch, StartupBase) — loading those images sends the standard request data (IP address,
+		user agent) to those hosts, as with any image on the web. No third-party scripts run on
+		this site. Downloads are served from GitHub Releases.
+	</p>
+
+	<h2>Your rights</h2>
+	<p>
+		Under the GDPR and similar laws you can ask what we hold about you, ask for it to be
+		corrected or deleted, and object to processing. For the waitlist, deletion is the whole
+		story — your email address is the only personal data we hold. Write to
+		<a href="mailto:hello@getbrainstorm.online">hello@getbrainstorm.online</a> or open an
+		issue on <a href={links.github} rel="noopener noreferrer">GitHub</a>.
+	</p>
+
+	<h2>Changes</h2>
+	<p>
+		If this policy changes, the date above changes with it, and the history is public in the
+		site's <a href={links.github} rel="noopener noreferrer">source repository</a>.
+	</p>
+</Article>

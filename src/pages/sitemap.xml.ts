@@ -11,6 +11,8 @@ import { type Lang, languages, localizePath } from "~/i18n/ui";
 // alternates for all locales (+ x-default) so Google clusters the language
 // versions instead of treating them as duplicates.
 const routes = ["/", "/apps", "/downloads"];
+// English-only routes (legal pages) — emitted once, with no locale alternates.
+const enOnlyRoutes = ["/privacy", "/terms"];
 const langs = Object.keys(languages) as Lang[];
 
 function alternatesXml(route: string): string {
@@ -32,6 +34,7 @@ export const GET: APIRoute = () => {
 				return `\t<url>\n\t\t<loc>${loc}</loc>\n${alternatesXml(route)}\n\t</url>`;
 			}),
 		)
+		.concat(enOnlyRoutes.map((route) => `\t<url>\n\t\t<loc>${SITE_URL}${route}</loc>\n\t</url>`))
 		.join("\n");
 
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
