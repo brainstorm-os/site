@@ -11,18 +11,19 @@ interface Props {
 	eyebrow?: string;
 	date?: Date;
 	meta?: string;
+	localized?: boolean;
 }
 
-const { title, description, eyebrow, date, meta } = Astro.props;
+const { title, description, eyebrow, date, meta, localized = true } = Astro.props;
 
 const dateString = date
 	? new Intl.DateTimeFormat("en", { year: "numeric", month: "short", day: "numeric" }).format(date)
 	: undefined;
 ---
 
-<Base title={`${title} — ${SITE_NAME}`} description={description}>
+<Base title={`${title} — ${SITE_NAME}`} description={description} localized={localized}>
 	<CornerMarks />
-	<Header />
+	<Header localized={localized} />
 
 	<main class="article-main">
 		<div class="container article-container">

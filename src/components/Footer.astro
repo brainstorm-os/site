@@ -56,6 +56,10 @@ const footerLinks = [
 
 		<div class="footer-meta">
 			<p class="copyright mono">© {year} {SITE_NAME}</p>
+			<nav class="legal" aria-label="Legal">
+				<a class="privacy mono" href="/privacy">{t("footer.privacy")}</a>
+				<a class="privacy mono" href="/terms">{t("footer.terms")}</a>
+			</nav>
 			<a class="source mono" href={links.repo} target="_blank" rel="noopener noreferrer">
 				{t("footer.opensource")}
 			</a>
@@ -155,9 +159,15 @@ const footerLinks = [
 		text-transform: uppercase;
 		margin: 0;
 	}
+	.legal {
+		display: inline-flex;
+		gap: var(--space-4);
+	}
+	.privacy,
 	.source {
 		transition: color var(--dur-base) var(--ease-out);
 	}
+	.privacy:hover,
 	.source:hover {
 		color: var(--cyan-core);
 	}

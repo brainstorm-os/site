@@ -84,6 +84,7 @@ const apps: Record<Lang, AppsCopy> = {
 			"Chaque surface produit de Brainstorm est sa propre application isolée — installée, mise à jour et supprimée séparément. Elles lisent et écrivent toutes le même coffre, si bien qu'une note ici est une ligne là-bas et un nœud dans le graphe, jamais une copie. Les voici toutes, en détail.",
 		indexAria: "Aller à une application",
 		docsLabel: "Docs ↗",
+		watchDemo: "Voir la démo",
 		closerTitle: "Toutes, en un seul téléchargement",
 		closerLede:
 			"Chaque application ci-dessus est livrée avec la bêta publique — gratuite, local-first, pour macOS, Windows et Linux.",

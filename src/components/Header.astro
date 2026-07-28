@@ -7,8 +7,9 @@ import { type Lang, defaultLang, localizePath, useTranslations } from "~/i18n/ui
 
 interface Props {
 	lang?: Lang;
+	localized?: boolean;
 }
-const { lang = defaultLang } = Astro.props;
+const { lang = defaultLang, localized = true } = Astro.props;
 const t = useTranslations(lang);
 
 // The nav section id maps to a translated label; hrefs are localised so the
@@ -45,7 +46,7 @@ const navKey: Record<string, Parameters<typeof t>[0]> = {
 		</nav>
 
 		<div class="actions">
-			<LangSwitcher lang={lang} />
+			<LangSwitcher lang={lang} localized={localized} />
 			<button
 				class="theme-toggle"
 				type="button"

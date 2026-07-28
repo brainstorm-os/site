@@ -3,8 +3,10 @@ import { type Lang, languages, localizePath, useTranslations } from "~/i18n/ui";
 
 interface Props {
 	lang: Lang;
+	/** English-only pages have no locale twins — send other locales home instead of to a 404. */
+	localized?: boolean;
 }
-const { lang } = Astro.props;
+const { lang, localized = true } = Astro.props;
 const t = useTranslations(lang);
 
 // Link each locale to the equivalent page for the current path, so switching
@@ -14,7 +16,7 @@ const entries = (Object.keys(languages) as Lang[]).map((code) => ({
 	code,
 	label: code.toUpperCase(),
 	name: languages[code],
-	href: localizePath(here, code),
+	href: localizePath(localized || code === lang ? here : "/", code),
 	current: code === lang,
 }));
 ---
