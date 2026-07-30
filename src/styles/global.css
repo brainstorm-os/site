@@ -56,6 +56,42 @@ body {
 	height: 0;
 }
 
+/* The consent answer buttons — shared between the banner and the "change your
+   answer" control on /privacy so the two ways of answering look the same. Both
+   answers get one face: an accept styled louder than a decline is a dark
+   pattern, and there is no third variant to justify a modifier. */
+.consent-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 11px 20px;
+	border-radius: var(--radius-2);
+	border: 1px solid var(--accent-border);
+	background: var(--accent-soft);
+	color: var(--paper);
+	font-family: inherit;
+	font-size: var(--text-sm);
+	font-weight: 500;
+	letter-spacing: var(--tracking-tight);
+	text-align: center;
+	cursor: pointer;
+	transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base)
+		var(--ease-out);
+}
+.consent-btn:hover {
+	border-color: var(--cyan-glow);
+	background: var(--hairline);
+}
+/* The site suppresses focus rings globally; the consent controls have to keep
+   theirs — answering has to be possible from the keyboard alone. */
+.consent-btn:focus-visible {
+	outline: 2px solid var(--cyan-glow);
+	outline-offset: 2px;
+}
+.consent-btn[hidden] {
+	display: none;
+}
+
 .glow-ring {
 	position: relative;
 }
