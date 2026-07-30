@@ -1,0 +1,310 @@
+---
+/**
+ * Opt-in gate for analytics.
+ *
+ * Rendered as the FIRST element in <body> so a keyboard or screen-reader user
+ * meets it before the page content, even though it is painted at the bottom of
+ * the viewport. It is `position: fixed`, so it takes no space in the flow and
+ * cannot shift layout when it appears.
+ *
+ * On a first visit it does not steal focus and does not block the page — the
+ * page stays readable, scrollable and usable while the question is open, which
+ * is what "no cookie banner obstructing content" means in practice. When the
+ * visitor reopens it themselves from the footer or the privacy page, it behaves
+ * like the modal they asked for: focus moves in, Tab cycles inside it, and
+ * Escape closes it and hands focus back to whatever opened it.
+ */
+import { consentCopy } from "~/i18n/consent";
+import { type Lang, defaultLang, localizePath } from "~/i18n/ui";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const copy = consentCopy(lang);
+const privacyHref = localizePath("/privacy", lang);
+---
+
+<aside
+	class="consent"
+	role="dialog"
+	aria-modal="false"
+	aria-labelledby="consent-title"
+	aria-describedby="consent-body"
+	data-consent-banner
+	data-state-granted={copy.stateGranted}
+	data-state-denied={copy.stateDenied}
+	hidden
+>
+	<div class="consent-panel">
+		<div class="consent-copy">
+			<p class="consent-title" id="consent-title">{copy.title}</p>
+			<p class="consent-body" id="consent-body">
+				{copy.body}{" "}
+				<a href={privacyHref}>{copy.learnMore}</a>
+			</p>
+			<p class="consent-state mono" data-consent-state hidden></p>
+		</div>
+
+		<div class="consent-actions">
+			<button class="consent-btn" type="button" data-consent-choice="denied">
+				{copy.decline}
+			</button>
+			<button class="consent-btn" type="button" data-consent-choice="granted">
+				{copy.accept}
+			</button>
+		</div>
+
+		<button
+			class="consent-close"
+			type="button"
+			aria-label={copy.close}
+			title={copy.close}
+			data-consent-close
+			hidden
+		>
+			<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
+				<path
+					d="M3 3l8 8M11 3l-8 8"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.6"
+					stroke-linecap="round"></path>
+			</svg>
+		</button>
+	</div>
+</aside>
+
+<style>
+	.consent {
+		position: fixed;
+		inset: auto 0 0 0;
+		z-index: var(--z-top);
+		padding: var(--space-3) var(--gutter-x) calc(var(--space-3) + env(safe-area-inset-bottom));
+		display: flex;
+		justify-content: center;
+		pointer-events: none;
+	}
+	.consent[hidden] {
+		display: none;
+	}
+	.consent-panel {
+		pointer-events: auto;
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: var(--space-5);
+		flex-wrap: wrap;
+		width: 100%;
+		max-width: var(--content-max);
+		padding: var(--space-4) var(--space-5);
+		border-radius: var(--radius-3);
+		border: 1px solid var(--hairline-strong);
+		background: var(--bg-mid);
+		box-shadow: var(--card-shadow);
+		animation: consent-in var(--dur-slow) var(--ease-out) both;
+	}
+	@keyframes consent-in {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+	}
+	.consent-copy {
+		flex: 1 1 380px;
+		min-width: 0;
+	}
+	.consent-title {
+		font-size: var(--text-base);
+		font-weight: 500;
+		letter-spacing: var(--tracking-tight);
+		color: var(--paper);
+		margin: 0 0 var(--space-2);
+	}
+	.consent-body {
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fog-3);
+		margin: 0;
+		max-width: 78ch;
+	}
+	.consent-body a {
+		color: var(--cyan-core);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.consent-state {
+		font-size: var(--text-mono);
+		letter-spacing: var(--tracking-eyebrow);
+		text-transform: uppercase;
+		color: var(--fog-1);
+		margin: var(--space-3) 0 0;
+	}
+	.consent-state[hidden] {
+		display: none;
+	}
+
+	.consent-actions {
+		display: flex;
+		gap: var(--space-3);
+		flex: 0 0 auto;
+		flex-wrap: wrap;
+	}
+	/* Face comes from the shared `.consent-btn` in global.css; only the bar's
+	   own sizing lives here. */
+	.consent-actions .consent-btn {
+		flex: 1 1 auto;
+		min-width: 160px;
+	}
+
+	.consent-close {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		border-radius: var(--radius-2);
+		border: 1px solid transparent;
+		background: transparent;
+		color: var(--fog-2);
+		cursor: pointer;
+	}
+	.consent-close[hidden] {
+		display: none;
+	}
+	.consent-close:hover {
+		color: var(--paper);
+		border-color: var(--hairline-strong);
+	}
+	.consent-close:focus-visible {
+		outline: 2px solid var(--cyan-glow);
+		outline-offset: 2px;
+	}
+
+	@media (max-width: 760px) {
+		.consent-panel {
+			align-items: stretch;
+			flex-direction: column;
+			gap: var(--space-4);
+		}
+		.consent-actions {
+			flex-direction: column;
+		}
+	}
+</style>
+
+<script>
+	import { startAnalytics, stopAnalytics } from "~/lib/analytics";
+	import {
+		ConsentDecision,
+		readStoredConsent,
+		resolveConsent,
+		signalsOptOut,
+		storeConsent,
+	} from "~/lib/consent";
+
+	const root = document.querySelector<HTMLElement>("[data-consent-banner]");
+
+	if (root) {
+		const stateLine = root.querySelector<HTMLElement>("[data-consent-state]");
+		const closeButton = root.querySelector<HTMLElement>("[data-consent-close]");
+
+		let managing = false;
+		let trigger: HTMLElement | null = null;
+
+		/** True when a running SDK was torn down, so the page has to be reloaded
+		 *  for the identifier to be genuinely gone. */
+		const apply = (decision: ConsentDecision, persist: boolean): boolean => {
+			if (persist) storeConsent(decision);
+			const granted = decision === ConsentDecision.Granted;
+			let teardown = false;
+			if (granted) void startAnalytics();
+			else teardown = stopAnalytics();
+			if (stateLine) {
+				stateLine.textContent =
+					(granted ? root.dataset.stateGranted : root.dataset.stateDenied) ?? "";
+			}
+			return teardown;
+		};
+
+		const focusable = (): HTMLElement[] =>
+			[...root.querySelectorAll<HTMLElement>("button, a[href]")].filter((el) => !el.hidden);
+
+		const close = (): void => {
+			root.hidden = true;
+			if (managing) trigger?.focus();
+			managing = false;
+			trigger = null;
+		};
+
+		const open = (byUser: boolean, from: HTMLElement | null): void => {
+			managing = byUser;
+			trigger = from;
+			if (closeButton) closeButton.hidden = !byUser;
+			if (stateLine) stateLine.hidden = !byUser;
+			root.hidden = false;
+			// Straight to the first answer: the visitor opened this to change it,
+			// not to re-read the explanation.
+			if (byUser) root.querySelector<HTMLElement>("[data-consent-choice]")?.focus();
+		};
+
+		for (const button of root.querySelectorAll<HTMLElement>("[data-consent-choice]")) {
+			const decision =
+				button.dataset.consentChoice === ConsentDecision.Granted
+					? ConsentDecision.Granted
+					: ConsentDecision.Denied;
+			button.addEventListener("click", () => {
+				const needsReload = apply(decision, true);
+				close();
+				if (needsReload) location.reload();
+			});
+		}
+		closeButton?.addEventListener("click", close);
+
+		root.addEventListener("keydown", (event) => {
+			if (!managing) return;
+			if (event.key === "Escape") {
+				close();
+				return;
+			}
+			if (event.key !== "Tab") return;
+			// Only while the visitor deliberately opened the panel: cycling inside
+			// it is what they expect from a dialog they asked for. On a first visit
+			// there is no trap at all — the banner is just the first tab stop, and
+			// the page behind it stays fully reachable.
+			const items = focusable();
+			const first = items[0];
+			const last = items[items.length - 1];
+			if (!first || !last) return;
+			if (event.shiftKey && document.activeElement === first) {
+				event.preventDefault();
+				last.focus();
+			} else if (!event.shiftKey && document.activeElement === last) {
+				event.preventDefault();
+				first.focus();
+			}
+		});
+
+		// The withdrawal triggers ship hidden: without this script there is no
+		// analytics to withdraw, so an inert control would be a lie.
+		for (const opener of document.querySelectorAll<HTMLElement>("[data-consent-open]")) {
+			opener.hidden = false;
+		}
+
+		document.addEventListener("click", (event) => {
+			const opener = (event.target as Element | null)?.closest<HTMLElement>("[data-consent-open]");
+			if (!opener) return;
+			event.preventDefault();
+			apply(readStoredConsent()?.decision ?? ConsentDecision.Denied, false);
+			open(true, opener);
+		});
+
+		const state = resolveConsent(readStoredConsent(), Date.now(), signalsOptOut(navigator));
+		apply(state.decision, false);
+		if (state.prompt) open(false, null);
+	}
+</script>

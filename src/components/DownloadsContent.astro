@@ -7,6 +7,7 @@ import { PLATFORMS, Platform, type PlatformMeta } from "~/content/releases";
 import { SITE_NAME, links } from "~/content/site";
 import { downloadsCopy } from "~/i18n/pages";
 import { type Lang, defaultLang } from "~/i18n/ui";
+import { DownloadSurface, campaignHref } from "~/lib/download-link";
 
 interface Props {
 	lang?: Lang;
@@ -52,6 +53,36 @@ const assetsFor = (release: Release, platform: Platform) =>
 	release.data.assets.filter((a) => a.platform === platform);
 
 const requirementFor = (p: PlatformMeta) => copy.platformReq[p.id] ?? p.requirement;
+
+// Bound here rather than referenced inline in the template below: Biome only
+// parses an .astro file's frontmatter, so an enum used solely in the markup
+// looks type-only to `useImportType` and its "safe fix" would strip the import.
+const LATEST = DownloadSurface.Latest;
+const ARCHIVE = DownloadSurface.Archive;
+
+// Every asset link is stamped with its campaign and carries the same fields as
+// `data-dl-*`, so the click event and the outbound URL describe one download.
+const downloadAttrs = (
+	release: Release,
+	platform: Platform,
+	label: string,
+	surface: DownloadSurface,
+) => ({
+	"data-dl-platform": platform,
+	"data-dl-asset": label,
+	"data-dl-version": release.data.version,
+	"data-dl-channel": release.data.channel,
+	"data-dl-surface": surface,
+	"data-dl-locale": lang,
+});
+
+const downloadHref = (
+	href: string,
+	release: Release,
+	platform: Platform,
+	label: string,
+	surface: DownloadSurface,
+) => campaignHref(href, { platform, label, version: release.data.version, surface });
 
 // Recognisable platform marks, inline SVG (the site bans raster + emoji glyphs).
 const GLYPH: Record<Platform, string> = {
@@ -112,7 +143,12 @@ const GLYPH: Record<Platform, string> = {
 									<ul class="asset-list">
 										{assets.map((a) => (
 											<li>
-												<a class="asset" href={a.href} download>
+												<a
+													class="asset"
+													href={downloadHref(a.href, latest, p.id, a.label, LATEST)}
+													download
+													{...downloadAttrs(latest, p.id, a.label, LATEST)}
+												>
 													<span class="asset-label">{a.label}</span>
 													{a.size && <span class="asset-size mono">{a.size}</span>}
 													<svg
@@ -193,7 +229,11 @@ const GLYPH: Record<Platform, string> = {
 									<ul class="archive-assets">
 										{r.data.assets.map((a) => (
 											<li>
-												<a href={a.href} download>
+												<a
+													href={downloadHref(a.href, r, a.platform, a.label, ARCHIVE)}
+													download
+													{...downloadAttrs(r, a.platform, a.label, ARCHIVE)}
+												>
 													{PLATFORMS.find((p) => p.id === a.platform)?.name} · {a.label}
 												</a>
 											</li>
@@ -212,6 +252,26 @@ const GLYPH: Record<Platform, string> = {
 </main>
 
 <script>
+	import { DOWNLOAD_EVENT } from "~/lib/download-link";
+	import { track } from "~/lib/analytics";
+
+	// The highest-value event on the site: which platform and build people
+	// actually take. Delegated so the latest cards and the archive list share one
+	// listener, and a no-op until the visitor has opted in.
+	document.addEventListener("click", (event) => {
+		const link = (event.target as Element | null)?.closest<HTMLAnchorElement>("[data-dl-platform]");
+		if (!link) return;
+		const { dlPlatform, dlAsset, dlVersion, dlChannel, dlSurface, dlLocale } = link.dataset;
+		track(DOWNLOAD_EVENT, {
+			platform: dlPlatform,
+			asset: dlAsset,
+			version: dlVersion,
+			channel: dlChannel,
+			surface: dlSurface,
+			locale: dlLocale,
+		});
+	});
+
 	// Progressive enhancement: highlight the card for the visitor's OS. The page
 	// renders all three platforms identically without JS — this only adds a hint.
 	const ua = navigator.userAgent;

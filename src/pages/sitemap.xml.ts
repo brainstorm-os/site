@@ -10,9 +10,9 @@ import { type Lang, languages, localizePath } from "~/i18n/ui";
 // Each route is emitted once per locale, and every entry carries xhtml:link
 // alternates for all locales (+ x-default) so Google clusters the language
 // versions instead of treating them as duplicates.
-const routes = ["/", "/apps", "/downloads"];
+const routes = ["/", "/apps", "/downloads", "/privacy"];
 // English-only routes (legal pages) — emitted once, with no locale alternates.
-const enOnlyRoutes = ["/privacy", "/terms"];
+const enOnlyRoutes = ["/terms"];
 const langs = Object.keys(languages) as Lang[];
 
 function alternatesXml(route: string): string {

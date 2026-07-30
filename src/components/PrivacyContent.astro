@@ -1,0 +1,49 @@
+---
+import { privacyCopy } from "~/i18n/privacy";
+import { type Lang, defaultLang } from "~/i18n/ui";
+import Article from "~/layouts/Article.astro";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const copy = privacyCopy(lang);
+
+// Bump whenever the policy text changes — it is the "last updated" the reader
+// is entitled to and the only honest way to date a legal page.
+const UPDATED = new Date("2026-07-30");
+---
+
+<Article
+	title={copy.title}
+	description={copy.description}
+	eyebrow={copy.eyebrow}
+	date={UPDATED}
+	lang={lang}
+>
+	<p set:html={copy.intro} />
+
+	{
+		copy.blocks.map((block) => {
+			const Heading = block.level === 2 ? "h2" : "h3";
+			return (
+				<>
+					<Heading>{block.heading}</Heading>
+					{block.paragraphs.map((paragraph) => (
+						<p set:html={paragraph} />
+					))}
+					{block.manage && (
+						<p>
+							{/* Second withdrawal path, next to the paragraph that explains it.
+							    Hidden until the consent script unhides it — with JS off there
+							    is nothing to withdraw. */}
+							<button class="consent-btn" type="button" data-consent-open hidden>
+								{copy.manageCta}
+							</button>
+						</p>
+					)}
+				</>
+			);
+		})
+	}
+</Article>

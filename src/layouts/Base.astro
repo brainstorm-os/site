@@ -1,5 +1,6 @@
 ---
 import "~/styles/global.css";
+import ConsentBanner from "~/components/ConsentBanner.astro";
 import { SITE_NAME } from "~/content/site";
 import { type Lang, alternatesFor, defaultLang, htmlLang, ogLocale } from "~/i18n/ui";
 
@@ -88,30 +89,11 @@ const alternates =
 		<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 	</head>
 	<body>
+		<!-- First in the body so keyboard and screen-reader users reach the question
+		     before the page content; painted at the bottom of the viewport. It also
+		     owns the analytics boot — nothing is loaded until it says so. -->
+		<ConsentBanner lang={lang} />
+
 		<slot />
-
-		<script>
-			import { init } from "@amplitude/analytics-browser";
-
-			if (!window.__amplitudeInitialized) {
-				window.__amplitudeInitialized = true;
-				// Cookieless on purpose: identityStorage "none" + attribution off means
-				// no AMP_* cookies and no persistent identifier, so no consent banner is
-				// needed (see /privacy). Visitors are counted per-session only.
-				init("cca1e2687dc8b1388f4b33372a97fdaa", {
-					serverZone: "EU",
-					identityStorage: "none",
-					trackingOptions: { ipAddress: false },
-					autocapture: {
-						attribution: false,
-						pageViews: true,
-						sessions: true,
-						formInteractions: true,
-						fileDownloads: true,
-						elementInteractions: true,
-					},
-				});
-			}
-		</script>
 	</body>
 </html>

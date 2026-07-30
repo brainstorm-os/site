@@ -137,7 +137,8 @@ const inputId = `email-${idSuffix}`;
 </style>
 
 <script>
-	import { track } from "@amplitude/analytics-browser";
+	// Consent-gated: a no-op until the visitor opts in, never a throw.
+	import { track } from "~/lib/analytics";
 
 	for (const form of document.querySelectorAll<HTMLFormElement>(".email-signup")) {
 		const status = form.querySelector<HTMLParagraphElement>(".status");
