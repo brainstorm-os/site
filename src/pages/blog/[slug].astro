@@ -1,6 +1,8 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import TagChips from "~/components/TagChips.astro";
 import Article from "~/layouts/Article.astro";
+import { collectTags } from "~/lib/tags";
 
 // Blog posts are English-only (localized={false}) — the design-decision essays
 // are written once, in the voice of the design docs they link to.
@@ -22,6 +24,10 @@ const kindLabel: Record<CollectionEntry<"blog">["data"]["kind"], string> = {
 	advisory: "Advisory",
 	tutorial: "Tutorial",
 };
+
+// Through `collectTags` so a post's chips carry the same slugs, and the same
+// spelling, as the tag pages they link to.
+const tags = collectTags([{ tags: post.data.tags }]);
 ---
 
 <Article
@@ -29,9 +35,9 @@ const kindLabel: Record<CollectionEntry<"blog">["data"]["kind"], string> = {
 	description={post.data.summary}
 	eyebrow={kindLabel[post.data.kind]}
 	date={post.data.date}
-	meta={post.data.tags.join(" · ")}
 	localized={false}
 >
+	<TagChips slot="tags" tags={tags} label="Filed under" />
 	<Content />
 	<p class="mono"><a href="/blog">← All posts</a></p>
 </Article>

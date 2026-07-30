@@ -20,12 +20,17 @@ export const GET: APIRoute = async () => {
 		.map((entry) => {
 			const link = absolute(entry.href);
 			const description = [entry.summary, ...entry.points].join("\n\n");
+			// One category for the stream, then one per tag — the same vocabulary
+			// /blog/tags browses, so a reader's feed app can filter on it too.
+			const categories = [FEED_KIND_LABEL[entry.kind], ...entry.tags].map(
+				(category) => `\t\t\t<category>${escapeXml(category)}</category>`,
+			);
 			return [
 				"\t\t<item>",
 				`\t\t\t<title>${escapeXml(entry.title)}</title>`,
 				`\t\t\t<link>${escapeXml(link)}</link>`,
 				`\t\t\t<guid isPermaLink="false">${escapeXml(absolute(entry.key))}</guid>`,
-				`\t\t\t<category>${escapeXml(FEED_KIND_LABEL[entry.kind])}</category>`,
+				...categories,
 				`\t\t\t<pubDate>${entry.date.toUTCString()}</pubDate>`,
 				`\t\t\t<description>${escapeXml(description)}</description>`,
 				"\t\t</item>",

@@ -1,0 +1,105 @@
+---
+import FeedTimeline from "~/components/FeedTimeline.astro";
+import TagChips from "~/components/TagChips.astro";
+import Article from "~/layouts/Article.astro";
+import {
+	FEED_KIND_PLURAL,
+	type FeedEntry,
+	FeedKind,
+	buildFeed,
+	countByKind,
+	groupByMonth,
+} from "~/lib/feed";
+import { type TagSummary, collectTags, entriesWithTag } from "~/lib/tags";
+
+// One page per distinct tag, built from the same feed the timeline renders, so
+// a tag can never resolve to a URL the site does not generate.
+export async function getStaticPaths() {
+	const entries = await buildFeed();
+	const tags = collectTags(entries);
+	return tags.map((tag) => ({
+		params: { tag: tag.slug },
+		props: { tag, tags, entries: entriesWithTag(entries, tag.slug) },
+	}));
+}
+
+interface Props {
+	tag: TagSummary;
+	tags: TagSummary[];
+	entries: FeedEntry[];
+}
+
+const { tag, tags, entries } = Astro.props;
+
+const months = groupByMonth(entries);
+const counts = countByKind(entries);
+const countLine = Object.values(FeedKind)
+	.filter((kind) => counts[kind] > 0)
+	.map((kind) => `${counts[kind]} ${FEED_KIND_PLURAL[kind]}`)
+	.join(" · ");
+---
+
+<Article
+	title={tag.tag}
+	description={`Everything on the Brainstorm blog filed under ${tag.tag}, newest first.`}
+	eyebrow="Topic"
+	localized={false}
+>
+	<div class="feed">
+		<div class="feed-bar">
+			<p class="feed-count mono">{countLine}</p>
+			<a class="feed-rss mono" href="/blog/tags">All topics</a>
+		</div>
+
+		<div class="feed-controls">
+			<TagChips tags={tags} activeSlug={tag.slug} label="Topics" countInLabel />
+		</div>
+
+		<FeedTimeline months={months} activeSlug={tag.slug} />
+
+		<p class="feed-back mono"><a href="/blog">Back to the timeline</a></p>
+	</div>
+</Article>
+
+{/* `is:inline` for the same reason the timeline is: these rules belong to the
+    tag pages, not to the one stylesheet every route loads and the landing
+    page's size budget measures. */}
+<style is:inline>
+	.feed-bar {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-4);
+	}
+	.feed-count,
+	.feed .feed-rss {
+		font-size: var(--text-mono);
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+		text-decoration: none;
+	}
+	.feed .feed-rss:hover {
+		color: var(--cyan-core);
+	}
+	.feed-controls {
+		margin-top: var(--space-4);
+		padding-bottom: var(--space-5);
+		border-bottom: 1px solid var(--hairline);
+	}
+	.feed-back {
+		margin-top: var(--space-7);
+		padding-top: var(--space-5);
+		border-top: 1px solid var(--hairline);
+		font-size: var(--text-mono);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.feed .feed-back a {
+		color: var(--fog-1);
+		text-decoration: none;
+	}
+	.feed .feed-back a:hover {
+		color: var(--cyan-core);
+	}
+</style>
