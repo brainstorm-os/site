@@ -7,6 +7,7 @@ tags:
   - app-platform
   - agent
   - capabilities
+author: Brainstorm's founder
 source: brainstorm/docs/apps/03-app-model.md
 ---
 
@@ -18,7 +19,7 @@ That's the floor, not the ceiling. A bundle can ship whatever its page needs —
 
 ## The manifest is data, not code
 
-Here is a real manifest from the demo we filmed — a small dashboard that reads project entities:
+Here is a real manifest from the filmed demo — a small dashboard that reads project entities:
 
 ```json
 {
@@ -31,7 +32,7 @@ Here is a real manifest from the demo we filmed — a small dashboard that reads
 }
 ```
 
-Six required fields. The interesting one is `capabilities`: every capability is a string with the shape `verb.noun:scope` — this app asks to *read entities of exactly one type*. Notes asks for more (`entities.write:io.brainstorm.notes/Note/v1`, `files.write`, `intents.dispatch:open`, …), but the grammar never changes, and the list is static. There is no API to request a capability at runtime — we ruled that out early, because dynamic permission escalation makes auditing an app's reach intractable. What the manifest declares at install time is everything the app will ever be able to ask for.
+Six required fields. The interesting one is `capabilities`: every capability is a string with the shape `verb.noun:scope` — this app asks to *read entities of exactly one type*. Notes asks for more (`entities.write:io.brainstorm.notes/Note/v1`, `files.write`, `intents.dispatch:open`, …), but the grammar never changes, and the list is static. There is no API to request a capability at runtime — that was ruled out early, because dynamic permission escalation makes auditing an app's reach intractable. What the manifest declares at install time is everything the app will ever be able to ask for.
 
 At install, that list is what you consent to. The sheet shows the app id, the version, the capability strings, and — for anything that didn't come from the catalog — a plain warning that the bundle is unsigned. Approve, and the grants are written to the vault's **capability ledger**. On update, the shell diffs the lists: a new capability always re-prompts. There is no silent escalation path.
 
@@ -59,7 +60,7 @@ The agent's context is assembled by the shell's broker — never by the app host
 
 1. **A self-model.** A short static preamble describing what the agent is and how it should behave. Its `CLAUDE.md`, if you like.
 2. **The platform catalog.** Which apps are installed, which entity types exist, which tools the conversation has been granted. Derived live from the registry and the capability ledger.
-3. **The shape of your graph — not its contents.** Counts by type, the type catalog, recently-touched titles. Our working rule is five words: *shape is context, contents are retrieval.*
+3. **The shape of your graph — not its contents.** Counts by type, the type catalog, recently-touched titles. The working rule is five words: *shape is context, contents are retrieval.*
 
 Actual note bodies reach the model only through retrieval: the agent runs a capability-gated hybrid search (full-text + vector, fused) and gets a bounded top-K of results to ground its answer, citing real entity ids. The Agent app holds **no general entity-read capability at all** — its reading power is literally "what search returns," not "walk the vault." Retrieved text is injected as quoted, untrusted content, never as instructions; the tool list for a turn is fixed by the capability intersection before the model says a word, so nothing the model generates — and nothing hostile hiding in a retrieved note — can add a tool to the set.
 
@@ -75,6 +76,6 @@ Notice what the agent never touches: the installer. There is no "agent installs 
 
 Three ways to produce the same bundle — type it in the code editor, sideload it from disk, or let the agent draft it for your approval. All three converge on the same installer, the same consent sheet, the same ledger entry, the same broker standing between the running app and your data. The finished app sees what it was granted; asking for more comes back refused, whoever the author was.
 
-That convergence is the design. We didn't build a separate "AI app builder" with its own trust rules; we made the platform contract small enough that writing an app is within reach of a person typing for ninety seconds *or* a model drafting under supervision — and put all the safety in the one place that doesn't care about authorship.
+That convergence is the design. I didn't build a separate "AI app builder" with its own trust rules; I made the platform contract small enough that writing an app is within reach of a person typing for ninety seconds *or* a model drafting under supervision — and put all the safety in the one place that doesn't care about authorship.
 
 There's a 90-second video of the whole loop — both files typed, installed, running on real data, refused when overstepping, then the agent drafting a second app — on the [home page](/). The beta is free, for macOS, Windows, and Linux, at [getbrainstorm.online](https://getbrainstorm.online), and the shell is source-available (AGPL) on [GitHub](https://github.com/brainstorm-os). The design docs behind this post — the app model, the SDK surface, and the agent harness — ship in the repo, in the same Markdown the product is built from.
