@@ -15,5 +15,6 @@ screenshots:
   - src: "/screenshots/apps/code-editor/01-editor.webp"
     title: "Editing a snippet"
     caption: "Shiki highlighting and diagnostics over a collaborative buffer that is a vault object."
+video: "fYHF2EKQXo4"
 source: "brainstorm/docs/implementation-plan.md §9.7"
 ---
