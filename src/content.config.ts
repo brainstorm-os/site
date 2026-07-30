@@ -58,8 +58,24 @@ const blog = defineCollection({
 		summary: z.string().min(20),
 		kind: z.enum(["decision", "retrospective", "advisory", "tutorial"]),
 		tags: z.array(z.string()).default([]),
-		author: z.string().default("Brainstorm team"),
+		// Brainstorm is built by one person. The default byline must not invent a
+		// team the reader could go looking for.
+		author: z.string().default("Brainstorm's founder"),
 		source: z.string().optional(),
+	}),
+});
+
+// Published demo videos, surfaced as their own stream in the /blog timeline.
+// `video` mirrors the `apps` collection's convention: a bare YouTube id, never a
+// full URL, so one id drives both the on-page lightbox and the watch link.
+const videos = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/videos" }),
+	schema: z.object({
+		date: z.coerce.date(),
+		title: z.string(),
+		summary: z.string().min(20),
+		video: z.string().min(6),
+		duration: z.string(),
 	}),
 });
 
@@ -135,6 +151,7 @@ export const collections = {
 	changelog,
 	releases,
 	blog,
+	videos,
 	tutorials,
 	segments,
 	compare,

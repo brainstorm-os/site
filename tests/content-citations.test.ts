@@ -60,9 +60,12 @@ describe("content citations", () => {
 					expect(fm, "must have frontmatter").toBeTruthy();
 					const source = fm?.source;
 					expect(source, "source: required").toBeTruthy();
+					// `github.com/brainstorm-app` was allowed here and does not exist —
+					// the org is `brainstorm-os`, and its design docs are not public.
+					// The public render of the same corpus is the docs portal.
 					const valid =
 						source?.startsWith("brainstorm/docs/") ||
-						source?.startsWith("https://github.com/brainstorm-app/brainstorm/");
+						source?.startsWith("https://docs.getbrainstorm.online/");
 					expect(valid, `source must cite brainstorm docs (got: ${source})`).toBe(true);
 				});
 			}

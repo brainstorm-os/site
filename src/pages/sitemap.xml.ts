@@ -14,6 +14,7 @@ import { type Lang, languages, localizePath } from "~/i18n/ui";
 const routes = ["/", "/apps", "/downloads", "/privacy"];
 // English-only routes (legal pages + the blog) — emitted once, with no locale
 // alternates. Blog post slugs are appended from the content collection below.
+// The RSS feed is a subscription endpoint, not a page, so it stays out.
 const enOnlyRoutes = ["/terms", "/blog"];
 const langs = Object.keys(languages) as Lang[];
 

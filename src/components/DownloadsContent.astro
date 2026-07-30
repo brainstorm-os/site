@@ -97,7 +97,10 @@ const GLYPH: Record<Platform, string> = {
 
 <main class="downloads-main">
 	<div class="container">
-		<header class="page-header">
+		{/* Anchored per version so the /blog timeline can link a release entry
+		    straight at the build it is about — the latest lands at the top of the
+		    page, older ones at their archive row. */}
+		<header class="page-header" id={latest && `v${latest.data.version}`}>
 			<p class="eyebrow">
 				<span class="diamond" aria-hidden="true">◇</span>
 				{copy.eyebrow}
@@ -214,7 +217,7 @@ const GLYPH: Record<Platform, string> = {
 					<h2 class="archive-title">{copy.archiveTitle}</h2>
 					<ul class="archive-list">
 						{archive.map((r) => (
-							<li class="archive-item">
+							<li class="archive-item" id={`v${r.data.version}`}>
 								<div class="archive-meta">
 									<span class="archive-version">v{r.data.version}</span>
 									<time class="archive-date mono" datetime={r.data.date.toISOString()}>
