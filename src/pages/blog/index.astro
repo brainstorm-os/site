@@ -1,51 +1,327 @@
 ---
-import { getCollection } from "astro:content";
+import VideoDialog from "~/components/VideoDialog.astro";
 import Article from "~/layouts/Article.astro";
+import {
+	FEED_KIND_LABEL,
+	FEED_KIND_PLURAL,
+	FeedKind,
+	buildFeed,
+	countByKind,
+	groupByMonth,
+} from "~/lib/feed";
 
-const posts = (await getCollection("blog")).sort(
-	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const entries = await buildFeed();
+const months = groupByMonth(entries);
+const counts = countByKind(entries);
 
-const dateFmt = new Intl.DateTimeFormat("en", { year: "numeric", month: "short", day: "numeric" });
+const streams = Object.values(FeedKind).filter((kind) => counts[kind] > 0);
+
+// Only offer a chip for a stream that has entries — an empty filter is a dead
+// control.
+const filters = [
+	{ id: "all", label: "Everything" },
+	...streams.map((kind) => ({ id: kind, label: `${FEED_KIND_LABEL[kind]}s` })),
+];
+
+const countLine = streams.map((kind) => `${counts[kind]} ${FEED_KIND_PLURAL[kind]}`).join(" · ");
+
+const dateFmt = new Intl.DateTimeFormat("en", {
+	year: "numeric",
+	month: "short",
+	day: "numeric",
+	timeZone: "UTC",
+});
 ---
 
 <Article
 	title="Blog"
-	description="Design decisions, retrospectives, and the occasional advisory — written from the same design docs the product is built from."
+	description="Everything Brainstorm publishes, in one timeline — design decisions, retrospectives, every release, and the demo videos."
 	eyebrow="Writing"
 	localized={false}
 >
-	<ul class="blog-list">
+	<div class="feed">
+		<div class="feed-bar">
+			<p class="feed-count mono">{countLine}</p>
+			<a class="feed-rss mono" href="/blog/rss.xml">RSS feed</a>
+		</div>
+
+		<div class="feed-filter" role="group" aria-label="Filter the timeline by kind">
+			{
+				filters.map((filter, index) => (
+					<>
+						<input
+							class="feed-radio"
+							type="radio"
+							name="feed-kind"
+							id={`feed-${filter.id}`}
+							checked={index === 0}
+						/>
+						<label class="feed-chip" for={`feed-${filter.id}`}>
+							{filter.label}
+						</label>
+					</>
+				))
+			}
+		</div>
+
 		{
-			posts.map((post) => (
-				<li>
-					<p class="mono blog-date">
-						<time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
-					</p>
-					<h2>
-						<a href={`/blog/${post.id}`}>{post.data.title}</a>
+			months.map((month) => (
+				<section class="feed-month" aria-labelledby={`m-${month.id}`}>
+					<h2 class="feed-month-title mono" id={`m-${month.id}`}>
+						{month.label}
 					</h2>
-					<p>{post.data.summary}</p>
-				</li>
+					<ol class="feed-list">
+						{month.entries.map((entry) => (
+							<li class="feed-item" data-kind={entry.kind}>
+								<p class="feed-meta mono">
+									<span class:list={["feed-badge", `feed-badge--${entry.kind}`]}>
+										{FEED_KIND_LABEL[entry.kind]}
+									</span>
+									<time datetime={entry.date.toISOString()}>{dateFmt.format(entry.date)}</time>
+									{entry.meta && (
+										<span>
+											<span class="feed-sep" aria-hidden="true">
+												·
+											</span>
+											{entry.meta}
+										</span>
+									)}
+								</p>
+								<h3 class="feed-title">
+									<a
+										href={entry.href}
+										{...(entry.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+									>
+										{entry.title}
+									</a>
+								</h3>
+								<p class="feed-summary">{entry.summary}</p>
+								{entry.points.length > 0 && (
+									<ul class="feed-points">
+										{entry.points.map((point) => (
+											<li>{point}</li>
+										))}
+									</ul>
+								)}
+								{entry.videoId && (
+									<div class="feed-watch">
+										<VideoDialog
+											videoId={entry.videoId}
+											label="Watch here"
+											title={entry.title}
+											watchHref={entry.href}
+										/>
+									</div>
+								)}
+							</li>
+						))}
+					</ol>
+				</section>
 			))
 		}
-	</ul>
+	</div>
 </Article>
 
-<style>
-	.blog-list {
+{/* `is:inline` keeps these rules in this page instead of the one shared
+    stylesheet (`vite.build.cssCodeSplit: false`) that every route loads — the
+    landing page's size-limit budget measures that file, and a blog timeline has
+    no business inside it. Every selector is `feed-`-prefixed and rooted at
+    `.feed`, which is the scoping Astro would otherwise add. */}
+<style is:inline>
+	.feed-bar {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-4);
+	}
+	.feed-count,
+	.feed .feed-rss {
+		font-size: var(--text-mono);
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+		text-decoration: none;
+	}
+	.feed .feed-rss:hover {
+		color: var(--cyan-core);
+	}
+
+	.feed-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-top: var(--space-4);
+		padding-bottom: var(--space-5);
+		border-bottom: 1px solid var(--hairline);
+	}
+	/* Kept in the layout rather than `hidden` so the group stays keyboard
+	   reachable — the filter is CSS-only and must work with JavaScript off. */
+	.feed-radio {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		opacity: 0;
+		pointer-events: none;
+	}
+	.feed-chip {
+		padding: 6px 14px;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--hairline-strong);
+		font-size: var(--text-xs);
+		color: var(--fog-2);
+		cursor: pointer;
+		transition:
+			border-color var(--dur-base) var(--ease-out),
+			color var(--dur-base) var(--ease-out);
+	}
+	.feed-chip:hover {
+		color: var(--paper);
+		border-color: var(--cyan-glow);
+	}
+	.feed-radio:checked + .feed-chip {
+		color: var(--paper);
+		border-color: var(--cyan-glow);
+		background: var(--accent-soft);
+	}
+	.feed-radio:focus-visible + .feed-chip {
+		outline: 2px solid var(--cyan-core);
+		outline-offset: 2px;
+	}
+
+	.feed-month {
+		margin-top: var(--space-7);
+	}
+	.feed .feed-month-title {
+		font-size: var(--text-mono);
+		font-weight: 400;
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+		margin: 0;
+	}
+	.feed .feed-list {
+		list-style: none;
+		padding: 0 0 0 var(--space-5);
+		margin: var(--space-4) 0 0;
+		border-left: 1px solid var(--hairline);
+	}
+	.feed .feed-list > li {
+		position: relative;
+		margin: 0 0 var(--space-6);
+	}
+	.feed .feed-list > li:last-child {
+		margin-bottom: 0;
+	}
+	/* The timeline node. Colour is the second signal for the kind, after the
+	   badge text — never the only one. */
+	.feed-item::before {
+		content: "";
+		position: absolute;
+		left: calc(-1 * var(--space-5) - 3px);
+		top: 7px;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--fog-1);
+	}
+	.feed-item[data-kind="release"]::before {
+		background: var(--cyan-glow);
+	}
+	.feed-item[data-kind="video"]::before {
+		background: var(--paper);
+	}
+	.feed-meta {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: var(--space-2) var(--space-3);
+		font-size: var(--text-mono);
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.feed-badge {
+		padding: 2px 8px;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--hairline-strong);
+		color: var(--fog-2);
+	}
+	.feed-badge--release {
+		color: var(--cyan-bright);
+		border-color: var(--accent-border);
+	}
+	.feed-badge--video {
+		color: var(--paper);
+	}
+	.feed-sep {
+		margin-right: var(--space-3);
+	}
+	.feed .feed-title {
+		font-size: var(--text-lg);
+		font-weight: 500;
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
+		margin: var(--space-2) 0 6px;
+	}
+	.feed .feed-title a {
+		color: var(--paper);
+		text-decoration: none;
+		transition: color var(--dur-base) var(--ease-out);
+	}
+	.feed .feed-title a:hover {
+		color: var(--cyan-core);
+	}
+	.feed-summary {
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fog-3);
+		max-width: 62ch;
+	}
+	/* `ch` resolves against this element's own font-size — set it here, not on the
+	   items, or the bullets get a wider measure than the summary above them. */
+	.feed .feed-points {
 		list-style: none;
 		padding: 0;
-		margin: 0;
-		display: grid;
-		gap: 2.5rem;
+		margin: var(--space-3) 0 0;
+		max-width: 62ch;
+		font-size: var(--text-sm);
 	}
-	.blog-list h2 {
-		margin: 0.15rem 0 0.35rem;
+	.feed .feed-points li {
+		position: relative;
+		margin: 6px 0 0;
+		padding-left: var(--space-4);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
 	}
-	.blog-date {
-		margin: 0;
-		opacity: 0.7;
-		font-size: 0.85em;
+	.feed .feed-points li::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0.62em;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--accent-border);
+	}
+	.feed-watch {
+		margin-top: var(--space-3);
+	}
+	.feed-watch .video-trigger {
+		padding: 8px 16px;
+		font-size: var(--text-sm);
+	}
+
+	/* CSS-only stream filter: `:has()` reads the checked radio, so filtering needs
+	   no JavaScript and the page still renders whole with JavaScript disabled. A
+	   month left with nothing in it hides its heading too. */
+	.feed:has(#feed-article:checked) .feed-item:not([data-kind="article"]),
+	.feed:has(#feed-release:checked) .feed-item:not([data-kind="release"]),
+	.feed:has(#feed-video:checked) .feed-item:not([data-kind="video"]) {
+		display: none;
+	}
+	.feed:has(#feed-article:checked) .feed-month:not(:has([data-kind="article"])),
+	.feed:has(#feed-release:checked) .feed-month:not(:has([data-kind="release"])),
+	.feed:has(#feed-video:checked) .feed-month:not(:has([data-kind="video"])) {
+		display: none;
 	}
 </style>
