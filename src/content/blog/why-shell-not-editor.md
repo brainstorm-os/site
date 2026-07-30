@@ -6,6 +6,7 @@ kind: decision
 tags:
   - architecture
   - design-decision
+author: Brainstorm's founder
 source: brainstorm/docs/foundations/01-vision.md
 ---
 
@@ -29,10 +30,10 @@ Three properties fall out of it:
 
 3. **Two apps that handle the same kind of data don't fight.** Multiple apps can read and write entities of the same type. No one app is the "owner" of a type. Schema is owned by data, not apps.
 
-## What we give up
+## What this gives up
 
 A monolithic editor with a single document model can do some things a host-of-apps cannot, easily — instant cross-block transformations, a single undo stack across the whole product, a unified search bar that knows everything.
 
 Brainstorm trades those for a model where adding a feature next year doesn't require editing six other features.
 
-We think this trade is right for a product whose ambition is decade-scale durability. The full case is in [01-vision.md](https://github.com/brainstorm-app/brainstorm/blob/main/docs/foundations/01-vision.md).
+This is the right trade for a product whose ambition is decade-scale durability. The full case is in `docs/foundations/01-vision.md`, which ships with the source on [GitHub](https://github.com/brainstorm-os).
