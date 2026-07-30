@@ -1,0 +1,185 @@
+---
+import TagChips from "~/components/TagChips.astro";
+import Article from "~/layouts/Article.astro";
+import { FEED_KIND_LABEL, buildFeed } from "~/lib/feed";
+import { collectTags, entriesWithTag, tagHref } from "~/lib/tags";
+
+const entries = await buildFeed();
+const tags = collectTags(entries);
+
+const topics = tags.map((tag) => ({ ...tag, entries: entriesWithTag(entries, tag.slug) }));
+
+const topicCount = tags.length === 1 ? "1 topic" : `${tags.length} topics`;
+const entryCount = (count: number) => (count === 1 ? "1 entry" : `${count} entries`);
+
+const dateFmt = new Intl.DateTimeFormat("en", {
+	year: "numeric",
+	month: "short",
+	timeZone: "UTC",
+});
+---
+
+<Article
+	title="Topics"
+	description={`Every subject the Brainstorm blog covers, with what has been published under each. ${topicCount} across the articles and the demo videos.`}
+	eyebrow="Blog"
+	localized={false}
+>
+	<div class="topics">
+		<TagChips tags={tags} label="Topics" countInLabel />
+
+		<ul class="topics-list">
+			{
+				topics.map((topic) => (
+					<li class="topic">
+						<div class="topic-head">
+							<h2 class="topic-name">
+								<a href={tagHref(topic.slug)}>{topic.tag}</a>
+							</h2>
+							<p class="topic-count mono">{entryCount(topic.count)}</p>
+						</div>
+						<ul class="topic-entries">
+							{topic.entries.map((entry) => (
+								<li>
+									<a
+										class="topic-entry"
+										href={entry.href}
+										{...(entry.external
+											? { target: "_blank", rel: "noopener noreferrer" }
+											: {})}
+									>
+										{entry.title}
+									</a>
+									<span class="topic-entry-meta mono">
+										{FEED_KIND_LABEL[entry.kind]}
+										<span class="topic-sep" aria-hidden="true">
+											·
+										</span>
+										{dateFmt.format(entry.date)}
+									</span>
+								</li>
+							))}
+						</ul>
+					</li>
+				))
+			}
+		</ul>
+
+		<p class="topics-note">
+			Tags are written by hand on articles and on the demo videos they fit. Releases are not
+			tagged: a build is a point in time rather than a subject, and every version is listed in the
+			<a href="/downloads">downloads archive</a>. The full timeline, tagged or not, is on the <a
+				href="/blog">blog</a
+			>.
+		</p>
+	</div>
+</Article>
+
+{/* `is:inline` for the same reason the timeline is: these rules belong to the
+    tag pages, not to the one stylesheet every route loads and the landing
+    page's size budget measures. */}
+<style is:inline>
+	.topics .topics-list {
+		list-style: none;
+		padding: 0;
+		margin: var(--space-7) 0 0;
+	}
+	/* Rendered inside `.prose`, which margins every list item after the first.
+	   Spacing here comes from the row padding, not from that. */
+	.topics .topics-list > li,
+	.topics .topic-entries > li {
+		margin: 0;
+	}
+	.topics .topic {
+		display: grid;
+		grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+		gap: var(--space-3) var(--space-6);
+		padding: var(--space-5) 0;
+		border-top: 1px solid var(--hairline);
+	}
+	.topics .topic:last-child {
+		border-bottom: 1px solid var(--hairline);
+	}
+	.topic-head {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.topics .topic-name {
+		font-size: var(--text-base);
+		font-weight: 500;
+		letter-spacing: var(--tracking-tight);
+		margin: 0;
+	}
+	.topics .topic-name a {
+		color: var(--paper);
+		text-decoration: none;
+		transition: color var(--dur-base) var(--ease-out);
+	}
+	.topics .topic-name a:hover,
+	.topics .topic-name a:focus-visible {
+		color: var(--cyan-core);
+	}
+	.topic-count {
+		font-size: var(--text-mono);
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.topics .topic-entries {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+	.topics .topic-entry {
+		color: var(--fog-3);
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+	}
+	.topics .topic-entry:hover {
+		color: var(--cyan-core);
+		border-color: var(--accent-border);
+	}
+	.topic-entry-meta {
+		display: block;
+		margin-top: 2px;
+		font-size: var(--text-mono);
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.topic-sep {
+		margin: 0 6px;
+	}
+	.topics .topics-note {
+		margin-top: var(--space-6);
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
+		max-width: 62ch;
+	}
+	.topics .topics-note a {
+		color: var(--cyan-core);
+		text-decoration: none;
+		border-bottom: 1px solid var(--accent-border);
+	}
+	.topics .topics-note a:hover {
+		color: var(--cyan-bright);
+	}
+	.topics a:focus-visible {
+		outline: 2px solid var(--cyan-core);
+		outline-offset: 2px;
+	}
+
+	@media (max-width: 640px) {
+		.topics .topic {
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--space-3);
+		}
+	}
+</style>

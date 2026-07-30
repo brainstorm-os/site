@@ -30,8 +30,11 @@ export interface FeedEntry {
 	summary: string;
 	/** Site-relative for articles and releases; absolute for videos. */
 	href: string;
-	/** Secondary line next to the date (version + channel, tags, run time). */
+	/** Secondary line next to the date (channel, run time). */
 	meta: string;
+	/** Topics this entry is filed under. Each one links to its own tag page.
+	 *  Articles and demo videos carry tags; releases never do — see below. */
+	tags: string[];
 	/** Short bullets — release highlights. Empty for everything else. */
 	points: string[];
 	/** YouTube id, present only on video entries (drives the on-page lightbox). */
@@ -57,7 +60,8 @@ export async function buildFeed(): Promise<FeedEntry[]> {
 			title: post.data.title,
 			summary: post.data.summary,
 			href: `/blog/${post.id}`,
-			meta: post.data.tags.join(" · "),
+			meta: "",
+			tags: post.data.tags,
 			points: [],
 			external: false,
 		}),
@@ -77,6 +81,11 @@ export async function buildFeed(): Promise<FeedEntry[]> {
 			summary,
 			href: `/downloads#v${version}`,
 			meta: channel,
+			// Releases carry no tags. A build is a point in time, not a topic, and
+			// the honest alternative — inventing a subject for each of ~30 archived
+			// versions — would fill the tag pages with entries nobody filed there.
+			// The version archive on /downloads is how you browse releases.
+			tags: [],
 			points: showsHighlights(version, index === 0) ? highlights.slice(0, MAX_POINTS) : [],
 			external: false,
 		};
@@ -91,6 +100,7 @@ export async function buildFeed(): Promise<FeedEntry[]> {
 			summary: entry.data.summary,
 			href: `https://www.youtube.com/watch?v=${entry.data.video}`,
 			meta: entry.data.duration,
+			tags: entry.data.tags,
 			points: [],
 			videoId: entry.data.video,
 			external: true,

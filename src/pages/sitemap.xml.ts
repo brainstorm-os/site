@@ -2,6 +2,8 @@ import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
 import { SITE_URL } from "~/content/site";
 import { type Lang, languages, localizePath } from "~/i18n/ui";
+import { buildFeed } from "~/lib/feed";
+import { collectTags, tagHref } from "~/lib/tags";
 
 // A single sitemap.xml for the marketing site, generated off SITE_URL so the
 // domain never drifts. Only indexable routes belong here — /joined is the
@@ -13,9 +15,11 @@ import { type Lang, languages, localizePath } from "~/i18n/ui";
 // versions instead of treating them as duplicates.
 const routes = ["/", "/apps", "/downloads", "/privacy"];
 // English-only routes (legal pages + the blog) — emitted once, with no locale
-// alternates. Blog post slugs are appended from the content collection below.
+// alternates. Blog post slugs and tag pages are appended from the content
+// collections below, off the same helpers the pages are generated from, so a
+// listed URL is always a URL the build produced.
 // The RSS feed is a subscription endpoint, not a page, so it stays out.
-const enOnlyRoutes = ["/terms", "/blog"];
+const enOnlyRoutes = ["/terms", "/blog", "/blog/tags"];
 const langs = Object.keys(languages) as Lang[];
 
 function alternatesXml(route: string): string {
@@ -31,7 +35,10 @@ function alternatesXml(route: string): string {
 
 export const GET: APIRoute = async () => {
 	const posts = await getCollection("blog");
-	const enOnly = enOnlyRoutes.concat(posts.map((post) => `/blog/${post.id}`));
+	const tags = collectTags(await buildFeed());
+	const enOnly = enOnlyRoutes
+		.concat(posts.map((post) => `/blog/${post.id}`))
+		.concat(tags.map((tag) => tagHref(tag.slug)));
 	const urls = routes
 		.flatMap((route) =>
 			langs.map((lang) => {

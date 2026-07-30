@@ -1,0 +1,123 @@
+---
+import { type TagSummary, tagHref } from "~/lib/tags";
+
+interface Props {
+	tags: TagSummary[];
+	/** Slug of the tag whose page this is, if any. */
+	activeSlug?: string;
+	/** Small lead-in label rendered before the chips. */
+	label?: string;
+	/** Announce the count in the chip's accessible name (the tag index does it
+	 *  in visible text instead). */
+	countInLabel?: boolean;
+}
+
+const { tags, activeSlug, label, countInLabel = false } = Astro.props;
+
+const plural = (count: number) => (count === 1 ? "1 entry" : `${count} entries`);
+---
+
+{
+	tags.length > 0 && (
+		<nav class="tag-row" aria-label={label ?? "Topics"}>
+			{label && <span class="tag-row__label mono">{label}</span>}
+			<ul class="tag-row__list">
+				{tags.map((tag) => (
+					<li>
+						<a
+							class="tag-chip"
+							href={tagHref(tag.slug)}
+							{...(tag.slug === activeSlug ? { "aria-current": "page" } : {})}
+							{...(countInLabel ? { "aria-label": `${tag.tag}, ${plural(tag.count)}` } : {})}
+						>
+							{tag.tag}
+						</a>
+					</li>
+				))}
+				{Astro.slots.has("default") && (
+					<li>
+						<slot />
+					</li>
+				)}
+			</ul>
+		</nav>
+	)
+}
+
+{/* `is:inline` keeps these rules out of the one stylesheet every route loads —
+    the landing page's size budget measures that file, and tag chrome has no
+    business inside it. Selectors are `tag-`-prefixed and rooted at `.tag-row`,
+    which is the scoping Astro would otherwise add. */}
+<style is:inline>
+	.tag-row {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: var(--space-2) var(--space-3);
+	}
+	.tag-row .tag-row__label {
+		font-size: var(--text-mono);
+		color: var(--fog-1);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+	}
+	.tag-row .tag-row__list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	/* Every rule above is doubled up on `.tag-row` to out-specify `.prose ul`
+	   and `.prose li + li`: these rows render inside the article prose, whose
+	   list padding indents the chips and whose 0.5em item margin pushes all but
+	   the first chip in a wrapped row down by half a line. */
+	.tag-row .tag-row__list > li {
+		margin: 0;
+	}
+	/* Filled, borderless: readably different from the outlined kind-filter chips
+	   next to it on /blog, which switch a view rather than navigate. */
+	.tag-row .tag-chip {
+		display: inline-block;
+		padding: 5px 12px;
+		border-radius: var(--radius-pill);
+		border: 1px solid transparent;
+		background: var(--accent-soft);
+		color: var(--cyan-core);
+		font-size: var(--text-xs);
+		line-height: 1.3;
+		text-decoration: none;
+		transition:
+			border-color var(--dur-base) var(--ease-out),
+			color var(--dur-base) var(--ease-out);
+	}
+	.tag-row .tag-chip:hover {
+		border-color: var(--accent-border);
+		color: var(--cyan-bright);
+	}
+	/* The current tag is inverted, and carries aria-current="page" so the state
+	   reaches a screen reader without depending on the fill. */
+	.tag-row .tag-chip[aria-current="page"] {
+		background: var(--cyan-core);
+		border-color: var(--cyan-core);
+		color: var(--bg-mid);
+	}
+	/* The trailing "all of them" link: outlined instead of filled, because it
+	   leaves the row rather than being one more topic in it. */
+	.tag-row .tag-chip--more {
+		background: none;
+		border-color: var(--hairline-strong);
+		color: var(--fog-2);
+	}
+	.tag-row .tag-chip--more:hover {
+		border-color: var(--cyan-glow);
+		color: var(--paper);
+	}
+	/* The global reset drops focus rings everywhere; interactive chrome puts one
+	   back, or the row is unusable by keyboard. */
+	.tag-row .tag-chip:focus-visible {
+		outline: 2px solid var(--cyan-core);
+		outline-offset: 2px;
+	}
+</style>

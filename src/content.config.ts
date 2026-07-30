@@ -76,6 +76,10 @@ const videos = defineCollection({
 		summary: z.string().min(20),
 		video: z.string().min(6),
 		duration: z.string(),
+		// Optional, and only where a tag is literally true of the footage. A video
+		// with no topic that matches the written vocabulary stays untagged rather
+		// than growing the vocabulary a singleton.
+		tags: z.array(z.string()).default([]),
 	}),
 });
 
