@@ -11,6 +11,9 @@ export const GET: APIRoute = async () => {
 		(a, b) => a.data.order - b.data.order,
 	);
 	const apps = (await getCollection("apps")).sort((a, b) => a.data.order - b.data.order);
+	const blog = (await getCollection("blog")).sort(
+		(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+	);
 
 	const sections: string[] = [
 		`# ${SITE_NAME}`,
@@ -38,6 +41,10 @@ export const GET: APIRoute = async () => {
 		`- [Documentation](${links.docs}): using ${SITE_NAME} — vaults, apps, objects, local-first sync, and the permission model`,
 		`- [Docs llms.txt](${links.docs}/llms.txt): machine-readable index of the documentation`,
 		`- [Docs llms-full.txt](${links.docs}/llms-full.txt): the full documentation corpus as a single Markdown file`,
+		"",
+		"## Blog",
+		"",
+		...blog.map((p) => `- [${p.data.title}](${SITE_URL}/blog/${p.id}): ${p.data.summary}`),
 		"",
 		"## Source",
 		"",
