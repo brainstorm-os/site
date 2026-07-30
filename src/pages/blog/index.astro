@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import Article from "~/layouts/Article.astro";
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const dateFmt = new Intl.DateTimeFormat("en", { year: "numeric", month: "short", day: "numeric" });
+---
+
+<Article
+	title="Blog"
+	description="Design decisions, retrospectives, and the occasional advisory — written from the same design docs the product is built from."
+	eyebrow="Writing"
+	localized={false}
+>
+	<ul class="blog-list">
+		{
+			posts.map((post) => (
+				<li>
+					<p class="mono blog-date">
+						<time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+					</p>
+					<h2>
+						<a href={`/blog/${post.id}`}>{post.data.title}</a>
+					</h2>
+					<p>{post.data.summary}</p>
+				</li>
+			))
+		}
+	</ul>
+</Article>
+
+<style>
+	.blog-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 2.5rem;
+	}
+	.blog-list h2 {
+		margin: 0.15rem 0 0.35rem;
+	}
+	.blog-date {
+		margin: 0;
+		opacity: 0.7;
+		font-size: 0.85em;
+	}
+</style>

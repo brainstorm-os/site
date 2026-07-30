@@ -1,0 +1,37 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Article from "~/layouts/Article.astro";
+
+// Blog posts are English-only (localized={false}) — the design-decision essays
+// are written once, in the voice of the design docs they link to.
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+	post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const kindLabel: Record<CollectionEntry<"blog">["data"]["kind"], string> = {
+	decision: "Design decision",
+	retrospective: "Retrospective",
+	advisory: "Advisory",
+	tutorial: "Tutorial",
+};
+---
+
+<Article
+	title={post.data.title}
+	description={post.data.summary}
+	eyebrow={kindLabel[post.data.kind]}
+	date={post.data.date}
+	meta={post.data.tags.join(" · ")}
+	localized={false}
+>
+	<Content />
+	<p class="mono"><a href="/blog">← All posts</a></p>
+</Article>

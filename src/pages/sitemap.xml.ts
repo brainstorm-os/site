@@ -1,3 +1,4 @@
+import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
 import { SITE_URL } from "~/content/site";
 import { type Lang, languages, localizePath } from "~/i18n/ui";
@@ -11,8 +12,9 @@ import { type Lang, languages, localizePath } from "~/i18n/ui";
 // alternates for all locales (+ x-default) so Google clusters the language
 // versions instead of treating them as duplicates.
 const routes = ["/", "/apps", "/downloads", "/privacy"];
-// English-only routes (legal pages) — emitted once, with no locale alternates.
-const enOnlyRoutes = ["/terms"];
+// English-only routes (legal pages + the blog) — emitted once, with no locale
+// alternates. Blog post slugs are appended from the content collection below.
+const enOnlyRoutes = ["/terms", "/blog"];
 const langs = Object.keys(languages) as Lang[];
 
 function alternatesXml(route: string): string {
@@ -26,7 +28,9 @@ function alternatesXml(route: string): string {
 	return links.join("\n");
 }
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+	const posts = await getCollection("blog");
+	const enOnly = enOnlyRoutes.concat(posts.map((post) => `/blog/${post.id}`));
 	const urls = routes
 		.flatMap((route) =>
 			langs.map((lang) => {
@@ -34,7 +38,7 @@ export const GET: APIRoute = () => {
 				return `\t<url>\n\t\t<loc>${loc}</loc>\n${alternatesXml(route)}\n\t</url>`;
 			}),
 		)
-		.concat(enOnlyRoutes.map((route) => `\t<url>\n\t\t<loc>${SITE_URL}${route}</loc>\n\t</url>`))
+		.concat(enOnly.map((route) => `\t<url>\n\t\t<loc>${SITE_URL}${route}</loc>\n\t</url>`))
 		.join("\n");
 
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
