@@ -1,7 +1,7 @@
 ---
 date: 2026-07-30
-title: An app is two files — and the agent can write them
-summary: How Brainstorm's app model stays small enough to type by hand, what the built-in agent actually sees of your vault, and why the capability ledger doesn't care who wrote the code.
+title: An app can be two files — and the agent can write them
+summary: How Brainstorm's app model stays small enough to type by hand yet grows to full React apps, what the built-in agent actually sees of your vault, and why the capability ledger doesn't care who wrote the code.
 kind: decision
 tags:
   - app-platform
@@ -12,9 +12,9 @@ source: brainstorm/docs/apps/03-app-model.md
 
 Brainstorm is a desktop shell that hosts sandboxed apps — Notes, Tasks, Calendar, a Database, twenty-odd others. All of them are built the same way, on the same SDK, behind the same permission system. Which raises the obvious question: can *you* build one?
 
-Yes, and the whole platform contract fits in one sentence: **an app is a `manifest.json` and an `index.html`.**
+Yes, and the whole platform contract fits in one sentence: **a valid app is a `manifest.json` and an entry `index.html`.**
 
-No bundler, no `npm install`, no terminal, no build step. You can write both files inside Brainstorm's own code editor and install the app straight out of your vault. And since the agent can draft code files too, you can also just describe the app you want — with the same guarantees either way. This post walks through why the model is that small, what the agent actually sees when it works in your vault, and why "who wrote the code" turns out not to matter.
+That's the floor, not the ceiling. A bundle can ship whatever its page needs — scripts, stylesheets, images, fonts, web workers — and the first-party apps are exactly that: full React bundles with the same two load-bearing pieces, a manifest and an entry page. What the floor buys you is that *no build step is required to reach it*: no bundler, no `npm install`, no terminal. A useful app really can be two files you write inside Brainstorm's own code editor and install straight out of your vault. And since the agent can draft code files too, you can also just describe the app you want — with the same guarantees either way. This post walks through why the minimum is that small, what the agent actually sees when it works in your vault, and why "who wrote the code" turns out not to matter.
 
 ## The manifest is data, not code
 
@@ -47,7 +47,7 @@ What an app *cannot* get, from any API, at any trust level: filesystem paths, ne
 
 ## Install from your own vault
 
-Since the app is two text files, and Brainstorm has a code editor, the shortest possible path is: write the files in your vault, then install them from there. That path shipped in the latest builds. The Marketplace's *Install from…* menu offers *From vault code files…*, which finds groups of code-file entities that contain a `manifest.json`, validates them shell-side, and runs the result through the exact same installer — same consent sheet, same ledger write, same unsigned advisory.
+Since a small app is just text files, and Brainstorm has a code editor, the shortest possible path is: write the files in your vault, then install them from there. That path shipped in the latest builds. The Marketplace's *Install from…* menu offers *From vault code files…*, which finds groups of code-file entities that contain a `manifest.json`, validates them shell-side, and runs the result through the exact same installer — same consent sheet, same ledger write, same unsigned advisory. Bundles that carry more than text — icons, images, other binary assets — install through the same menu from a local folder or a `.brainstorm` file instead; the vault path is optimised for the code-editor loop.
 
 One design detail worth naming: the install affordance lives in the shell's dashboard, not in the code editor. The editor is just another sandboxed app; giving it an "install" button would have created a new privileged surface reachable from app code. Keeping the gesture in trusted chrome means the vault-install feature added zero new attack surface reachable by any app.
 
@@ -73,7 +73,7 @@ Notice what the agent never touches: the installer. There is no "agent installs 
 
 ## The punchline: the ledger doesn't care who wrote the code
 
-Three ways to produce the same two files — type them in the code editor, sideload them from disk, or let the agent draft them for your approval. All three converge on the same installer, the same consent sheet, the same ledger entry, the same broker standing between the running app and your data. The finished app sees what it was granted; asking for more comes back refused, whoever the author was.
+Three ways to produce the same bundle — type it in the code editor, sideload it from disk, or let the agent draft it for your approval. All three converge on the same installer, the same consent sheet, the same ledger entry, the same broker standing between the running app and your data. The finished app sees what it was granted; asking for more comes back refused, whoever the author was.
 
 That convergence is the design. We didn't build a separate "AI app builder" with its own trust rules; we made the platform contract small enough that writing an app is within reach of a person typing for ninety seconds *or* a model drafting under supervision — and put all the safety in the one place that doesn't care about authorship.
 
