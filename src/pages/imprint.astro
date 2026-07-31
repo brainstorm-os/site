@@ -4,8 +4,6 @@ import Article from "~/layouts/Article.astro";
 
 // §5 DDG provider identification.
 const PROVIDER_NAME = "Andrey Simachev";
-const PROVIDER_STREET = "Schreinerstr. 17";
-const PROVIDER_CITY = "10247 Berlin";
 const PROVIDER_COUNTRY = "Germany";
 const PROVIDER_EMAIL = "founder@getbrainstorm.online";
 ---
@@ -21,11 +19,11 @@ const PROVIDER_EMAIL = "founder@getbrainstorm.online";
 	<p>
 		{PROVIDER_NAME}
 		<br />
-		{PROVIDER_STREET}
-		<br />
-		{PROVIDER_CITY}
-		<br />
-		{PROVIDER_COUNTRY}
+		Berlin, {PROVIDER_COUNTRY}
+	</p>
+	<p>
+		Ladungsfähige Anschrift wird auf begründete Anfrage mitgeteilt. — A serviceable
+		postal address is provided on legitimate request.
 	</p>
 
 	<h2>Kontakt / Contact</h2>
@@ -37,7 +35,7 @@ const PROVIDER_EMAIL = "founder@getbrainstorm.online";
 
 	<h2>Verantwortlich für den Inhalt nach §18 Abs. 2 MStV</h2>
 	<p>
-		{PROVIDER_NAME}, {PROVIDER_STREET}, {PROVIDER_CITY}
+		{PROVIDER_NAME}, Berlin
 	</p>
 
 	<h2>Verbraucherstreitbeilegung / Consumer dispute resolution</h2>
