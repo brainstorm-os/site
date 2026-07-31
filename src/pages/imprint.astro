@@ -1,0 +1,59 @@
+---
+import { links } from "~/content/site";
+import Article from "~/layouts/Article.astro";
+
+// §5 DDG provider identification. Fill these before this page deploys —
+// placeholders in square brackets must never reach production.
+const PROVIDER_NAME = "[FULL LEGAL NAME]";
+const PROVIDER_STREET = "[STREET AND NUMBER]";
+const PROVIDER_CITY = "[POSTCODE] Berlin";
+const PROVIDER_COUNTRY = "Germany";
+const PROVIDER_EMAIL = "founder@getbrainstorm.online";
+---
+
+<Article
+	title="Impressum"
+	description="Legal notice — provider identification under §5 DDG."
+	eyebrow="Legal"
+	date={new Date("2026-07-31")}
+	localized={false}
+>
+	<h2>Angaben gemäß §5 DDG / Provider identification</h2>
+	<p>
+		{PROVIDER_NAME}
+		<br />
+		{PROVIDER_STREET}
+		<br />
+		{PROVIDER_CITY}
+		<br />
+		{PROVIDER_COUNTRY}
+	</p>
+
+	<h2>Kontakt / Contact</h2>
+	<p>
+		E-Mail: <a href={`mailto:${PROVIDER_EMAIL}`}>{PROVIDER_EMAIL}</a>
+		<br />
+		<a href={links.github} rel="noopener noreferrer">GitHub</a>
+	</p>
+
+	<h2>Verantwortlich für den Inhalt nach §18 Abs. 2 MStV</h2>
+	<p>
+		{PROVIDER_NAME}, {PROVIDER_STREET}, {PROVIDER_CITY}
+	</p>
+
+	<h2>Verbraucherstreitbeilegung / Consumer dispute resolution</h2>
+	<p>
+		Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+		Verbraucherschlichtungsstelle teilzunehmen. — We are neither willing nor obliged to
+		participate in dispute-resolution proceedings before a consumer arbitration board.
+	</p>
+
+	<h2>Haftung für Links / Liability for links</h2>
+	<p>
+		Diese Website verlinkt auf externe Seiten Dritter, auf deren Inhalte wir keinen Einfluss
+		haben; für diese Inhalte ist stets der jeweilige Anbieter verantwortlich. — This site
+		links to external third-party sites whose content we do not control; the respective
+		provider is responsible for that content. See also the
+		<a href="/privacy">privacy policy</a> and the <a href="/terms">terms of use</a>.
+	</p>
+</Article>
