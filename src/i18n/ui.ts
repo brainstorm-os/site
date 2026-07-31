@@ -104,6 +104,7 @@ export const ui = {
 		"footer.opensource": "Open source · AGPL-3.0",
 		"footer.privacy": "Privacy",
 		"footer.terms": "Terms",
+		"footer.imprint": "Imprint",
 		"newsletter.cta": "Subscribe",
 		"newsletter.success": "You're subscribed. We'll send the occasional update.",
 		"cta.download": "Download",
@@ -138,6 +139,7 @@ export const ui = {
 		"footer.opensource": "Quelloffen · AGPL-3.0",
 		"footer.privacy": "Datenschutz",
 		"footer.terms": "Nutzungsbedingungen",
+		"footer.imprint": "Impressum",
 		"newsletter.cta": "Abonnieren",
 		"newsletter.success": "Du bist dabei. Wir melden uns gelegentlich mit Neuigkeiten.",
 		"cta.download": "Herunterladen",
@@ -172,6 +174,7 @@ export const ui = {
 		"footer.opensource": "Open source · AGPL-3.0",
 		"footer.privacy": "Confidentialité",
 		"footer.terms": "Conditions d'utilisation",
+		"footer.imprint": "Mentions légales",
 		"newsletter.cta": "S'abonner",
 		"newsletter.success":
 			"Vous êtes abonné. Nous vous enverrons quelques nouvelles de temps à autre.",

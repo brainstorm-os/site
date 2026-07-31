@@ -19,7 +19,7 @@ const routes = ["/", "/apps", "/downloads", "/privacy"];
 // collections below, off the same helpers the pages are generated from, so a
 // listed URL is always a URL the build produced.
 // The RSS feed is a subscription endpoint, not a page, so it stays out.
-const enOnlyRoutes = ["/terms", "/blog", "/blog/tags"];
+const enOnlyRoutes = ["/terms", "/imprint", "/blog", "/blog/tags"];
 const langs = Object.keys(languages) as Lang[];
 
 function alternatesXml(route: string): string {
