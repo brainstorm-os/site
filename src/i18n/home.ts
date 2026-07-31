@@ -23,6 +23,17 @@ interface Cap {
 	summary: string;
 }
 
+interface PricingTier {
+	name: string;
+	price: string;
+	per: string;
+	annual?: string;
+	tagline: string;
+	features: string[];
+	/** True only for the tier you can use today (Free). */
+	available: boolean;
+}
+
 export interface HomeCopy {
 	seoTitle: string;
 	seoDescription: string;
@@ -63,6 +74,23 @@ export interface HomeCopy {
 		title: string;
 		lede: string;
 		items: RoadmapItem[];
+	};
+	pricing: {
+		eyebrow: string;
+		title: string;
+		lede: string;
+		comingBadge: string;
+		tiers: PricingTier[];
+		enterprise: { title: string; body: string; cta: string };
+		freeNote: string;
+		pricesNote: string;
+		waitlist: {
+			lede: string;
+			cta: string;
+			success: string;
+			emailLabel: string;
+			placeholder: string;
+		};
 	};
 	closer: {
 		title: string;
@@ -220,6 +248,87 @@ const en: HomeCopy = {
 			},
 		],
 	},
+	pricing: {
+		eyebrow: "Pricing",
+		title: "The product is free. The infrastructure is optional.",
+		lede:
+			"Everything that runs on your machine is free, forever — every app, your own sync, your own AI keys. Paid plans add hosted infrastructure we run for you, and they arrive with the commercial release.",
+		comingBadge: "Coming soon",
+		tiers: [
+			{
+				name: "Free",
+				price: "$0",
+				per: "forever",
+				tagline: "The whole product, on your machine.",
+				features: [
+					"All bundled apps, unlimited local storage",
+					"Sync over your own network — no server needed",
+					"Self-hosted relay and peer-to-peer sharing",
+					"Local AI, plus bring-your-own provider keys",
+					"Import and export everything — no lock-in",
+				],
+				available: true,
+			},
+			{
+				name: "Plus",
+				price: "$4.99",
+				per: "/ month",
+				annual: "$49.99 / year — two months free",
+				tagline: "Your devices, talking seamlessly.",
+				features: [
+					"Hosted end-to-end encrypted relay, up to 5 devices",
+					"20 GB cloud attachments",
+					"Encrypted key backup and recovery",
+					"90-day sync history",
+				],
+				available: false,
+			},
+			{
+				name: "Pro",
+				price: "$14.99",
+				per: "/ month",
+				annual: "$149.99 / year",
+				tagline: "Headroom and priority for power users.",
+				features: [
+					"Up to 15 devices, priority relay routing",
+					"200 GB cloud attachments",
+					"$5 / month of bundled AI credits",
+					"365-day sync history and priority support",
+				],
+				available: false,
+			},
+			{
+				name: "Team",
+				price: "$19",
+				per: "/ seat / month",
+				annual: "$190 / seat / year",
+				tagline: "Shared spaces for groups that think together.",
+				features: [
+					"Everything in Pro, pooled across the team",
+					"Shared org spaces with role-based access",
+					"Admin tools and audit log",
+					"$10 / seat monthly AI credits",
+				],
+				available: false,
+			},
+		],
+		enterprise: {
+			title: "Enterprise",
+			body:
+				"$39 / seat / month baseline — SSO (SAML / OIDC), SCIM provisioning, custom DPA, configurable audit retention, and an on-prem relay option. Volume discounts are published on the rate card, not negotiated in the dark.",
+			cta: "Talk to us",
+		},
+		freeNote:
+			"Free is not a trial. Local persistence, every bundled app, peer-to-peer sync, self-hosting, your own AI keys, and full import/export stay free, forever.",
+		pricesNote: "Hosted plans open with the commercial release; listed prices are launch targets.",
+		waitlist: {
+			lede: "Want hosted sync the moment it opens?",
+			cta: "Get notified",
+			success: "You're on the list. We'll email you when hosted plans open.",
+			emailLabel: "Email address",
+			placeholder: "you@example.com",
+		},
+	},
 	closer: {
 		title: "Own your tools again",
 		lede: "Free, local-first, and yours. Download the public beta for macOS, Windows, or Linux.",
@@ -376,6 +485,88 @@ const de: HomeCopy = {
 					"Bau heute auf dem offenen SDK, dann entdecke, installiere und veröffentliche Apps von Drittanbietern — jede in derselben Sandbox, unter denselben Fähigkeiten-Erlaubnissen, die du steuerst.",
 			},
 		],
+	},
+	pricing: {
+		eyebrow: "Preise",
+		title: "Das Produkt ist kostenlos. Die Infrastruktur ist optional.",
+		lede:
+			"Alles, was auf deinem Rechner läuft, ist für immer kostenlos — jede App, deine eigene Synchronisierung, deine eigenen KI-Schlüssel. Bezahlte Pläne fügen gehostete Infrastruktur hinzu, die wir für dich betreiben — sie kommen mit dem kommerziellen Release.",
+		comingBadge: "Bald verfügbar",
+		tiers: [
+			{
+				name: "Free",
+				price: "0 $",
+				per: "für immer",
+				tagline: "Das ganze Produkt, auf deinem Rechner.",
+				features: [
+					"Alle mitgelieferten Apps, unbegrenzter lokaler Speicher",
+					"Synchronisierung über dein eigenes Netzwerk — kein Server nötig",
+					"Selbst gehostetes Relay und Peer-to-Peer-Teilen",
+					"Lokale KI, plus eigene Provider-Schlüssel",
+					"Alles importieren und exportieren — kein Lock-in",
+				],
+				available: true,
+			},
+			{
+				name: "Plus",
+				price: "4,99 $",
+				per: "/ Monat",
+				annual: "49,99 $ / Jahr — zwei Monate geschenkt",
+				tagline: "Deine Geräte, nahtlos im Gespräch.",
+				features: [
+					"Gehostetes Ende-zu-Ende-verschlüsseltes Relay, bis zu 5 Geräte",
+					"20 GB Cloud-Anhänge",
+					"Verschlüsseltes Schlüssel-Backup und Wiederherstellung",
+					"90 Tage Sync-Verlauf",
+				],
+				available: false,
+			},
+			{
+				name: "Pro",
+				price: "14,99 $",
+				per: "/ Monat",
+				annual: "149,99 $ / Jahr",
+				tagline: "Spielraum und Priorität für Power-User.",
+				features: [
+					"Bis zu 15 Geräte, priorisiertes Relay-Routing",
+					"200 GB Cloud-Anhänge",
+					"5 $ / Monat an KI-Guthaben inklusive",
+					"365 Tage Sync-Verlauf und Priority-Support",
+				],
+				available: false,
+			},
+			{
+				name: "Team",
+				price: "19 $",
+				per: "/ Platz / Monat",
+				annual: "190 $ / Platz / Jahr",
+				tagline: "Gemeinsame Räume für Gruppen, die zusammen denken.",
+				features: [
+					"Alles aus Pro, im Team gebündelt",
+					"Gemeinsame Org-Räume mit rollenbasiertem Zugriff",
+					"Admin-Werkzeuge und Audit-Log",
+					"10 $ / Platz an monatlichem KI-Guthaben",
+				],
+				available: false,
+			},
+		],
+		enterprise: {
+			title: "Enterprise",
+			body:
+				"39 $ / Platz / Monat als Basis — SSO (SAML / OIDC), SCIM-Provisionierung, individuelle AVV, konfigurierbare Audit-Aufbewahrung und eine On-Prem-Relay-Option. Mengenrabatte stehen öffentlich in der Preisliste, statt im Dunkeln verhandelt zu werden.",
+			cta: "Sprich mit uns",
+		},
+		freeNote:
+			"Free ist keine Testversion. Lokale Speicherung, jede mitgelieferte App, Peer-to-Peer-Sync, Self-Hosting, eigene KI-Schlüssel und voller Import/Export bleiben für immer kostenlos.",
+		pricesNote:
+			"Gehostete Pläne starten mit dem kommerziellen Release; die gelisteten Preise sind Zielpreise zum Start.",
+		waitlist: {
+			lede: "Du willst gehostete Synchronisierung, sobald sie startet?",
+			cta: "Benachrichtigt werden",
+			success: "Du stehst auf der Liste. Wir schreiben dir, sobald die gehosteten Pläne starten.",
+			emailLabel: "E-Mail-Adresse",
+			placeholder: "du@example.com",
+		},
 	},
 	closer: {
 		title: "Besitze deine Werkzeuge wieder",
@@ -536,6 +727,88 @@ const fr: HomeCopy = {
 					"Construisez dès aujourd'hui sur le SDK ouvert, puis découvrez, installez et publiez des applications tierces — chacune tournant dans la même sandbox, sous les mêmes autorisations de capacités que vous contrôlez.",
 			},
 		],
+	},
+	pricing: {
+		eyebrow: "Tarifs",
+		title: "Le produit est gratuit. L'infrastructure est optionnelle.",
+		lede:
+			"Tout ce qui tourne sur votre machine est gratuit, pour toujours — chaque application, votre propre synchronisation, vos propres clés d'IA. Les formules payantes ajoutent une infrastructure hébergée que nous opérons pour vous — elles arriveront avec la version commerciale.",
+		comingBadge: "Bientôt disponible",
+		tiers: [
+			{
+				name: "Free",
+				price: "0 $",
+				per: "pour toujours",
+				tagline: "Le produit complet, sur votre machine.",
+				features: [
+					"Toutes les applications incluses, stockage local illimité",
+					"Synchronisation sur votre propre réseau — aucun serveur requis",
+					"Relais auto-hébergé et partage pair-à-pair",
+					"IA locale, plus vos propres clés de fournisseur",
+					"Import et export de tout — aucun verrouillage",
+				],
+				available: true,
+			},
+			{
+				name: "Plus",
+				price: "4,99 $",
+				per: "/ mois",
+				annual: "49,99 $ / an — deux mois offerts",
+				tagline: "Vos appareils, en dialogue permanent.",
+				features: [
+					"Relais hébergé chiffré de bout en bout, jusqu'à 5 appareils",
+					"20 Go de pièces jointes cloud",
+					"Sauvegarde chiffrée des clés et récupération",
+					"90 jours d'historique de synchronisation",
+				],
+				available: false,
+			},
+			{
+				name: "Pro",
+				price: "14,99 $",
+				per: "/ mois",
+				annual: "149,99 $ / an",
+				tagline: "De la marge et de la priorité pour les utilisateurs intensifs.",
+				features: [
+					"Jusqu'à 15 appareils, routage relais prioritaire",
+					"200 Go de pièces jointes cloud",
+					"5 $ / mois de crédits d'IA inclus",
+					"365 jours d'historique et support prioritaire",
+				],
+				available: false,
+			},
+			{
+				name: "Team",
+				price: "19 $",
+				per: "/ siège / mois",
+				annual: "190 $ / siège / an",
+				tagline: "Des espaces partagés pour les groupes qui pensent ensemble.",
+				features: [
+					"Tout Pro, mutualisé à l'échelle de l'équipe",
+					"Espaces d'organisation partagés avec accès par rôles",
+					"Outils d'administration et journal d'audit",
+					"10 $ / siège de crédits d'IA mensuels",
+				],
+				available: false,
+			},
+		],
+		enterprise: {
+			title: "Enterprise",
+			body:
+				"39 $ / siège / mois en tarif de base — SSO (SAML / OIDC), provisionnement SCIM, DPA sur mesure, rétention d'audit configurable et option de relais on-premise. Les remises de volume sont publiées sur la grille tarifaire, pas négociées dans l'ombre.",
+			cta: "Parlez-nous",
+		},
+		freeNote:
+			"Free n'est pas un essai. La persistance locale, chaque application incluse, la synchronisation pair-à-pair, l'auto-hébergement, vos propres clés d'IA et l'import/export complet restent gratuits, pour toujours.",
+		pricesNote:
+			"Les formules hébergées ouvriront avec la version commerciale ; les prix listés sont des cibles de lancement.",
+		waitlist: {
+			lede: "Vous voulez la synchronisation hébergée dès son ouverture ?",
+			cta: "Être averti",
+			success: "Vous êtes sur la liste. Nous vous écrirons dès l'ouverture des formules hébergées.",
+			emailLabel: "Adresse e-mail",
+			placeholder: "vous@exemple.com",
+		},
 	},
 	closer: {
 		title: "Redevenez maître de vos outils",
