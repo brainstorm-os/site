@@ -38,6 +38,16 @@ const privacy: Record<Lang, PrivacyCopy> = {
 		blocks: [
 			{ heading: "What we collect", level: 2, paragraphs: [] },
 			{
+				heading: "Counting visits — no consent needed, because there is nothing to consent to",
+				level: 3,
+				paragraphs: [
+					"Separately from the analytics above, we count page views. This one runs for everyone, and we want to be plain about why that is not a loophole: it sets no cookie, writes nothing to your device, and creates no identifier that could be used to recognise you on a later visit. There is nothing stored, so there is nothing to ask permission for.",
+					"It exists because consent-based analytics cannot answer a simple question honestly — how many people visited. It only ever sees the people who said yes, so its totals are a fraction of unknown size. Rather than quietly treat that fraction as the whole, we measure the total separately and keep the two apart: this one counts, the one above explains.",
+					"It is run by Vercel, who already host this site and therefore already receive every request you make to it — no new company learns anything new, and no request leaves for another domain. What is recorded is the page path, the referrer, and coarse device and country information derived from the request itself. Never an IP address stored against you, never a profile, never anything you type.",
+					"The legal basis is our legitimate interest in knowing whether the site works, under GDPR Art. 6(1)(f). Because nothing is stored on your device, the ePrivacy consent rules that cover the analytics above do not apply here.",
+				],
+			},
+			{
 				heading: "Usage analytics — only if you say yes",
 				level: 3,
 				manage: true,
@@ -75,7 +85,7 @@ const privacy: Record<Lang, PrivacyCopy> = {
 				heading: "What loads from third parties",
 				level: 2,
 				paragraphs: [
-					"The product-tour video embeds from <code>youtube-nocookie.com</code> and only loads after you press play; until then no request goes to YouTube. The footer shows badges from launch directories we are listed on (VerifiedDR, Endors, KittyLaunch, ListBulb, Product Watch, StartupBase) — loading those images sends the standard request data (IP address, user agent) to those hosts, as with any image on the web. Apart from Amplitude, and only after you say yes, no third-party script runs on this site. Downloads are served from GitHub Releases.",
+					"The product-tour video embeds from <code>youtube-nocookie.com</code> and only loads after you press play; until then no request goes to YouTube. The footer shows badges from launch directories we are listed on (VerifiedDR, Endors, KittyLaunch, ListBulb, Product Watch, StartupBase) — loading those images sends the standard request data (IP address, user agent) to those hosts, as with any image on the web. Apart from Amplitude, and only after you say yes, the only other script on this site is the visit counter described above — served from our own domain by our host, so it contacts no other company. Downloads are served from GitHub Releases.",
 				],
 			},
 			{
@@ -102,6 +112,16 @@ const privacy: Record<Lang, PrivacyCopy> = {
 		intro: `Brainstorm ist ein lokal-first Produkt, und diese Website hält es genauso: so wenig wie möglich erheben, das Erhobene langweilig halten, vor dem Speichern fragen und weder deine Aufmerksamkeit noch deine Daten verkaufen. Diese Seite beschreibt alles, was die Website unter ${SITE_LINK} mit Daten tut. Die Brainstorm-App selbst speichert deine Daten auf deinem Rechner und hat kein Konto-System; nichts auf dieser Seite betrifft die App.`,
 		blocks: [
 			{ heading: "Was wir erheben", level: 2, paragraphs: [] },
+			{
+				heading: "Besuche zählen — ohne Einwilligung, weil es nichts einzuwilligen gibt",
+				level: 3,
+				paragraphs: [
+					"Unabhängig von der Statistik unten zählen wir Seitenaufrufe. Das läuft für alle, und wir wollen offen sagen, warum das kein Schlupfloch ist: Es setzt kein Cookie, schreibt nichts auf dein Gerät und erzeugt keine Kennung, mit der du bei einem späteren Besuch wiedererkannt werden könntest. Es wird nichts gespeichert, also gibt es nichts, wofür wir um Erlaubnis fragen müssten.",
+					"Es existiert, weil einwilligungsbasierte Statistik eine einfache Frage nicht ehrlich beantworten kann — wie viele Menschen die Seite besucht haben. Sie sieht immer nur die, die zugestimmt haben, ihre Summen sind also ein Bruchteil unbekannter Größe. Statt diesen Bruchteil stillschweigend für das Ganze zu halten, messen wir die Gesamtzahl getrennt: Diese Zählung zählt, die Statistik unten erklärt.",
+					"Betrieben wird sie von Vercel, die diese Seite ohnehin hosten und daher jede Anfrage bereits erhalten — kein neues Unternehmen erfährt etwas Neues, und keine Anfrage verlässt die Domain. Erfasst werden der Seitenpfad, der Referrer sowie grobe Geräte- und Länderangaben aus der Anfrage selbst. Niemals eine dir zugeordnete IP-Adresse, niemals ein Profil, niemals etwas, das du eintippst.",
+					"Rechtsgrundlage ist unser berechtigtes Interesse zu wissen, ob die Seite funktioniert, nach Art. 6 Abs. 1 lit. f DSGVO. Da nichts auf deinem Gerät gespeichert wird, greifen die ePrivacy-Einwilligungsregeln, die für die Statistik unten gelten, hier nicht.",
+				],
+			},
 			{
 				heading: "Nutzungsstatistik — nur wenn du zustimmst",
 				level: 3,
@@ -140,7 +160,7 @@ const privacy: Record<Lang, PrivacyCopy> = {
 				heading: "Was von Dritten geladen wird",
 				level: 2,
 				paragraphs: [
-					"Das Produkt-Tour-Video ist von <code>youtube-nocookie.com</code> eingebettet und lädt erst, wenn du auf Play drückst; vorher geht keine Anfrage an YouTube. Der Fußbereich zeigt Badges von Launch-Verzeichnissen, in denen wir gelistet sind (VerifiedDR, Endors, KittyLaunch, ListBulb, Product Watch, StartupBase) — das Laden dieser Bilder sendet die üblichen Anfragedaten (IP-Adresse, User-Agent) an diese Hosts, wie bei jedem Bild im Web. Außer Amplitude, und auch das erst nach deinem Ja, läuft kein Skript Dritter auf dieser Website. Downloads kommen von GitHub Releases.",
+					"Das Produkt-Tour-Video ist von <code>youtube-nocookie.com</code> eingebettet und lädt erst, wenn du auf Play drückst; vorher geht keine Anfrage an YouTube. Der Fußbereich zeigt Badges von Launch-Verzeichnissen, in denen wir gelistet sind (VerifiedDR, Endors, KittyLaunch, ListBulb, Product Watch, StartupBase) — das Laden dieser Bilder sendet die üblichen Anfragedaten (IP-Adresse, User-Agent) an diese Hosts, wie bei jedem Bild im Web. Außer Amplitude, und auch das erst nach deinem Ja, ist das einzige weitere Skript auf dieser Website die oben beschriebene Besuchszählung — von unserer eigenen Domain durch unseren Hoster ausgeliefert, sie kontaktiert also kein weiteres Unternehmen. Downloads kommen von GitHub Releases.",
 				],
 			},
 			{
@@ -167,6 +187,16 @@ const privacy: Record<Lang, PrivacyCopy> = {
 		intro: `Brainstorm est un produit local-first, et ce site suit la même ligne : collecter le moins possible, garder ce qui est collecté ennuyeux, demander avant de conserver quoi que ce soit, et ne jamais monnayer votre attention ni vos données. Cette page décrit tout ce que le site ${SITE_LINK} fait avec des données. L'application Brainstorm, elle, garde vos données sur votre machine et n'a aucun système de compte ; rien ici ne concerne l'application.`,
 		blocks: [
 			{ heading: "Ce que nous collectons", level: 2, paragraphs: [] },
+			{
+				heading: "Compter les visites — sans consentement, parce qu'il n'y a rien à consentir",
+				level: 3,
+				paragraphs: [
+					"Indépendamment de la mesure ci-dessous, nous comptons les pages vues. Celle-ci fonctionne pour tout le monde, et nous tenons à dire clairement pourquoi ce n'est pas un contournement : elle ne dépose aucun cookie, n'écrit rien sur votre appareil et ne crée aucun identifiant permettant de vous reconnaître lors d'une visite ultérieure. Rien n'est stocké, il n'y a donc rien pour quoi demander une permission.",
+					"Elle existe parce qu'une mesure fondée sur le consentement ne peut pas répondre honnêtement à une question simple : combien de personnes sont venues. Elle ne voit que celles qui ont accepté, ses totaux sont donc une fraction de taille inconnue. Plutôt que de faire passer discrètement cette fraction pour le tout, nous mesurons le total séparément : celle-ci compte, celle ci-dessous explique.",
+					"Elle est opérée par Vercel, qui héberge déjà ce site et reçoit donc déjà chacune de vos requêtes — aucune nouvelle entreprise n'apprend quoi que ce soit de nouveau, et aucune requête ne quitte le domaine. Sont enregistrés le chemin de la page, le référent, ainsi que des informations grossières d'appareil et de pays déduites de la requête elle-même. Jamais une adresse IP conservée contre vous, jamais un profil, jamais ce que vous saisissez.",
+					"La base légale est notre intérêt légitime à savoir si le site fonctionne, au titre de l'art. 6(1)(f) du RGPD. Comme rien n'est stocké sur votre appareil, les règles ePrivacy de consentement qui s'appliquent à la mesure ci-dessous ne s'appliquent pas ici.",
+				],
+			},
 			{
 				heading: "Mesure d'audience — seulement si vous acceptez",
 				level: 3,
@@ -205,7 +235,7 @@ const privacy: Record<Lang, PrivacyCopy> = {
 				heading: "Ce qui est chargé depuis des tiers",
 				level: 2,
 				paragraphs: [
-					"La vidéo de présentation est intégrée depuis <code>youtube-nocookie.com</code> et ne se charge qu'après un clic sur lecture ; avant cela, aucune requête ne part vers YouTube. Le pied de page affiche les badges des annuaires de lancement où nous sommes référencés (VerifiedDR, Endors, KittyLaunch, ListBulb, Product Watch, StartupBase) — charger ces images envoie les données de requête habituelles (adresse IP, agent utilisateur) à ces hôtes, comme toute image sur le web. À part Amplitude, et seulement après votre accord, aucun script tiers ne s'exécute sur ce site. Les téléchargements sont servis par GitHub Releases.",
+					"La vidéo de présentation est intégrée depuis <code>youtube-nocookie.com</code> et ne se charge qu'après un clic sur lecture ; avant cela, aucune requête ne part vers YouTube. Le pied de page affiche les badges des annuaires de lancement où nous sommes référencés (VerifiedDR, Endors, KittyLaunch, ListBulb, Product Watch, StartupBase) — charger ces images envoie les données de requête habituelles (adresse IP, agent utilisateur) à ces hôtes, comme toute image sur le web. À part Amplitude, et seulement après votre accord, le seul autre script de ce site est le compteur de visites décrit plus haut — servi depuis notre propre domaine par notre hébergeur, il ne contacte donc aucune autre entreprise. Les téléchargements sont servis par GitHub Releases.",
 				],
 			},
 			{

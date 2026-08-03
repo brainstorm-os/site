@@ -95,5 +95,30 @@ const alternates =
 		<ConsentBanner lang={lang} />
 
 		<slot />
+
+		{/*
+		  Consent-free visitor counting.
+
+		  This is deliberately NOT behind the consent gate, and it is not a
+		  loophole: it sets no cookie, writes nothing to the device, and mints
+		  no identifier a visitor could be recognised by later. There is
+		  nothing to ask permission for, which is exactly why it may count
+		  everyone.
+
+		  It exists because the consented layer cannot answer "how many
+		  people came". Amplitude only sees visitors who accepted, so its
+		  totals are a subset of unknown size — fine for behaviour and funnel
+		  shape, useless as a growth number. This one is the opposite: true
+		  totals, no behaviour. Two signals, each honest about what it can
+		  measure, instead of one that quietly under-reports.
+
+		  Same-origin on purpose. Vercel serves both the script and the beacon
+		  from `/_vercel/insights/*`, so no third party is contacted, no new
+		  host enters the CSP, and `script-src 'self'` / `connect-src 'self'`
+		  already cover it. Requires Web Analytics to be enabled on the Vercel
+		  project; without it the path 404s and the page is otherwise
+		  unaffected.
+		*/}
+		<script is:inline defer src="/_vercel/insights/script.js"></script>
 	</body>
 </html>
