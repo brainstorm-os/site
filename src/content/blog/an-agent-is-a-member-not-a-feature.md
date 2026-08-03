@@ -55,6 +55,8 @@ All twenty apps went through a design pass, so the same thing looks the same eve
 
 And one fix I want to name properly rather than bury. In Journal, if you opened a new day and started typing immediately, the first words could be dropped. Once that happened, that day's body stayed blank on every later visit, even though the word count still showed the text, which is a genuinely horrible way to lose writing because the product keeps telling you it is there.
 
-That is fixed. But the repair does not reach backwards, and I would rather say so here than let you discover it. It stops new entries from being lost. It cannot recover text that was already lost this way, because those words never reached the disk. If a day from before 0.13.0 still shows an empty body, that content is gone. We found two such days in our own vault.
+That is fixed. But the repair does not reach backwards, and I would rather say so here than let you discover it. It stops new entries from being lost. It cannot recover text that was already lost this way, because those words never reached the disk. If a day from before 0.13.0 still shows an empty body, that content is gone. We found seven such days in our own vault.
+
+I am building the tool that finds them, because right now the product cannot tell you which of your documents this happened to, and that is worse than the loss itself. It will not repair anything. It will at least let you know.
 
 0.13.0 is available now for macOS, Windows and Linux. Existing installs update from Settings then Updates. It is still a beta, so keep backups of anything important. Your vault is a plain folder you control completely.
