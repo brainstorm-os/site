@@ -3,7 +3,7 @@
   "framework": "astro",
   "buildCommand": "bun run build",
   "outputDirectory": "dist",
-  "installCommand": "bun install",
+  "installCommand": "bun install --frozen-lockfile",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
