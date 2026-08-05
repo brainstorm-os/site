@@ -23,9 +23,9 @@ export interface PrivacyCopy {
 }
 
 const MAILTO = '<a href="mailto:founder@getbrainstorm.online">founder@getbrainstorm.online</a>';
-const GITHUB = '<a href="https://github.com/brainstorm-os" rel="noopener noreferrer">GitHub</a>';
+const GITHUB = '<a href="https://gitlab.com/brainstorm-os" rel="noopener noreferrer">GitLab</a>';
 const repo = (label: string) =>
-	`<a href="https://github.com/brainstorm-os/site" rel="noopener noreferrer">${label}</a>`;
+	`<a href="https://gitlab.com/brainstorm-os/site" rel="noopener noreferrer">${label}</a>`;
 const SITE_LINK = `<a href="${SITE_URL}">${SITE_URL}</a>`;
 
 const privacy: Record<Lang, PrivacyCopy> = {

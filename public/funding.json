@@ -20,8 +20,8 @@
         "url": "https://getbrainstorm.online"
       },
       "repositoryUrl": {
-        "url": "https://github.com/brainstorm-os/shell",
-        "wellKnown": "https://github.com/brainstorm-os/shell/blob/main/.well-known/funding-manifest-urls"
+        "url": "https://gitlab.com/brainstorm-os/shell",
+        "wellKnown": "https://gitlab.com/brainstorm-os/shell/-/blob/main/.well-known/funding-manifest-urls"
       },
       "licenses": ["spdx:AGPL-3.0-or-later"],
       "tags": [
@@ -47,7 +47,7 @@
       {
         "guid": "github",
         "type": "other",
-        "address": "https://github.com/brainstorm-os",
+        "address": "https://gitlab.com/brainstorm-os",
         "description": "Follow development, open issues, and contribute on GitHub."
       }
     ],

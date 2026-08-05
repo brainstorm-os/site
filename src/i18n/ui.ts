@@ -84,7 +84,7 @@ type UiKey = keyof (typeof ui)["en"];
 export const ui = {
 	en: {
 		"star.text": "Brainstorm is free and open source — if it's useful to you,",
-		"star.link": "star it on GitHub",
+		"star.link": "star it on GitLab",
 		"nav.overview": "Overview",
 		"nav.apps": "Apps",
 		"nav.how": "How it works",
@@ -100,7 +100,7 @@ export const ui = {
 		"footer.download": "Download",
 		"footer.docs": "Docs",
 		"footer.blog": "Blog",
-		"footer.github": "GitHub",
+		"footer.github": "GitLab",
 		"footer.youtube": "YouTube",
 		"footer.opensource": "Open source · AGPL-3.0",
 		"footer.privacy": "Privacy",
@@ -120,7 +120,7 @@ export const ui = {
 	},
 	de: {
 		"star.text": "Brainstorm ist kostenlos und quelloffen — wenn es dir nützt,",
-		"star.link": "gib ihm einen Stern auf GitHub",
+		"star.link": "gib ihm einen Stern auf GitLab",
 		"nav.overview": "Überblick",
 		"nav.apps": "Apps",
 		"nav.how": "So funktioniert's",
@@ -136,7 +136,7 @@ export const ui = {
 		"footer.download": "Herunterladen",
 		"footer.docs": "Doku",
 		"footer.blog": "Blog",
-		"footer.github": "GitHub",
+		"footer.github": "GitLab",
 		"footer.youtube": "YouTube",
 		"footer.opensource": "Quelloffen · AGPL-3.0",
 		"footer.privacy": "Datenschutz",
@@ -156,7 +156,7 @@ export const ui = {
 	},
 	fr: {
 		"star.text": "Brainstorm est gratuit et open source — s'il vous est utile,",
-		"star.link": "mettez-lui une étoile sur GitHub",
+		"star.link": "mettez-lui une étoile sur GitLab",
 		"nav.overview": "Aperçu",
 		"nav.apps": "Applications",
 		"nav.how": "Comment ça marche",
@@ -172,7 +172,7 @@ export const ui = {
 		"footer.download": "Télécharger",
 		"footer.docs": "Docs",
 		"footer.blog": "Blog",
-		"footer.github": "GitHub",
+		"footer.github": "GitLab",
 		"footer.youtube": "YouTube",
 		"footer.opensource": "Open source · AGPL-3.0",
 		"footer.privacy": "Confidentialité",
