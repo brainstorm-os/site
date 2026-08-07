@@ -12,13 +12,13 @@ channels:
 source: brainstorm/docs/platform/46-marketing-and-promotion.md §Audience — Segment 2
 ---
 
-The short version: the shell is an **Electron + IPC + capability-ledger host**. Apps are **sandboxed renderers** with declared capabilities and a fixed-depth per-app pending queue. **Yjs** is the CRDT. **SQLite + FTS5** is the store. **Block Protocol** is the interop. **Lexical** powers rich text. The full architecture is in `docs/foundations/02-architecture.md`.
+The short version: the shell is an **Electron + IPC + capability-ledger host**. Apps are **sandboxed renderers** with declared capabilities and a fixed-depth per-app pending queue. **Yjs** is the CRDT. **SQLite + FTS5** is the store. **Block Protocol** is the interop. **Lexical** powers rich text. The full architecture is in [What is Brainstorm](https://docs.getbrainstorm.online/start-here/what-is-brainstorm/).
 
 ## Why you might care
 
 - **The IPC envelope is a real contract.** Every host-service call goes through `{v, msg, app, service, method, args, caps}`. The broker validates structure, verifies the preload-stamped app id, checks capabilities against the per-vault ledger, and forwards to a service handler. Fail-closed; capability misses return `Unavailable`, not approval.
 
-- **The SDK is real.** Manifest, capabilities, host services, versioning — all in `docs/apps/08-app-sdk.md`. The Code app lets you write a Brainstorm app from inside Brainstorm. Build, install, debug — all in-product. The capability surface is documented.
+- **The SDK is real.** Manifest, capabilities, host services, versioning — all in the [SDK reference](https://docs.getbrainstorm.online/build/the-sdk/). The Code app lets you write a Brainstorm app from inside Brainstorm. Build, install, debug — all in-product. The capability surface is documented.
 
 - **Storage is local-first, repo-pattern, and runtime-agnostic.** `bun:sqlite` under tests, `better-sqlite3` in production. No inline SQL outside repos. Yjs persistence is snapshot+tail with per-update CRC32; compaction at 256 KiB tail.
 
@@ -26,12 +26,11 @@ The short version: the shell is an **Electron + IPC + capability-ledger host**. 
 
 ## The hooks
 
-- [SDK reference](https://github.com/brainstorm-app/brainstorm/blob/main/docs/apps/08-app-sdk.md)
-- [Capability model](https://github.com/brainstorm-app/brainstorm/blob/main/docs/security/09-security-and-sandbox.md)
-- [Shell-as-framework](https://github.com/brainstorm-app/brainstorm/blob/main/docs/apps/26-shell-as-framework.md)
-- [Implementation plan](https://github.com/brainstorm-app/brainstorm/blob/main/docs/implementation-plan.md) — what's done, what's in progress
-- [Open questions](https://github.com/brainstorm-app/brainstorm/blob/main/docs/reference/11-open-questions.md) — what we haven't decided yet
+- [SDK reference](https://docs.getbrainstorm.online/build/the-sdk/)
+- [Capability model](https://docs.getbrainstorm.online/build/capabilities/)
+- [Shell-as-framework](https://docs.getbrainstorm.online/build/overview/)
+- [Roadmap](https://gitlab.com/brainstorm-os/shell/-/blob/main/ROADMAP.md) — what's done, what's in progress
 
 ## Build an app this weekend
 
-[20-minute tutorial](/tutorials/build-your-first-app) · [Source](https://github.com/brainstorm-app/brainstorm) · [Download](/download/mac)
+[20-minute tutorial](/tutorials/build-your-first-app) · [Source](https://gitlab.com/brainstorm-os) · [Download](/download/mac)

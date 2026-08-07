@@ -33,8 +33,8 @@ That is the difference. It is the only difference that matters at year five.
 
 We're not "X but better." We are different. The credibility we want to earn is not the credibility of being a successor. It's the credibility of being honest about what shape we are.
 
-Read the [architecture overview](https://github.com/brainstorm-app/brainstorm/blob/main/docs/foundations/02-architecture.md) before downloading. If the shape makes sense, the product will.
+Read the [architecture overview](https://docs.getbrainstorm.online/start-here/what-is-brainstorm/) before downloading. If the shape makes sense, the product will.
 
 ## Where to start
 
-[Download Brainstorm](/download/mac) · [Read the docs](https://github.com/brainstorm-app/brainstorm/tree/main/docs) · [GitHub](https://github.com/brainstorm-app)
+[Download Brainstorm](/download/mac) · [Read the docs](https://docs.getbrainstorm.online/) · [GitLab](https://gitlab.com/brainstorm-os)

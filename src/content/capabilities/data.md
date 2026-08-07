@@ -2,7 +2,7 @@
 order: 2
 title: Your data, your disk.
 summary: Every document is a file on your machine. Sync is optional and uses Yjs CRDTs. Export to standard formats anytime. No account required, ever.
-linkHref: https://github.com/brainstorm-app/brainstorm/blob/main/docs/foundations/28-vault-and-onboarding.md
+linkHref: https://docs.getbrainstorm.online/concepts/vaults/
 linkLabel: The vault model
 source: brainstorm/docs/foundations/28-vault-and-onboarding.md
 ---

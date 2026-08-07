@@ -94,4 +94,4 @@ You just wrote, built, and installed a Brainstorm app without leaving Brainstorm
 
 ---
 
-The full SDK reference is in [`apps/08-app-sdk.md`](https://github.com/brainstorm-app/brainstorm/blob/main/docs/apps/08-app-sdk.md). The capability model is in [`security/09-security-and-sandbox.md`](https://github.com/brainstorm-app/brainstorm/blob/main/docs/security/09-security-and-sandbox.md). Publishing to the catalog is covered in [`apps/14-app-store.md`](https://github.com/brainstorm-app/brainstorm/blob/main/docs/apps/14-app-store.md).
+The full [SDK reference](https://docs.getbrainstorm.online/build/the-sdk/) and the [capability model](https://docs.getbrainstorm.online/build/capabilities/) are in the docs, along with an [overview of building and publishing an app](https://docs.getbrainstorm.online/build/overview/).
