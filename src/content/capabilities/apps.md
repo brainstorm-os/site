@@ -2,7 +2,7 @@
 order: 1
 title: Apps you choose, not features bundled in.
 summary: Install Notes, Database, Files, Graph from us. Install third-party apps from the catalog or a URL. Uninstall what you don't use. The shell stays small.
-linkHref: https://github.com/brainstorm-app/brainstorm/blob/main/docs/apps/03-app-model.md
+linkHref: https://docs.getbrainstorm.online/build/overview/
 linkLabel: How apps work
 source: brainstorm/docs/apps/03-app-model.md
 ---

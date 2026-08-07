@@ -31,13 +31,13 @@ We use precise language because precise language is less common in this space an
 
 ## What to read before trusting us
 
-- [Security and sandbox model](https://github.com/brainstorm-app/brainstorm/blob/main/docs/security/09-security-and-sandbox.md)
-- [Identity, organisations, and encryption](https://github.com/brainstorm-app/brainstorm/blob/main/docs/security/16-identity-orgs-encryption.md)
-- [Credential storage](https://github.com/brainstorm-app/brainstorm/blob/main/docs/security/29-credentials-storage.md)
-- [AI foundations](https://github.com/brainstorm-app/brainstorm/blob/main/docs/platform/22-ai-foundations.md)
+- [Security and sandbox model](https://docs.getbrainstorm.online/build/capabilities/)
+- [Identity, organisations, and encryption](https://docs.getbrainstorm.online/concepts/your-data-and-security/)
+- [Credential storage](https://docs.getbrainstorm.online/concepts/your-data-and-security/)
+- [AI foundations](https://docs.getbrainstorm.online/apps/agent/)
 
 If something there doesn't match what the running product does, file an issue. We'll fix one or the other.
 
 ## Where to start
 
-[Download Brainstorm](/download/mac) · [Read the docs](https://github.com/brainstorm-app/brainstorm/tree/main/docs)
+[Download Brainstorm](/download/mac) · [Read the docs](https://docs.getbrainstorm.online/)

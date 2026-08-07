@@ -47,7 +47,7 @@ facts.
 
 Before flipping `status` to `published`, send a one-week heads-up to the
 competitor team so they can flag inaccuracies — per
-[OQ-MK-8](https://github.com/brainstorm-app/brainstorm/blob/main/docs/reference/11-open-questions.md).
+OQ-MK-8.
 
 The body content above the side-by-side table is the **narrative** — what
 each product is for, where they overlap, where they diverge. The matrix is
