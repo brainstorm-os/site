@@ -1,0 +1,52 @@
+# Site CI. This repo had none, and CI/CD was enabled — so every push created a
+# pipeline with no jobs and failed. Permanent false-red, and worse, the 208 tests
+# ran nowhere: Vercel builds the site but does not test it.
+#
+# Cheap by design: no native modules, no Electron, no browsers. Install, test,
+# build. Seconds of compute, not the tens of minutes the shell pipeline costs.
+#
+# Base image is the full `node:22-bookworm` rather than a slim variant, matching
+# the shell repo — a slim base there dropped python3/build-essential and broke
+# any dependency that falls back to node-gyp. Not worth re-learning here.
+
+default:
+  image: node:22-bookworm
+  interruptible: true
+  before_script:
+    - curl -fsSL https://bun.sh/install | bash
+    - export PATH="$HOME/.bun/bin:$PATH"
+    # --frozen-lockfile deliberately: a stale bun.lock is what let Vercel install
+    # undici 5.28.4 while package.json pinned ^6.28.0, silently voiding the
+    # security override. Either the lockfile matches what we tested, or CI fails.
+    - bun install --frozen-lockfile
+
+variables:
+  BUN_INSTALL_CACHE_DIR: "$CI_PROJECT_DIR/.cache/bun"
+
+cache:
+  key:
+    files:
+      - bun.lock
+  paths:
+    - .cache/bun
+
+# Only merge requests and main. Without this GitLab starts a pipeline on every
+# branch push, including throwaway and agent branches.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+    - when: never
+
+stages:
+  - verify
+
+verify:
+  stage: verify
+  timeout: 15m
+  script:
+    - export PATH="$HOME/.bun/bin:$PATH"
+    - bun run lint
+    - bun run typecheck
+    - bun run test
+    - bun run build
