@@ -120,5 +120,19 @@ const alternates =
 		  unaffected.
 		*/}
 		<script is:inline defer src="/_vercel/insights/script.js"></script>
+
+		{/*
+		  BuildHop feedback button. Injects a floating button that opens a
+		  feedback panel in a buildhop.io iframe. Not behind the consent gate:
+		  the loader fetches its session with `credentials: "omit"`, sets no
+		  cookie, and keeps only a widget session token in localStorage —
+		  nothing identifies the visitor across sites. buildhop.io is
+		  allowlisted in script-src / connect-src / frame-src (vercel.json).
+		*/}
+		<script
+			is:inline
+			async
+			src="https://buildhop.io/feedback-widget.js"
+			data-launch-id="4c70952e-d3b7-48cf-9afd-65aa063b3356"></script>
 	</body>
 </html>
