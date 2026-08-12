@@ -94,4 +94,4 @@ You just wrote, built, and installed a Brainstorm app without leaving Brainstorm
 
 ---
 
-The full [SDK reference](https://docs.getbrainstorm.online/build/the-sdk/) and the [capability model](https://docs.getbrainstorm.online/build/capabilities/) are in the docs, along with an [overview of building and publishing an app](https://docs.getbrainstorm.online/build/overview/).
+The full [SDK reference](https://docs.getbrainstorm.online/build/the-sdk) and the [capability model](https://docs.getbrainstorm.online/build/capabilities) are in the docs, along with an [overview of building and publishing an app](https://docs.getbrainstorm.online/build/overview).

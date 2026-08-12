@@ -31,10 +31,10 @@ We use precise language because precise language is less common in this space an
 
 ## What to read before trusting us
 
-- [Security and sandbox model](https://docs.getbrainstorm.online/build/capabilities/)
-- [Identity, organisations, and encryption](https://docs.getbrainstorm.online/concepts/your-data-and-security/)
-- [Credential storage](https://docs.getbrainstorm.online/concepts/your-data-and-security/)
-- [AI foundations](https://docs.getbrainstorm.online/apps/agent/)
+- [Security and sandbox model](https://docs.getbrainstorm.online/build/capabilities)
+- [Identity, organisations, and encryption](https://docs.getbrainstorm.online/concepts/your-data-and-security)
+- [Credential storage](https://docs.getbrainstorm.online/concepts/your-data-and-security)
+- [AI foundations](https://docs.getbrainstorm.online/apps/agent)
 
 If something there doesn't match what the running product does, file an issue. We'll fix one or the other.
 
