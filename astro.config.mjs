@@ -6,6 +6,11 @@ import { defineConfig } from "astro/config";
 // Above-the-fold content remains pure Astro / zero JS.
 export default defineConfig({
 	site: "https://getbrainstorm.online",
+	// URLs carry no trailing slash, matching `"trailingSlash": false` in
+	// vercel.json. Left at the default, Astro emits `/privacy/` in canonical,
+	// og:url, hreflang and internal links while Vercel 308-redirects that to
+	// `/privacy` — so every page canonicalises to a redirect.
+	trailingSlash: "never",
 	integrations: [react()],
 	// English is the default and stays at the root; German lives under `/de/`.
 	// No auto-redirect — the copy module + <link hreflang> handle discovery.

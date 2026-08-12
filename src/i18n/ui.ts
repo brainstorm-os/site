@@ -40,9 +40,14 @@ export function stripLangPrefix(pathname: string): string {
 // (http/mailto/tel) and pure hashes pass through untouched.
 export function localizePath(path: string, lang: Lang): string {
 	if (/^(?:[a-z]+:|\/\/|#)/i.test(path)) return path;
-	const base = stripLangPrefix(path);
-	if (lang === defaultLang) return base;
-	return base === "/" ? `/${lang}` : `/${lang}${base}`;
+	// Split any fragment or query off before prefixing. The homepage anchors are
+	// written "/#overview", and treating that whole string as the path yields
+	// "/de/#overview" — which 308-redirects under `trailingSlash: "never"`.
+	const cut = path.search(/[#?]/);
+	const suffix = cut === -1 ? "" : path.slice(cut);
+	const base = stripLangPrefix(cut === -1 ? path : path.slice(0, cut));
+	if (lang === defaultLang) return base + suffix;
+	return (base === "/" ? `/${lang}` : `/${lang}${base}`) + suffix;
 }
 
 export interface Alternate {

@@ -24,10 +24,10 @@ If you want to follow the team plan, subscribe to the newsletter below — we'll
 - **Self-hosting story.** Move your vault to your own infrastructure when you outgrow ours.
 - **Enterprise pricing published.** No "contact sales for pricing."
 
-The design is in [Your data and security](https://docs.getbrainstorm.online/concepts/your-data-and-security/).
+The design is in [Your data and security](https://docs.getbrainstorm.online/concepts/your-data-and-security).
 
 ## What you can do today
 
 Use Brainstorm personally now, on your own devices. The personal vault is free, forever. If you bring it to the team later, your data and customisations come with you.
 
-[Download Brainstorm](/download/mac) · [Read the architecture](https://docs.getbrainstorm.online/start-here/what-is-brainstorm/)
+[Download Brainstorm](/download/mac) · [Read the architecture](https://docs.getbrainstorm.online/start-here/what-is-brainstorm)

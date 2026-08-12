@@ -2,7 +2,7 @@
 order: 5
 title: A real app SDK.
 summary: Sandboxed, capability-gated, with a stable contract. Build an app from inside Brainstorm with the Code app, and install it from a local package or a URL.
-linkHref: https://docs.getbrainstorm.online/build/the-sdk/
+linkHref: https://docs.getbrainstorm.online/build/the-sdk
 linkLabel: SDK reference
 source: brainstorm/docs/apps/08-app-sdk.md + docs/apps/26-shell-as-framework.md
 ---
