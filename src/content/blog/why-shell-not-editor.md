@@ -34,4 +34,4 @@ Apps own the concepts. They interoperate by speaking a common language of typed 
 
 A monolithic editor with a single document model does a few things a host of apps cannot do easily, such as instant transformations across every block, or one undo stack covering the whole product. Brainstorm gives those up in exchange for a system where adding a feature next year does not mean editing six existing ones, and where you can throw a feature away without the rest noticing.
 
-For a product meant to still be maintainable in ten years, that is the trade worth making. The full case is in [What is Brainstorm](https://docs.getbrainstorm.online/start-here/what-is-brainstorm/); the shell itself is source-available on [GitLab](https://gitlab.com/brainstorm-os).
+For a product meant to still be maintainable in ten years, that is the trade worth making. The full case is in [What is Brainstorm](https://docs.getbrainstorm.online/start-here/what-is-brainstorm); the shell itself is source-available on [GitLab](https://gitlab.com/brainstorm-os).

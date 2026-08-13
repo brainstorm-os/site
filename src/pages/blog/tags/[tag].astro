@@ -3,11 +3,11 @@ import FeedTimeline from "~/components/FeedTimeline.astro";
 import TagChips from "~/components/TagChips.astro";
 import Article from "~/layouts/Article.astro";
 import {
-	FEED_KIND_PLURAL,
 	type FeedEntry,
 	FeedKind,
 	buildFeed,
 	countByKind,
+	countPhrase,
 	groupByMonth,
 } from "~/lib/feed";
 import { type TagSummary, collectTags, entriesWithTag } from "~/lib/tags";
@@ -35,13 +35,13 @@ const months = groupByMonth(entries);
 const counts = countByKind(entries);
 const countLine = Object.values(FeedKind)
 	.filter((kind) => counts[kind] > 0)
-	.map((kind) => `${counts[kind]} ${FEED_KIND_PLURAL[kind]}`)
+	.map((kind) => countPhrase(kind, counts[kind]))
 	.join(" · ");
 ---
 
 <Article
 	title={tag.tag}
-	description={`Everything on the Brainstorm blog filed under ${tag.tag}, newest first.`}
+	description={`${countLine} filed under ${tag.tag}, newest first — notes from building Brainstorm, the local-first, AI-native operating system for knowledge work.`}
 	eyebrow="Topic"
 	localized={false}
 >

@@ -31,7 +31,8 @@ const SITE_LINK = `<a href="${SITE_URL}">${SITE_URL}</a>`;
 const privacy: Record<Lang, PrivacyCopy> = {
 	en: {
 		title: "Privacy policy",
-		description: "What this site stores, when it starts, and how to change your mind.",
+		description:
+			"What this site stores, when it starts, and how to change your mind — opt-in analytics, a cookieless visit count, and no account system in the app.",
 		eyebrow: "Legal",
 		manageCta: "Change your answer",
 		intro: `Brainstorm is a local-first product, and this site follows the same posture: collect as little as possible, keep what is collected boring, ask before storing anything, and never trade your attention or your data. This page describes everything the site at ${SITE_LINK} does with data. The Brainstorm app itself stores your data on your machine and has no account system; nothing on this page is about the app.`,
@@ -106,7 +107,8 @@ const privacy: Record<Lang, PrivacyCopy> = {
 	},
 	de: {
 		title: "Datenschutzerklärung",
-		description: "Was diese Website speichert, ab wann, und wie du es wieder änderst.",
+		description:
+			"Was diese Website speichert, ab wann, und wie du es wieder änderst — Opt-in-Analytics, eine cookielose Besuchszählung und kein Konto-System in der App.",
 		eyebrow: "Rechtliches",
 		manageCta: "Antwort ändern",
 		intro: `Brainstorm ist ein lokal-first Produkt, und diese Website hält es genauso: so wenig wie möglich erheben, das Erhobene langweilig halten, vor dem Speichern fragen und weder deine Aufmerksamkeit noch deine Daten verkaufen. Diese Seite beschreibt alles, was die Website unter ${SITE_LINK} mit Daten tut. Die Brainstorm-App selbst speichert deine Daten auf deinem Rechner und hat kein Konto-System; nichts auf dieser Seite betrifft die App.`,
@@ -181,7 +183,8 @@ const privacy: Record<Lang, PrivacyCopy> = {
 	},
 	fr: {
 		title: "Politique de confidentialité",
-		description: "Ce que ce site conserve, à partir de quand, et comment changer d'avis.",
+		description:
+			"Ce que ce site conserve, à partir de quand, et comment changer d'avis — analytics avec consentement, comptage sans cookie, aucun compte dans l'application.",
 		eyebrow: "Mentions légales",
 		manageCta: "Modifier votre réponse",
 		intro: `Brainstorm est un produit local-first, et ce site suit la même ligne : collecter le moins possible, garder ce qui est collecté ennuyeux, demander avant de conserver quoi que ce soit, et ne jamais monnayer votre attention ni vos données. Cette page décrit tout ce que le site ${SITE_LINK} fait avec des données. L'application Brainstorm, elle, garde vos données sur votre machine et n'a aucun système de compte ; rien ici ne concerne l'application.`,

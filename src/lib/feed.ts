@@ -21,6 +21,14 @@ export const FEED_KIND_PLURAL: Record<FeedKind, string> = {
 	[FeedKind.Video]: "videos",
 };
 
+/**
+ * "3 articles" / "1 article" — the count line reads on-page and, for tag pages,
+ * inside the meta description, so a lone entry must not say "1 articles".
+ * English plurals here are regular; the singular is the plural less its "s".
+ */
+export const countPhrase = (kind: FeedKind, n: number): string =>
+	`${n} ${n === 1 ? FEED_KIND_PLURAL[kind].replace(/s$/, "") : FEED_KIND_PLURAL[kind]}`;
+
 export interface FeedEntry {
 	kind: FeedKind;
 	/** Stable per-entry key — also the RSS <guid>. */

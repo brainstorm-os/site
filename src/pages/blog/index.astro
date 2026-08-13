@@ -4,10 +4,10 @@ import TagChips from "~/components/TagChips.astro";
 import Article from "~/layouts/Article.astro";
 import {
 	FEED_KIND_LABEL,
-	FEED_KIND_PLURAL,
 	FeedKind,
 	buildFeed,
 	countByKind,
+	countPhrase,
 	groupByMonth,
 } from "~/lib/feed";
 import { collectTags } from "~/lib/tags";
@@ -26,7 +26,7 @@ const filters = [
 	...streams.map((kind) => ({ id: kind, label: `${FEED_KIND_LABEL[kind]}s` })),
 ];
 
-const countLine = streams.map((kind) => `${counts[kind]} ${FEED_KIND_PLURAL[kind]}`).join(" · ");
+const countLine = streams.map((kind) => countPhrase(kind, counts[kind])).join(" · ");
 ---
 
 <Article
