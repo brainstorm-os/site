@@ -48,7 +48,7 @@ export const GET: APIRoute = async () => {
 		"",
 		"## Source",
 		"",
-		`- [GitLab](${links.github}): the Brainstorm organisation`,
+		`- [GitHub](${links.github}): the Brainstorm organisation`,
 		`- [Shell repository](${links.repo}): the desktop shell`,
 		"",
 	];
