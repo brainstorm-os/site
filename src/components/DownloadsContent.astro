@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import CornerMarks from "~/components/CornerMarks.astro";
 import Footer from "~/components/Footer.astro";
 import Header from "~/components/Header.astro";
@@ -42,6 +42,10 @@ const published = (await getCollection("releases"))
 
 const latest = published[0];
 const archive = published.slice(1);
+
+// The notes body is English-only, like the blog: written once, in the voice of
+// the design docs. The highlights above it are the per-locale summary.
+const Notes = latest ? (await render(latest)).Content : null;
 
 const dateFmt = new Intl.DateTimeFormat(copy.dateLocale, {
 	year: "numeric",
@@ -185,7 +189,7 @@ const GLYPH: Record<Platform, string> = {
 				<section class="empty">
 					<p class="empty-line">{copy.emptyLine}</p>
 					<p class="empty-sub">{copy.emptySub}</p>
-					<a class="empty-cta" href={links.repo + "/-/releases"}>
+					<a class="empty-cta" href={links.repo + "/releases"}>
 						{copy.emptyCta}
 					</a>
 				</section>
@@ -202,8 +206,19 @@ const GLYPH: Record<Platform, string> = {
 							))}
 						</ul>
 					)}
+					{Notes && (
+						<article class="release-notes">
+							<header class="release-notes-head">
+								<h2 class="release-notes-title">{copy.notesTitle}</h2>
+								<span class="release-notes-version mono">v{latest.data.version}</span>
+							</header>
+							<div class="prose release-notes-body">
+								<Notes />
+							</div>
+						</article>
+					)}
 					<p class="all-releases mono">
-						<a href={links.repo + "/-/releases"} target="_blank" rel="noopener noreferrer">
+						<a href={links.repo + "/releases"} target="_blank" rel="noopener noreferrer">
 							{copy.allReleases}
 						</a>
 					</p>
@@ -482,6 +497,56 @@ const GLYPH: Record<Platform, string> = {
 		height: 5px;
 		border-radius: 50%;
 		background: var(--cyan-glow);
+	}
+	.release-notes {
+		margin-top: var(--space-6);
+		padding-top: var(--space-6);
+		border-top: 1px solid var(--hairline);
+	}
+	.release-notes-head {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-3);
+		margin-bottom: var(--space-4);
+	}
+	.release-notes-title {
+		font-size: clamp(1.4rem, 1.3vw + 0.9rem, 1.85rem);
+		font-weight: 500;
+		letter-spacing: var(--tracking-tight);
+		color: var(--paper);
+	}
+	.release-notes-version {
+		font-size: var(--text-mono);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-eyebrow);
+		color: var(--fog-2);
+	}
+	/* Screenshots run wider than the measure so a 1440px capture stays legible;
+	   the text column keeps the prose width. */
+	.release-notes-body {
+		max-width: 60rem;
+	}
+	.release-notes-body > :global(:not(figure)) {
+		max-width: 68ch;
+	}
+	.release-notes-body :global(figure) {
+		margin: 2em 0 2.4em;
+		width: 100%;
+	}
+	.release-notes-body :global(figure img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-2);
+		border: 1px solid var(--hairline-strong);
+		box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.6);
+		background: var(--bg-edge);
+	}
+	.release-notes-body :global(figcaption) {
+		margin-top: var(--space-3);
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fog-2);
 	}
 	.all-releases a {
 		font-size: var(--text-mono);

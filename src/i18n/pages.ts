@@ -31,6 +31,8 @@ export interface DownloadsCopy {
 	platformAria: string;
 	noBuild: string;
 	notesAria: string;
+	/** Heading over the latest release's rendered notes. */
+	notesTitle: string;
 	allReleases: string;
 	emptyLine: string;
 	emptySub: string;
@@ -105,6 +107,7 @@ const downloads: Record<Lang, DownloadsCopy> = {
 		platformAria: "Download by platform",
 		noBuild: "No build for this platform yet.",
 		notesAria: "Release notes",
+		notesTitle: "What's new",
 		allReleases: "All releases on GitHub",
 		emptyLine: "No public builds yet.",
 		emptySub: "Brainstorm builds are published on GitHub — check the releases page for the latest.",
@@ -127,6 +130,7 @@ const downloads: Record<Lang, DownloadsCopy> = {
 		platformAria: "Nach Plattform herunterladen",
 		noBuild: "Noch kein Build für diese Plattform.",
 		notesAria: "Release-Notes",
+		notesTitle: "Was ist neu",
 		allReleases: "Alle Versionen auf GitHub",
 		emptyLine: "Noch keine öffentlichen Builds.",
 		emptySub:
@@ -153,6 +157,7 @@ const downloads: Record<Lang, DownloadsCopy> = {
 		platformAria: "Télécharger par plateforme",
 		noBuild: "Pas encore de build pour cette plateforme.",
 		notesAria: "Notes de version",
+		notesTitle: "Nouveautés",
 		allReleases: "Toutes les versions sur GitHub",
 		emptyLine: "Aucun build public pour l'instant.",
 		emptySub:
