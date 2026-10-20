@@ -181,21 +181,26 @@ const first = screenshots[0] ?? { app: "", title: "", caption: "" };
 		container-type: inline-size;
 	}
 
-	/* macOS traffic lights, sized in cqw against the 1100px-wide capture so
-	   they land in the app header's reserved inset at every displayed width.
-	   Fixed px (and earlier vw) drifted over the app title as the frame shrank. */
+	/* macOS traffic lights, placed where the shell draws them: 12px dots, 8px
+	   apart, the group's top-left at (14, 14) in the capture (the shell's
+	   `trafficLightPosition`). The captures are 1410×900 CSS px shown in a
+	   1100/720 frame with `object-fit: cover`, so one capture px is
+	   (720/900) / 1100 of the frame width = 0.0727cqw; every value below is
+	   that factor times the shell's px. Sizing in cqw keeps the dots in the
+	   header's inset at every displayed width — fixed px (and earlier vw)
+	   drifted over the app title as the frame shrank. */
 	.traffic {
 		position: absolute;
-		top: 1.09cqw;
-		left: 1.27cqw;
+		top: 1.018cqw;
+		left: 1.018cqw;
 		z-index: 3;
 		display: inline-flex;
-		gap: 0.64cqw;
+		gap: 0.582cqw;
 		pointer-events: none;
 	}
 	.traffic i {
-		width: 1cqw;
-		height: 1cqw;
+		width: 0.873cqw;
+		height: 0.873cqw;
 		border-radius: 50%;
 		box-shadow:
 			inset 0 0 0 0.5px rgba(0, 0, 0, 0.14),
