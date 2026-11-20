@@ -127,21 +127,25 @@ const darkSrc = (src: string) => src.replace(/\/([^/]+)$/, "/midnight/$1");
 		   frame, not the browser viewport (cqw below). */
 		container-type: inline-size;
 	}
-	/* macOS traffic lights, sized in cqw against the 1440px-wide capture
-	   so they stay in the app header's reserved inset at every displayed
-	   width. Fixed px drifted over the app title below 1440. */
+	/* macOS traffic lights, placed where the shell draws them: 12px dots, 8px
+	   apart, the group's top-left at (14, 14) in the capture (the shell's
+	   `trafficLightPosition`). The captures are 1410×900 CSS px shown in a
+	   1440/900 frame with `object-fit: cover`, so one capture px is 1/1410
+	   of the frame width = 0.0709cqw; every value below is that factor times
+	   the shell's px. The old values assumed a 1440px capture and drew the
+	   dots a quarter too small, 4px too high and 2px too far left. */
 	.traffic {
 		position: absolute;
-		top: 0.69cqw;
-		left: 0.83cqw;
+		top: 0.993cqw;
+		left: 0.993cqw;
 		z-index: 3;
 		display: inline-flex;
-		gap: 0.42cqw;
+		gap: 0.567cqw;
 		pointer-events: none;
 	}
 	.traffic i {
-		width: 0.625cqw;
-		height: 0.625cqw;
+		width: 0.851cqw;
+		height: 0.851cqw;
 		border-radius: 50%;
 		box-shadow:
 			inset 0 0 0 0.5px rgba(0, 0, 0, 0.14),
