@@ -58,8 +58,6 @@
     "vite": "^8.2.4",
     "path-to-regexp": "^6.3.0",
     "ajv": "^8.18.0",
-    "minimatch@^10": {
-      "brace-expansion": "^5.0.12"
-    }
+    "@vercel/nft": "^1.11.12"
   }
 }
